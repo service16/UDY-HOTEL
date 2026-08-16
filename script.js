@@ -1,22 +1,29 @@
-// Handle the search form submission
-function handleSearch() {
-    const checkin = document.getElementById('checkin').value;
-    const checkout = document.getElementById('checkout').value;
-    const guests = document.getElementById('guests').value;
-    const roomtype = document.getElementById('roomtype').value;
+// Filter rooms and apartments dynamically based on user selection
+function filterCategory(category) {
+    const cards = document.querySelectorAll('.card');
+    const buttons = document.querySelectorAll('.filter-btn');
 
-    if (!checkin || !checkout) {
-        alert('Please select both check-in and check-out dates.');
-        return;
-    }
+    // Update active state on filter buttons
+    buttons.forEach(btn => {
+        if(btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent.includes('All'))) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
-    alert(`Searching availability for ${guests} guest(s) from ${checkin} to ${checkout}!`);
-    
-    // Smoothly scroll down to the rooms section to show available listings
-    document.getElementById('rooms').scrollIntoView({ behavior: 'smooth' });
+    // Show or hide cards based on selected category
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'all' || cardCategory === category) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }
 
-// Handle individual room/apartment booking buttons
+// Handle booking alerts
 function openBooking(roomName) {
-    alert(`Great choice! You selected the ${roomName}. You can now proceed to confirm your dates or connect your payment gateway here.`);
+    alert(`Thank you for choosing Udy Hotel & Suites! You have selected the ${roomName}. You will now be redirected to secure your reservation.`);
 }
