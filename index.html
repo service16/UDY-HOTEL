@@ -15,7 +15,7 @@
             <p>📍 Plot 6 Olufagbemi Avenue, off Ikola Road, Alagbado, Lagos | ⚡ 24/7 Power & Free Wi-Fi</p>
             <div class="top-contact">
                 <a href="tel:+2347037766335">📞 +234 703 776 6335</a>
-                <a href="mailto:reservations@udyhotel.com">✉️ reservations@udyhotel.com</a>
+                <a href="javascript:void(0)" onclick="toggleAdminModal()" class="admin-link-btn">🔐 Admin Portal</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
             <nav class="nav-links">
                 <a href="#home" class="active">Home</a>
                 <a href="#accommodations">Rooms</a>
-                <a href="#amenities">Services & Lounge</a>
+                <a href="#amenities">Lounge & Bar</a>
                 <a href="#contact-us">Contact</a>
             </nav>
         </div>
@@ -83,42 +83,42 @@
             <!-- Room 1 -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600" alt="Single Room" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800" alt="Classic Single Room" class="card-img">
                     <span class="badge-tag">Single Room</span>
                 </div>
                 <div class="card-body">
                     <h3>Classic Single Room</h3>
                     <p class="price">₦35,000 <span>/ night</span></p>
                     <p class="desc">Cozy space equipped with air conditioning, flat-screen TV, clothes rack, and clean en-suite facilities.</p>
-                    <button class="btn-primary" onclick="openBooking('Classic Single Room')">Book Room</button>
+                    <button class="btn-primary" onclick="openBookingModal('Classic Single Room', 35000)">Book Room Now</button>
                 </div>
             </div>
 
             <!-- Room 2 -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600" alt="Double Room" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800" alt="Executive Double Room" class="card-img">
                     <span class="badge-tag">Double Room</span>
                 </div>
                 <div class="card-body">
                     <h3>Executive Double Room</h3>
                     <p class="price">₦50,000 <span>/ night</span></p>
                     <p class="desc">Features a comfortable double bed, refrigerator, electric kettle, desk workspace, and city view.</p>
-                    <button class="btn-primary" onclick="openBooking('Executive Double Room')">Book Room</button>
+                    <button class="btn-primary" onclick="openBookingModal('Executive Double Room', 50000)">Book Room Now</button>
                 </div>
             </div>
 
             <!-- Room 3 -->
             <div class="card">
                 <div class="card-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600" alt="Suite" class="card-img">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800" alt="Udy Presidential Suite" class="card-img">
                     <span class="badge-tag">Luxury Suite</span>
                 </div>
                 <div class="card-body">
                     <h3>Udy Presidential Suite</h3>
                     <p class="price">₦85,000 <span>/ night</span></p>
                     <p class="desc">Spacious luxury suite with premium amenities, spa bath, terrace access, and top-tier comfort.</p>
-                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Book Suite</button>
+                    <button class="btn-primary" onclick="openBookingModal('Udy Presidential Suite', 85000)">Book Suite Now</button>
                 </div>
             </div>
         </div>
@@ -134,21 +134,21 @@
 
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600" alt="Havana Lobby Bar">
+                    <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800" alt="Havana Lobby Bar">
                     <div class="gallery-caption">
                         <h3>Havana Lobby Bar & Open Bar</h3>
                         <p>Enjoy chilled drinks, signature cocktails, and your favorite Asun pairings.</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600" alt="Fiesta Restaurant">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" alt="Fiesta Restaurant">
                     <div class="gallery-caption">
                         <h3>Fiesta Restaurant</h3>
                         <p>Savor delicious, well-prepared local and continental dishes made by expert chefs.</p>
                     </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=600" alt="Night Club & Lounge">
+                    <img src="https://images.unsplash.com/photo-1545128485-c400e7702796?w=800" alt="Night Club & Lounge">
                     <div class="gallery-caption">
                         <h3>Night Club & Lounge</h3>
                         <p>Experience an energetic weekend atmosphere with great music and entertainment.</p>
@@ -157,6 +157,94 @@
             </div>
         </div>
     </section>
+
+    <!-- Booking Modal Form -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeBookingModal()">&times;</span>
+            <h2>Complete Your Reservation</h2>
+            <p id="modalRoomTitle" style="color: #0284c7; font-weight: 600; margin-bottom: 15px;"></p>
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="guestName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="guestPhone" required placeholder="+234...">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="guestEmail" required placeholder="yourname@domain.com">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Check-in Date</label>
+                        <input type="date" id="checkInDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out Date</label>
+                        <input type="date" id="checkOutDate" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 10px;">Confirm & Send Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Authentication & Dashboard Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content admin-content">
+            <span class="close-btn" onclick="toggleAdminModal()">&times;</span>
+            
+            <!-- Login View -->
+            <div id="adminLoginView">
+                <h2>Hotel Admin Access</h2>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Enter management credentials to view live booking notifications.</p>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="adminUser" placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="adminPass" placeholder="password">
+                </div>
+                <button class="btn-primary" onclick="loginAdmin()">Login to Dashboard</button>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="adminDashboardView" style="display: none;">
+                <div class="admin-header-flex">
+                    <h2>🏨 Hotel Management Dashboard</h2>
+                    <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+                </div>
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <h3 id="totalBookingsCount">0</h3>
+                        <p>Total Reservations</p>
+                    </div>
+                </div>
+                <h3>Recent Guest Bookings & Notifications</h3>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Guest Name</th>
+                                <th>Phone</th>
+                                <th>Room Type</th>
+                                <th>Check-In</th>
+                                <th>Check-Out</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingsTable">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="contact-us" class="site-footer">
@@ -179,4 +267,4 @@
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
