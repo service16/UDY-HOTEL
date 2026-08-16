@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. SET DEFAULT DATES FOR BOOKING BAR ---
-    const checkinInput = document.querySelector('input[type="date"]:nth-of-type(1)') || document.querySelectorAll('.booking-bar input[type="date"]')[0];
-    const checkoutInput = document.querySelector('input[type="date"]:nth-of-type(2)') || document.querySelectorAll('.booking-bar input[type="date"]')[1];
+    const checkinInput = document.querySelectorAll('.booking-bar input[type="date"]')[0];
+    const checkoutInput = document.querySelectorAll('.booking-bar input[type="date"]')[1];
 
     if (checkinInput && checkoutInput) {
         const today = new Date();
         
-        // Format date to YYYY-MM-DD
         const formatDate = (date) => {
             const d = new Date(date);
             let month = '' + (d.getMonth() + 1);
@@ -19,18 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return [year, month, day].join('-');
         };
 
-        // Check-in default: Today or tomorrow
         const checkinDate = new Date(today);
-        checkinDate.setDate(today.getDate() + 1); // Tomorrow
+        checkinDate.setDate(today.getDate() + 1);
 
-        // Check-out default: 3 days from today
         const checkoutDate = new Date(today);
         checkoutDate.setDate(today.getDate() + 3);
 
         checkinInput.value = formatDate(checkinDate);
         checkoutInput.value = formatDate(checkoutDate);
 
-        // Prevent selecting check-out dates before check-in
         checkinInput.addEventListener('change', (e) => {
             const selectedCheckin = new Date(e.target.value);
             const currentCheckout = new Date(checkoutInput.value);
@@ -53,12 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const checkin = checkinInput ? checkinInput.value : 'Selected Date';
             const checkout = checkoutInput ? checkoutInput.value : 'Selected Date';
             
-            // Trigger feedback action
-            console.log(`Checking availability from ${checkin} to ${checkout}...`);
-            
-            // Smooth user confirmation feedback
             const originalText = searchBtn.textContent;
-            searchBtn.textContent = 'Searching...';
+            searchBtn.textContent = 'Checking...';
             searchBtn.style.backgroundColor = 'var(--accent-gold)';
             searchBtn.style.color = 'var(--primary-dark)';
 
@@ -66,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchBtn.textContent = originalText;
                 searchBtn.style.backgroundColor = '';
                 searchBtn.style.color = '';
-                alert(`Availability confirmed! Rooms are ready for your stay from ${checkin} to ${checkout}. Proceeding to reservation details...`);
+                alert(`Availability confirmed for Udy Hotel and Suites! Rooms are ready from ${checkin} to ${checkout}.`);
             }, 600);
         });
     }
@@ -83,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- 4. SMOOTH SCROLLING FOR INTERNAL ANCHOR LINKS ---
+    // --- 4. SMOOTH SCROLLING FOR ANCHOR LINKS ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
