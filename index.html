@@ -3,44 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel & Luxury Apartments</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Udy Hotel & Luxury Apartments | Victoria Island & Lekki Standard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Top Bar for Trust & Contact Info -->
+    <div class="top-bar">
+        <div class="container top-bar-flex">
+            <p>📍 Prime Locations: Victoria Island & Lekki, Lagos | ⚡ 24/7 Guaranteed Power & High-Speed Wi-Fi</p>
+            <div class="top-contact">
+                <a href="tel:+234800000UDY">📞 +234 800 000 839</a>
+                <a href="mailto:reservations@udyhotel.com">✉️ reservations@udyhotel.com</a>
+            </div>
+        </div>
+    </div>
 
     <!-- Header / Navigation -->
     <header class="navbar">
         <div class="container nav-flex">
             <div class="logo">
-                <a href="#">UDY <span>HOTEL</span></a>
+                <a href="#">UDY <span>HOTEL & SUITES</span></a>
             </div>
-            <nav>
+            <nav class="nav-links">
                 <a href="#home" class="active">Home</a>
-                <a href="#rooms">Rooms & Suites</a>
-                <a href="#gallery">Views & Dining</a>
-                <a href="#booking">Book Now</a>
-                <a href="#contact">Contact</a>
+                <a href="#accommodations">Rooms & Apartments</a>
+                <a href="#experiences">Views & Bar</a>
+                <a href="#amenities">Services</a>
+                <a href="#booking" class="nav-btn-book">Reserve Now</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section with Booking Bar -->
+    <!-- Hero Section with Immersive Background & Booking Engine -->
     <section id="home" class="hero">
         <div class="hero-overlay">
             <div class="container hero-content">
-                <h1>Welcome to Udy Hotel & Apartments</h1>
-                <p>Experience unmatched comfort, premium rooms, and fully furnished luxury apartments.</p>
+                <span class="hero-badge">A New Definition of Nigerian Luxury</span>
+                <h1>Redefined Elegance & <br><span>Serviced Living</span></h1>
+                <p>Indulge in sophisticated hotel rooms, expansive apartments, rooftop views, and world-class hospitality in the heart of Lagos.</p>
                 
-                <!-- Quick Booking Widget -->
+                <!-- Advanced Booking Widget -->
                 <div class="booking-widget" id="booking">
                     <form class="booking-form" onsubmit="event.preventDefault(); handleSearch();">
                         <div class="form-group">
-                            <label>Check-in</label>
+                            <label>Check-in Date</label>
                             <input type="date" required id="checkin">
                         </div>
                         <div class="form-group">
-                            <label>Check-out</label>
+                            <label>Check-out Date</label>
                             <input type="date" required id="checkout">
                         </div>
                         <div class="form-group">
@@ -49,84 +61,128 @@
                                 <option value="1">1 Guest</option>
                                 <option value="2">2 Guests</option>
                                 <option value="3">3 Guests</option>
-                                <option value="4">4+ Guests</option>
+                                <option value="4">4+ Guests (Family)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Room Type</label>
+                            <label>Accommodation</label>
                             <select id="roomtype">
-                                <option value="all">All Accommodations</option>
-                                <option value="deluxe">Deluxe Hotel Room</option>
-                                <option value="apartment">Luxury Apartment</option>
-                                <option value="penthouse">Penthouse Suite</option>
+                                <option value="all">All Options</option>
+                                <option value="deluxe">Executive Hotel Room</option>
+                                <option value="apartment">2-Bedroom Luxury Apartment</option>
+                                <option value="penthouse">Udy Presidential Penthouse</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn-search">Search Rooms</button>
+                        <button type="submit" class="btn-search">Check Availability</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Rooms Section -->
-    <section id="rooms" class="section-padding container">
-        <h2 class="section-title">Rooms & Serviced Apartments</h2>
-        <p class="section-subtitle">Designed for professional living, relaxation, and memorable stays at Udy Hotel.</p>
+    <!-- Trust Feature Badges -->
+    <section class="features-bar">
+        <div class="container features-grid">
+            <div class="feature-box">
+                <h4>⚡ Uninterrupted Power</h4>
+                <p>Seamless 24-hour backup generator system.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🛡️ Maximum Security</h4>
+                <p>Armed personnel, CCTV surveillance, & secure gate access.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🌐 High-Speed Fiber Wi-Fi</h4>
+                <p>Unlimited high-speed connectivity across the premises.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🛎️ Concierge & Housekeeping</h4>
+                <p>Daily professional upkeep and round-the-clock room service.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accommodations Section -->
+    <section id="accommodations" class="section-padding container">
+        <div class="section-header">
+            <h2 class="section-title">Rooms & Serviced Apartments</h2>
+            <p class="section-subtitle">Meticulously curated living spaces combining comfort, security, and modern executive styling.</p>
+        </div>
         
         <div class="grid-3">
             <!-- Room 1 -->
-            <div class="card room-card">
-                <img src="room1.jpg" alt="Deluxe Room" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600'">
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="room1.jpg" alt="Deluxe Executive Room" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600'">
+                    <span class="badge-tag">Hotel Room</span>
+                </div>
                 <div class="card-body">
                     <h3>Deluxe Executive Room</h3>
-                    <p class="price">€150 <span>/ night</span></p>
-                    <p class="desc">Private balcony, king-sized bed, high-speed Wi-Fi, and premium room service.</p>
-                    <button class="btn-primary" onclick="openBooking('Deluxe Executive Room')">Book This Room</button>
+                    <p class="price">₦120,000 <span>/ night</span></p>
+                    <p class="desc">Plush king bed, smart climate control, luxury rain shower, and workspace setup.</p>
+                    <button class="btn-primary" onclick="openBooking('Deluxe Executive Room')">Reserve Room</button>
                 </div>
             </div>
 
             <!-- Room 2 -->
-            <div class="card room-card">
-                <img src="room2.jpg" alt="Executive Apartment" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'">
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="room2.jpg" alt="Luxury Apartment" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'">
+                    <span class="badge-tag">Serviced Apartment</span>
+                </div>
                 <div class="card-body">
                     <h3>2-Bedroom Luxury Apartment</h3>
-                    <p class="price">€280 <span>/ night</span></p>
-                    <p class="desc">Fully equipped modern kitchen, spacious living room, and exceptional city views.</p>
-                    <button class="btn-primary" onclick="openBooking('2-Bedroom Luxury Apartment')">Book Apartment</button>
+                    <p class="price">₦220,000 <span>/ night</span></p>
+                    <p class="desc">Features a fully loaded modern kitchen, spacious living lounge, and home entertainment system.</p>
+                    <button class="btn-primary" onclick="openBooking('2-Bedroom Luxury Apartment')">Reserve Apartment</button>
                 </div>
             </div>
 
             <!-- Room 3 -->
-            <div class="card room-card">
-                <img src="room3.jpg" alt="Penthouse Suite" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'">
+            <div class="card">
+                <div class="card-img-wrapper">
+                    <img src="room3.jpg" alt="Presidential Penthouse" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'">
+                    <span class="badge-tag">Penthouse Suite</span>
+                </div>
                 <div class="card-body">
                     <h3>Udy Presidential Suite</h3>
-                    <p class="price">€450 <span>/ night</span></p>
-                    <p class="desc">Top-floor luxury with private terrace, personal bar area, and panoramic views.</p>
-                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Book Suite</button>
+                    <p class="price">₦400,000 <span>/ night</span></p>
+                    <p class="desc">Top-tier penthouse experience with a private balcony, custom bar area, and panoramic horizon views.</p>
+                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Reserve Penthouse</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Highlights Showcase (Views, Kitchen, Bar) -->
-    <section id="gallery" class="section-padding bg-light">
+    <!-- Visual Showcase: Views, Kitchen, Bar -->
+    <section id="experiences" class="section-padding bg-light">
         <div class="container">
-            <h2 class="section-title">Explore Udy Hotel Amenities & Views</h2>
-            <p class="section-subtitle">Take a glance at our scenic outdoor views, modern kitchens, and exclusive bar.</p>
+            <div class="section-header">
+                <h2 class="section-title">The Udy Experience</h2>
+                <p class="section-subtitle">Take a closer look at our scenic vistas, ultra-modern apartment kitchens, and executive lounge bar.</p>
+            </div>
 
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="view.jpg" alt="Stunning Scenic View" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600'">
-                    <div class="gallery-caption">Breathtaking Scenic Views</div>
+                    <img src="view.jpg" alt="Scenic Views" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600'">
+                    <div class="gallery-caption">
+                        <h3>Breathtaking Views</h3>
+                        <p>Wake up to gorgeous city skylines and waterfront sunsets.</p>
+                    </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="kitchen.jpg" alt="Apartment Kitchen" onerror="this.src='https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600'">
-                    <div class="gallery-caption">Modern Fully Equipped Kitchens</div>
+                    <img src="kitchen.jpg" alt="Modern Apartment Kitchen" onerror="this.src='https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600'">
+                    <div class="gallery-caption">
+                        <h3>Gourmet Kitchens</h3>
+                        <p>Fully fitted with modern amenities for your home-style cooking.</p>
+                    </div>
                 </div>
                 <div class="gallery-item">
-                    <img src="bar.jpg" alt="Hotel Bar & Lounge" onerror="this.src='https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600'">
-                    <div class="gallery-caption">Exclusive Udy Lounge & Bar</div>
+                    <img src="bar.jpg" alt="Exclusive Lounge Bar" onerror="this.src='https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600'">
+                    <div class="gallery-caption">
+                        <h3>Skyline Lounge & Bar</h3>
+                        <p>Unwind with signature cocktails and fine beverages.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,151 +190,20 @@
 
     <!-- Footer -->
     <footer id="contact" class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Udy Hotel & Apartments. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel & Luxury Apartments</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <!-- Header / Navigation -->
-    <header class="navbar">
-        <div class="container nav-flex">
-            <div class="logo">
-                <a href="#">UDY <span>HOTEL</span></a>
+        <div class="container footer-flex">
+            <div>
+                <h3 class="footer-logo">UDY <span>HOTEL & SUITES</span></h3>
+                <p>Redefining shortlet apartments and luxury hospitality in Nigeria.</p>
             </div>
-            <nav>
-                <a href="#home" class="active">Home</a>
-                <a href="#rooms">Rooms & Suites</a>
-                <a href="#gallery">Views & Dining</a>
-                <a href="#booking">Book Now</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section with Booking Bar -->
-    <section id="home" class="hero">
-        <div class="hero-overlay">
-            <div class="container hero-content">
-                <h1>Welcome to Udy Hotel & Apartments</h1>
-                <p>Experience unmatched comfort, premium rooms, and fully furnished luxury apartments.</p>
-                
-                <!-- Quick Booking Widget -->
-                <div class="booking-widget" id="booking">
-                    <form class="booking-form" onsubmit="event.preventDefault(); handleSearch();">
-                        <div class="form-group">
-                            <label>Check-in</label>
-                            <input type="date" required id="checkin">
-                        </div>
-                        <div class="form-group">
-                            <label>Check-out</label>
-                            <input type="date" required id="checkout">
-                        </div>
-                        <div class="form-group">
-                            <label>Guests</label>
-                            <select id="guests">
-                                <option value="1">1 Guest</option>
-                                <option value="2">2 Guests</option>
-                                <option value="3">3 Guests</option>
-                                <option value="4">4+ Guests</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Room Type</label>
-                            <select id="roomtype">
-                                <option value="all">All Accommodations</option>
-                                <option value="deluxe">Deluxe Hotel Room</option>
-                                <option value="apartment">Luxury Apartment</option>
-                                <option value="penthouse">Penthouse Suite</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-search">Search Rooms</button>
-                    </form>
-                </div>
+            <div>
+                <h4>Direct Contact</h4>
+                <p>Phone: +234 800 000 839</p>
+                <p>Email: bookings@udyhotel.com</p>
+                <p>Lagos, Nigeria</p>
             </div>
         </div>
-    </section>
-
-    <!-- Featured Rooms Section -->
-    <section id="rooms" class="section-padding container">
-        <h2 class="section-title">Rooms & Serviced Apartments</h2>
-        <p class="section-subtitle">Designed for professional living, relaxation, and memorable stays at Udy Hotel.</p>
-        
-        <div class="grid-3">
-            <!-- Room 1 -->
-            <div class="card room-card">
-                <img src="room1.jpg" alt="Deluxe Room" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600'">
-                <div class="card-body">
-                    <h3>Deluxe Executive Room</h3>
-                    <p class="price">€150 <span>/ night</span></p>
-                    <p class="desc">Private balcony, king-sized bed, high-speed Wi-Fi, and premium room service.</p>
-                    <button class="btn-primary" onclick="openBooking('Deluxe Executive Room')">Book This Room</button>
-                </div>
-            </div>
-
-            <!-- Room 2 -->
-            <div class="card room-card">
-                <img src="room2.jpg" alt="Executive Apartment" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'">
-                <div class="card-body">
-                    <h3>2-Bedroom Luxury Apartment</h3>
-                    <p class="price">€280 <span>/ night</span></p>
-                    <p class="desc">Fully equipped modern kitchen, spacious living room, and exceptional city views.</p>
-                    <button class="btn-primary" onclick="openBooking('2-Bedroom Luxury Apartment')">Book Apartment</button>
-                </div>
-            </div>
-
-            <!-- Room 3 -->
-            <div class="card room-card">
-                <img src="room3.jpg" alt="Penthouse Suite" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'">
-                <div class="card-body">
-                    <h3>Udy Presidential Suite</h3>
-                    <p class="price">€450 <span>/ night</span></p>
-                    <p class="desc">Top-floor luxury with private terrace, personal bar area, and panoramic views.</p>
-                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Book Suite</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Highlights Showcase (Views, Kitchen, Bar) -->
-    <section id="gallery" class="section-padding bg-light">
-        <div class="container">
-            <h2 class="section-title">Explore Udy Hotel Amenities & Views</h2>
-            <p class="section-subtitle">Take a glance at our scenic outdoor views, modern kitchens, and exclusive bar.</p>
-
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="view.jpg" alt="Stunning Scenic View" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600'">
-                    <div class="gallery-caption">Breathtaking Scenic Views</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="kitchen.jpg" alt="Apartment Kitchen" onerror="this.src='https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600'">
-                    <div class="gallery-caption">Modern Fully Equipped Kitchens</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="bar.jpg" alt="Hotel Bar & Lounge" onerror="this.src='https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600'">
-                    <div class="gallery-caption">Exclusive Udy Lounge & Bar</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact" class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Udy Hotel & Apartments. All rights reserved.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Udy Hotel & Luxury Apartments. All rights reserved.</p>
         </div>
     </footer>
 
