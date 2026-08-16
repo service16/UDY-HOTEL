@@ -9,10 +9,10 @@
 </head>
 <body>
 
-    <!-- Top Bar for Trust & Contact Info -->
+    <!-- Top Bar -->
     <div class="top-bar">
         <div class="container top-bar-flex">
-            <p>📍 Prime Locations: Victoria Island & Lekki, Lagos | ⚡ 24/7 Guaranteed Power & High-Speed Wi-Fi</p>
+            <p>📍 Victoria Island & Lekki, Lagos | ⚡ 24/7 Guaranteed Power & High-Speed Wi-Fi</p>
             <div class="top-contact">
                 <a href="tel:+234800000UDY">📞 +234 800 000 839</a>
                 <a href="mailto:reservations@udyhotel.com">✉️ reservations@udyhotel.com</a>
@@ -28,53 +28,29 @@
             </div>
             <nav class="nav-links">
                 <a href="#home" class="active">Home</a>
-                <a href="#accommodations">Rooms & Apartments</a>
+                <a href="#accommodations" onclick="filterCategory('all')">All Options</a>
                 <a href="#experiences">Views & Bar</a>
-                <a href="#amenities">Services</a>
-                <a href="#booking" class="nav-btn-book">Reserve Now</a>
+                <a href="#contact-us">Contact</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section with Immersive Background & Booking Engine -->
+    <!-- Hero Section with Distinct Hotel vs Apartment Choice -->
     <section id="home" class="hero">
         <div class="hero-overlay">
             <div class="container hero-content">
-                <span class="hero-badge">A New Definition of Nigerian Luxury</span>
-                <h1>Redefined Elegance & <br><span>Serviced Living</span></h1>
-                <p>Indulge in sophisticated hotel rooms, expansive apartments, rooftop views, and world-class hospitality in the heart of Lagos.</p>
+                <span class="hero-badge">Welcome to Udy Hospitality</span>
+                <h1>Experience Luxury Hotel Rooms <br><span>& Serviced Apartments</span></h1>
+                <p>Choose your preferred style of stay in Lagos. Impeccable comfort, absolute security, and world-class amenities await you.</p>
                 
-                <!-- Advanced Booking Widget -->
-                <div class="booking-widget" id="booking">
-                    <form class="booking-form" onsubmit="event.preventDefault(); handleSearch();">
-                        <div class="form-group">
-                            <label>Check-in Date</label>
-                            <input type="date" required id="checkin">
-                        </div>
-                        <div class="form-group">
-                            <label>Check-out Date</label>
-                            <input type="date" required id="checkout">
-                        </div>
-                        <div class="form-group">
-                            <label>Guests</label>
-                            <select id="guests">
-                                <option value="1">1 Guest</option>
-                                <option value="2">2 Guests</option>
-                                <option value="3">3 Guests</option>
-                                <option value="4">4+ Guests (Family)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Accommodation</label>
-                            <select id="roomtype">
-                                <option value="all">All Options</option>
-                                <option value="deluxe">Executive Hotel Room</option>
-                                <option value="apartment">2-Bedroom Luxury Apartment</option>
-                                <option value="penthouse">Udy Presidential Penthouse</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn-search">Check Availability</button>
-                    </form>
+                <!-- Professional Dual Action Choice Buttons -->
+                <div class="hero-cta-group">
+                    <a href="#accommodations" class="btn-hero-option hotel-opt" onclick="filterCategory('hotel')">
+                        🏨 Book Hotel Room
+                    </a>
+                    <a href="#accommodations" class="btn-hero-option apt-opt" onclick="filterCategory('apartment')">
+                        🏢 Book Luxury Apartment
+                    </a>
                 </div>
             </div>
         </div>
@@ -85,19 +61,19 @@
         <div class="container features-grid">
             <div class="feature-box">
                 <h4>⚡ Uninterrupted Power</h4>
-                <p>Seamless 24-hour backup generator system.</p>
+                <p>24-hour backup generator systems.</p>
             </div>
             <div class="feature-box">
                 <h4>🛡️ Maximum Security</h4>
-                <p>Armed personnel, CCTV surveillance, & secure gate access.</p>
+                <p>Armed personnel & CCTV surveillance.</p>
             </div>
             <div class="feature-box">
-                <h4>🌐 High-Speed Fiber Wi-Fi</h4>
-                <p>Unlimited high-speed connectivity across the premises.</p>
+                <h4>🌐 High-Speed Wi-Fi</h4>
+                <p>Unlimited fiber internet connection.</p>
             </div>
             <div class="feature-box">
-                <h4>🛎️ Concierge & Housekeeping</h4>
-                <p>Daily professional upkeep and round-the-clock room service.</p>
+                <h4>🛎️ Room Service</h4>
+                <p>24/7 professional concierge & care.</p>
             </div>
         </div>
     </section>
@@ -105,13 +81,20 @@
     <!-- Accommodations Section -->
     <section id="accommodations" class="section-padding container">
         <div class="section-header">
-            <h2 class="section-title">Rooms & Serviced Apartments</h2>
-            <p class="section-subtitle">Meticulously curated living spaces combining comfort, security, and modern executive styling.</p>
+            <h2 class="section-title">Select Your Accommodation</h2>
+            <p class="section-subtitle">Filter or browse our tailored rooms and fully furnished shortlet apartments.</p>
+            
+            <!-- Category Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterCategory('all')">All Spaces</button>
+                <button class="filter-btn" onclick="filterCategory('hotel')">Hotel Rooms</button>
+                <button class="filter-btn" onclick="filterCategory('apartment')">Apartments & Suites</button>
+            </div>
         </div>
         
-        <div class="grid-3">
-            <!-- Room 1 -->
-            <div class="card">
+        <div class="grid-3" id="room-grid">
+            <!-- Room 1: Hotel -->
+            <div class="card" data-category="hotel">
                 <div class="card-img-wrapper">
                     <img src="room1.jpg" alt="Deluxe Executive Room" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600'">
                     <span class="badge-tag">Hotel Room</span>
@@ -119,13 +102,13 @@
                 <div class="card-body">
                     <h3>Deluxe Executive Room</h3>
                     <p class="price">₦120,000 <span>/ night</span></p>
-                    <p class="desc">Plush king bed, smart climate control, luxury rain shower, and workspace setup.</p>
+                    <p class="desc">Plush king bed, climate control, luxury rain shower, and dedicated workspace.</p>
                     <button class="btn-primary" onclick="openBooking('Deluxe Executive Room')">Reserve Room</button>
                 </div>
             </div>
 
-            <!-- Room 2 -->
-            <div class="card">
+            <!-- Room 2: Apartment -->
+            <div class="card" data-category="apartment">
                 <div class="card-img-wrapper">
                     <img src="room2.jpg" alt="Luxury Apartment" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'">
                     <span class="badge-tag">Serviced Apartment</span>
@@ -133,13 +116,13 @@
                 <div class="card-body">
                     <h3>2-Bedroom Luxury Apartment</h3>
                     <p class="price">₦220,000 <span>/ night</span></p>
-                    <p class="desc">Features a fully loaded modern kitchen, spacious living lounge, and home entertainment system.</p>
+                    <p class="desc">Fully loaded modern kitchen, spacious living lounge, and entertainment system.</p>
                     <button class="btn-primary" onclick="openBooking('2-Bedroom Luxury Apartment')">Reserve Apartment</button>
                 </div>
             </div>
 
-            <!-- Room 3 -->
-            <div class="card">
+            <!-- Room 3: Penthouse/Suite -->
+            <div class="card" data-category="apartment">
                 <div class="card-img-wrapper">
                     <img src="room3.jpg" alt="Presidential Penthouse" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'">
                     <span class="badge-tag">Penthouse Suite</span>
@@ -147,8 +130,8 @@
                 <div class="card-body">
                     <h3>Udy Presidential Suite</h3>
                     <p class="price">₦400,000 <span>/ night</span></p>
-                    <p class="desc">Top-tier penthouse experience with a private balcony, custom bar area, and panoramic horizon views.</p>
-                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Reserve Penthouse</button>
+                    <p class="desc">Top-tier penthouse experience with private balcony, personal bar area, and horizon views.</p>
+                    <button class="btn-primary" onclick="openBooking('Udy Presidential Suite')">Reserve Suite</button>
                 </div>
             </div>
         </div>
@@ -167,14 +150,14 @@
                     <img src="view.jpg" alt="Scenic Views" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600'">
                     <div class="gallery-caption">
                         <h3>Breathtaking Views</h3>
-                        <p>Wake up to gorgeous city skylines and waterfront sunsets.</p>
+                        <p>Wake up to gorgeous city skylines and sunsets.</p>
                     </div>
                 </div>
                 <div class="gallery-item">
                     <img src="kitchen.jpg" alt="Modern Apartment Kitchen" onerror="this.src='https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600'">
                     <div class="gallery-caption">
                         <h3>Gourmet Kitchens</h3>
-                        <p>Fully fitted with modern amenities for your home-style cooking.</p>
+                        <p>Fully fitted with modern amenities for your home cooking.</p>
                     </div>
                 </div>
                 <div class="gallery-item">
@@ -189,17 +172,17 @@
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="site-footer">
+    <footer id="contact-us" class="site-footer">
         <div class="container footer-flex">
             <div>
                 <h3 class="footer-logo">UDY <span>HOTEL & SUITES</span></h3>
-                <p>Redefining shortlet apartments and luxury hospitality in Nigeria.</p>
+                <p>Redefining shortlet apartments and luxury hospitality in Lagos, Nigeria.</p>
             </div>
             <div>
                 <h4>Direct Contact</h4>
                 <p>Phone: +234 800 000 839</p>
                 <p>Email: bookings@udyhotel.com</p>
-                <p>Lagos, Nigeria</p>
+                <p>Victoria Island & Lekki, Lagos</p>
             </div>
         </div>
         <div class="footer-bottom">
