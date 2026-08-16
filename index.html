@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Horizon Hotel & Luxury Apartments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="navbar">
+        <div class="container nav-flex">
+            <div class="logo">
+                <a href="#">GRAND <span>HORIZON</span></a>
+            </div>
+            <nav>
+                <a href="#home" class="active">Home</a>
+                <a href="#rooms">Rooms & Suites</a>
+                <a href="#gallery">Views & Dining</a>
+                <a href="#booking">Book Now</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Booking Bar -->
+    <section id="home" class="hero">
+        <div class="hero-overlay">
+            <div class="container hero-content">
+                <h1>Experience Luxury & Stunning Views</h1>
+                <p>Book premium hotel rooms and fully furnished luxury apartments online.</p>
+                
+                <!-- Quick Booking Widget -->
+                <div class="booking-widget" id="booking">
+                    <form class="booking-form" onsubmit="event.preventDefault(); handleSearch();">
+                        <div class="form-group">
+                            <label>Check-in</label>
+                            <input type="date" required id="checkin">
+                        </div>
+                        <div class="form-group">
+                            <label>Check-out</label>
+                            <input type="date" required id="checkout">
+                        </div>
+                        <div class="form-group">
+                            <label>Guests</label>
+                            <select id="guests">
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4+ Guests</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Room Type</label>
+                            <select id="roomtype">
+                                <option value="all">All Accommodations</option>
+                                <option value="deluxe">Deluxe Hotel Room</option>
+                                <option value="apartment">Luxury Apartment</option>
+                                <option value="penthouse">Penthouse Suite</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-search">Search Rooms</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Rooms Section -->
+    <section id="rooms" class="section-padding container">
+        <h2 class="section-title">Rooms & Serviced Apartments</h2>
+        <p class="section-subtitle">Designed for comfort, modern living, and unforgettable stays.</p>
+        
+        <div class="grid-3">
+            <!-- Room 1 -->
+            <div class="card room-card">
+                <img src="room1.jpg" alt="Deluxe Room" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600'">
+                <div class="card-body">
+                    <h3>Deluxe Ocean View Room</h3>
+                    <p class="price">€150 <span>/ night</span></p>
+                    <p class="desc">Private balcony, king-sized bed, high-speed Wi-Fi, and panoramic sea views.</p>
+                    <button class="btn-primary" onclick="openBooking('Deluxe Ocean View Room')">Book This Room</button>
+                </div>
+            </div>
+
+            <!-- Room 2 -->
+            <div class="card room-card">
+                <img src="room2.jpg" alt="Executive Apartment" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600'">
+                <div class="card-body">
+                    <h3>2-Bedroom Luxury Apartment</h3>
+                    <p class="price">€280 <span>/ night</span></p>
+                    <p class="desc">Fully equipped modern kitchen, spacious living room, and city skyline views.</p>
+                    <button class="btn-primary" onclick="openBooking('2-Bedroom Luxury Apartment')">Book Apartment</button>
+                </div>
+            </div>
+
+            <!-- Room 3 -->
+            <div class="card room-card">
+                <img src="room3.jpg" alt="Penthouse Suite" class="card-img" onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600'">
+                <div class="card-body">
+                    <h3>Presidential Penthouse</h3>
+                    <p class="price">€450 <span>/ night</span></p>
+                    <p class="desc">Top-floor luxury with private terrace, personal bar area, and 360° views.</p>
+                    <button class="btn-primary" onclick="openBooking('Presidential Penthouse')">Book Suite</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Showcase (Views, Kitchen, Bar) -->
+    <section id="gallery" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Explore Our Amenities & Views</h2>
+            <p class="section-subtitle">Take a glance at our scenic spots, luxury kitchens, and lounge bar.</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="view.jpg" alt="Stunning Scenic View" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600'">
+                    <div class="gallery-caption">Unmatched Scenic Views</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="kitchen.jpg" alt="Apartment Kitchen" onerror="this.src='https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=600'">
+                    <div class="gallery-caption">Modern Fully Equipped Kitchens</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="bar.jpg" alt="Hotel Bar & Lounge" onerror="this.src='https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600'">
+                    <div class="gallery-caption">Exclusive Rooftop Bar & Lounge</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Grand Horizon Hotel & Apartments. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
