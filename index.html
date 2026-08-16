@@ -3,494 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'eola Hotel Lagos | Where Elegance and Convenience Meet</title>
-    <!-- Google Fonts for Luxury Serif & Clean Sans Styling -->
+    <title>Udy Hotel and Suites | Comfort, Luxury & Style in Alagbado Lagos</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --primary-dark: #121212;
-            --accent-gold: #C5A059;
-            --accent-gold-hover: #b08d4c;
-            --bg-light: #F9F8F6;
-            --text-muted: #666666;
-            --white: #FFFFFF;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--white);
-            color: var(--primary-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, .serif-font {
-            font-family: 'Playfair Display', serif;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        /* --- HEADER & NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(18, 18, 18, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-        }
-
-        .nav-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 2px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .logo span {
-            color: var(--accent-gold);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--white);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-gold);
-        }
-
-        .book-btn-nav {
-            background-color: var(--accent-gold);
-            color: var(--primary-dark) !important;
-            padding: 10px 22px;
-            font-weight: 600 !important;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        .book-btn-nav:hover {
-            background-color: var(--white);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 95vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-            padding: 0 20px;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-size: 3.8rem;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            max-width: 800px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            margin-bottom: 40px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        /* --- BOOKING WIDGET BAR --- */
-        .booking-bar {
-            position: absolute;
-            bottom: -50px;
-            background: var(--white);
-            width: 85%;
-            max-width: 1100px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr) auto;
-            gap: 20px;
-            align-items: center;
-            border-radius: 8px;
-            z-index: 10;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .input-group label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .input-group input, .input-group select {
-            padding: 12px;
-            border: 1px solid #E0E0E0;
-            border-radius: 4px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.95krem;
-            outline: none;
-            color: var(--primary-dark);
-            background: var(--bg-light);
-        }
-
-        .search-availability-btn {
-            background-color: var(--primary-dark);
-            color: var(--white);
-            border: none;
-            padding: 15px 30px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            height: 100%;
-        }
-
-        .search-availability-btn:hover {
-            background-color: var(--accent-gold);
-            color: var(--primary-dark);
-        }
-
-        /* --- SECTION COMMONS --- */
-        section {
-            padding: 100px 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header span {
-            color: var(--accent-gold);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .section-header h2 {
-            font-size: 2.8rem;
-            color: var(--primary-dark);
-        }
-
-        /* --- ABOUT INTRO --- */
-        .intro-section {
-            background-color: var(--bg-light);
-            text-align: center;
-            padding-top: 140px;
-        }
-
-        .intro-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .intro-content p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
-        /* --- ROOMS SECTION --- */
-        .rooms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .room-card {
-            background: var(--white);
-            border: 1px solid #EFEFEF;
-            border-radius: 6px;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .room-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-        }
-
-        .room-img {
-            height: 260px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .room-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .room-card:hover .room-img img {
-            transform: scale(1.05);
-        }
-
-        .room-price-tag {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: var(--primary-dark);
-            color: var(--white);
-            padding: 8px 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 4px;
-        }
-
-        .room-details {
-            padding: 25px;
-        }
-
-        .room-details h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .room-details p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .room-link {
-            font-weight: 600;
-            color: var(--primary-dark);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-        }
-
-        .room-link:hover {
-            color: var(--accent-gold);
-        }
-
-        /* --- EXPERIENCES / AMENITIES --- */
-        .experiences-section {
-            background-color: var(--primary-dark);
-            color: var(--white);
-        }
-
-        .experiences-section .section-header h2 {
-            color: var(--white);
-        }
-
-        .exp-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
-        }
-
-        .exp-card {
-            position: relative.
-            height: 380px;
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .exp-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.7);
-            transition: var(--transition);
-        }
-
-        .exp-card:hover img {
-            filter: brightness(0.5);
-            transform: scale(1.03);
-        }
-
-        .exp-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-        }
-
-        .exp-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
-
-        .exp-info span {
-            color: var(--accent-gold);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* --- DINING SECTION --- */
-        .dining-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .dining-text h3 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-        }
-
-        .dining-text p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-        }
-
-        .dining-image img {
-            width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: #0b0b0b;
-            color: #aaa;
-            padding: 80px 0 30px 0;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        .footer-col h4 {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .footer-col p, .footer-col li a {
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            display: block;
-            transition: var(--transition);
-        }
-
-        .footer-col li a:hover {
-            color: var(--accent-gold);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        /* Responsive design adjustments */
-        @media(max-width: 900px) {
-            .booking-bar {
-                position: relative;
-                width: 100%;
-                bottom: 0;
-                grid-template-columns: 1fr;
-                margin-top: 30px;
-            }
-            .hero {
-                height: auto;
-                padding: 150px 20px 80px 20px;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .dining-container {
-                grid-template-columns: 1fr;
-            }
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- HEADER / NAVBAR -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">L'EOLA <span>HOTEL</span></a>
+            <a href="#" class="logo">UDY <span>HOTEL & SUITES</span></a>
             <ul class="nav-links">
-                <li><a href="#rooms">Our Rooms</a></li>
-                <li><a href="#experiences">Experiences</a></li>
-                <li><a href="#dining">Restaurant</a></li>
+                <li><a href="#rooms">Rooms & Suites</a></li>
+                <li><a href="#experiences">Amenities</a></li>
+                <li><a href="#dining">Lounge & Bar</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#rooms" class="book-btn-nav">Book A Stay</a></li>
             </ul>
@@ -499,36 +29,36 @@
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <h1>Where Elegance and Convenience Meet</h1>
-        <p>Maryland Estate, Ikeja, Lagos</p>
+        <h1>Experience Unmatched Comfort & Elegance</h1>
+        <p>Ikola Road, Alagbado, Lagos State</p>
 
         <!-- BOOKING SEARCH WIDGET -->
         <div class="booking-bar">
             <div class="input-group">
                 <label>Check-in Date</label>
-                <input type="date" value="2026-06-01">
+                <input type="date">
             </div>
             <div class="input-group">
                 <label>Check-out Date</label>
-                <input type="date" value="2026-06-03">
+                <input type="date">
             </div>
             <div class="input-group">
                 <label>Guests</label>
                 <select>
-                    <option>1 Adult</option>
-                    <option selected>2 Adults</option>
-                    <option>Family (2 Adults, 2 Kids)</option>
+                    <option>1 Guest</option>
+                    <option selected>2 Guests</option>
+                    <option>Family / Group</option>
                 </select>
             </div>
             <div class="input-group">
                 <label>Accommodation</label>
                 <select>
                     <option>All Rooms & Suites</option>
-                    <option>Deluxe Room</option>
+                    <option>Standard / Double Room</option>
                     <option>Executive Suite</option>
                 </select>
             </div>
-            <button class="search-availability-btn" onclick="alert('Checking live availability for Lagos...')">Check Availability</button>
+            <button class="search-availability-btn">Check Availability</button>
         </div>
     </section>
 
@@ -536,9 +66,9 @@
     <section class="intro-section">
         <div class="container">
             <div class="intro-content">
-                <span>Welcome to Lagos Luxury</span>
-                <h2>A Refined Sanctuary in the Heart of Ikeja</h2>
-                <p>Experience uncompromising hospitality, meticulous attention to detail, and modern luxury designed for both business and leisure travelers in Lagos.</p>
+                <span>Welcome to Udy Hotel</span>
+                <h2>Your Serene Sanctuary in Alagbado</h2>
+                <p>Discover top-tier hospitality, 24-hour uninterrupted power supply, maximum security, and exquisitely styled luxury rooms tailored for absolute relaxation.</p>
             </div>
         </div>
     </section>
@@ -555,39 +85,39 @@
                 <!-- Room 1 -->
                 <div class="room-card">
                     <div class="room-img">
-                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" alt="Deluxe Room">
-                        <div class="room-price-tag">From ₦195,000</div>
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80" alt="Double Room">
+                        <div class="room-price-tag">Top Comfort</div>
                     </div>
                     <div class="room-details">
-                        <h3>Deluxe Room</h3>
-                        <p>Refined retreat with modern furnishings, plush king-size bed, marble bathroom with rain shower, and skyline views.</p>
-                        <a href="#" class="room-link">View Details & Availability <i class="fa-solid fa-arrow-right"></i></a>
+                        <h3>Double Room</h3>
+                        <p>Tastefully furnished with modern conveniences, pure white linen bedding, flat-screen TV, and air conditioning.</p>
+                        <a href="#" class="room-link">View Details & Book <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Room 2 -->
                 <div class="room-card">
                     <div class="room-img">
-                        <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=800&q=80" alt="Studio Suite">
-                        <div class="room-price-tag">From ₦280,000</div>
+                        <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=800&q=80" alt="Executive Suite">
+                        <div class="room-price-tag">Luxury Stay</div>
                     </div>
                     <div class="room-details">
-                        <h3>Studio Suite</h3>
-                        <p>Open-plan layout featuring a lounge area, king-size bed, deep soaking tub, and floor-to-ceiling city windows.</p>
-                        <a href="#" class="room-link">View Details & Availability <i class="fa-solid fa-arrow-right"></i></a>
+                        <h3>Executive Suite</h3>
+                        <p>Spacious layout featuring enhanced lounge space, premium furnishings, spa bath options, and dedicated service.</p>
+                        <a href="#" class="room-link">View Details & Book <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
 
                 <!-- Room 3 -->
                 <div class="room-card">
                     <div class="room-img">
-                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Executive Suite">
-                        <div class="room-price-tag">From ₦360,000</div>
+                        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Deluxe Suite">
+                        <div class="room-price-tag">Ultimate Space</div>
                     </div>
                     <div class="room-details">
-                        <h3>Executive Suite</h3>
-                        <p>Offers a separate living and dining area, private study, executive lounge access, and bespoke butler service.</p>
-                        <a href="#" class="room-link">View Details & Availability <i class="fa-solid fa-arrow-right"></i></a>
+                        <h3>Deluxe Suite</h3>
+                        <p>Designed for guests seeking extra elegance, maximum privacy, beautiful views, and pristine interior finishes.</p>
+                        <a href="#" class="room-link">View Details & Book <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -598,30 +128,30 @@
     <section id="experiences" class="experiences-section">
         <div class="container">
             <div class="section-header">
-                <span>Beyond Accommodation</span>
-                <h2>Discover Our Amenities</h2>
+                <span>World-Class Facilities</span>
+                <h2>Explore Udy Hotel Amenities</h2>
             </div>
 
             <div class="exp-grid">
                 <div class="exp-card">
-                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80" alt="Pool">
+                    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80" alt="Swimming Pool">
                     <div class="exp-info">
-                        <span>Oasis</span>
-                        <h3>Swimming Pool</h3>
+                        <span>Relaxation</span>
+                        <h3>Swimming Pool & Open Bar</h3>
                     </div>
                 </div>
                 <div class="exp-card">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Fitness">
+                    <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80" alt="Lounge">
                     <div class="exp-info">
-                        <span>Performance</span>
-                        <h3>Fitness Centre</h3>
+                        <span>Vibes & Nightlife</span>
+                        <h3>Havana Lobby Bar & Nightclub</h3>
                     </div>
                 </div>
                 <div class="exp-card">
                     <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Events">
                     <div class="exp-info">
                         <span>Gatherings</span>
-                        <h3>Conferences & Events</h3>
+                        <h3>Meeting Rooms & Events</h3>
                     </div>
                 </div>
             </div>
@@ -633,13 +163,13 @@
         <div class="container">
             <div class="dining-container">
                 <div class="dining-text">
-                    <span>Culinary Excellence</span>
-                    <h3>Buka Mogambo Lagos</h3>
-                    <p>A vibrant culinary destination where exquisite plating craftsmanship meets the authentic warmth of West African hospitality and international dining standards.</p>
-                    <a href="#contact" class="book-btn-nav" style="display:inline-block; margin-top:15px;">Explore Menu & Reserve</a>
+                    <span>Taste & Unwind</span>
+                    <h3>Exquisite Kitchen & Bar</h3>
+                    <p>Enjoy freshly prepared local and continental dishes, chilled drinks, and our signature Asun served in a secure, calm, and vibrant atmosphere.</p>
+                    <a href="#contact" class="book-btn-nav" style="display:inline-block; margin-top:15px;">Reserve a Table</a>
                 </div>
                 <div class="dining-image">
-                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Restaurant Dining">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Dining">
                 </div>
             </div>
         </div>
@@ -650,29 +180,30 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>L'EOLA HOTEL LAGOS</h4>
-                    <p>1 Mogambo Close, Maryland Estate<br>Ikeja, Lagos, Nigeria</p>
-                    <p><i class="fa-solid fa-phone"></i> +234 812 999 1716</p>
+                    <h4>UDY HOTEL AND SUITES</h4>
+                    <p>Plot 6 Olufegbemi Avenue, Off Ikola Road<br>by Ajagbe Block Industry, Alagbado, Lagos</p>
+                    <p><i class="fa-solid fa-phone"></i> 24/7 Front Desk Support</p>
                 </div>
                 <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#rooms">Rooms & Suites</a></li>
-                        <li><a href="#experiences">Amenities</a></li>
-                        <li><a href="#dining">Dining</a></li>
-                        <li><a href="#contact">Privacy Policy</a></li>
+                        <li><a href="#experiences">Amenities & Lounge</a></li>
+                        <li><a href="#dining">Restaurant</a></li>
+                        <li><a href="#contact">Security & Privacy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Experience Lagos</h4>
-                    <p>Minutes away from Murtala Muhammed International Airport with seamless transit, top security, and absolute comfort.</p>
+                    <h4>Why Choose Us</h4>
+                    <p>Offering over 32 luxury rooms, ample parking space, 24-hour constant power supply, and top-tier security for your absolute peace of mind.</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 L'eola Hotel Lagos. All Rights Reserved. Styled for modern hospitality excellence.</p>
+                <p>&copy; 2026 Udy Hotel and Suites. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
