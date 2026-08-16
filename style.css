@@ -128,7 +128,7 @@ body {
 }
 
 .hero-content h1 {
-    font-size: 3.2rem;
+    font-size: 3rem;
     font-weight: 700;
     color: white;
     margin-bottom: 15px;
@@ -145,7 +145,6 @@ body {
     margin-bottom: 40px;
 }
 
-/* Dual Option Hero CTA Buttons */
 .hero-cta-group {
     display: flex;
     justify-content: center;
@@ -216,7 +215,7 @@ body {
 .section-header {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto 40px;
+    margin: 0 auto 50px;
 }
 
 .section-title {
@@ -229,31 +228,6 @@ body {
 .section-subtitle {
     color: #64748b;
     font-size: 1.05rem;
-    margin-bottom: 25px;
-}
-
-/* Category Filter Buttons */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.filter-btn {
-    padding: 10px 22px;
-    background: #e2e8f0;
-    border: none;
-    border-radius: 30px;
-    font-weight: 600;
-    color: #475569;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.filter-btn.active, .filter-btn:hover {
-    background: #0f172a;
-    color: white;
 }
 
 .bg-light {
