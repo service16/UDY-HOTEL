@@ -40,19 +40,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. BOOKING LOGIC & ADMIN SYNC ---
-    const handleBookingProcess = (selectedRoomType = null) => {
+    // --- 2. ROBUST BOOKING & LOCALSTORAGE SYNC FUNCTION ---
+    const processBooking = (forcedRoomType = null) => {
         const checkin = checkinInput ? checkinInput.value : '2026-06-01';
         const checkout = checkoutInput ? checkoutInput.value : '2026-06-03';
         const roomTypeSelect = document.getElementById('booking-room-select');
-        const roomType = selectedRoomType || (roomTypeSelect ? roomTypeSelect.value : 'Executive Suite');
+        const roomType = forcedRoomType || (roomTypeSelect ? roomTypeSelect.value : 'Executive Suite');
         
-        const guestName = prompt(`You are booking a ${roomType} at Udy Hotel & Suites.\n\nPlease enter your Full Name:`, "");
+        const guestName = prompt(`You are reserving a ${roomType}.\n\nPlease enter your Full Name to confirm your booking:`, "");
         
-        if (!guestName || guestName.trim() === "") return;
+        if (!guestName || guestName.trim() === "") {
+            alert("Booking cancelled. Name is required.");
+            return;
+        }
 
         const newBookingID = 'UDY-' + Math.floor(1000 + Math.random() * 9000);
-        const bookingRecord = {
+        const newRecord = {
             id: newBookingID,
             name: guestName.trim(),
             room: roomType,
@@ -61,29 +64,36 @@ document.addEventListener('DOMContentLoaded', () => {
             status: 'confirmed'
         };
 
-        // Save to browser LocalStorage so admin dashboard updates instantly
-        let existingBookings = JSON.parse(localStorage.getItem('udy_bookings')) || [];
-        existingBookings.unshift(bookingRecord);
-        localStorage.setItem('udy_bookings', JSON.stringify(existingBookings));
+        try {
+            // Retrieve existing array or create empty list under 'udy_bookings'
+            let existingBookings = JSON.parse(localStorage.getItem('udy_bookings')) || [];
+            existingBookings.unshift(newRecord);
+            
+            // Save back into LocalStorage securely
+            localStorage.setItem('udy_bookings', JSON.stringify(existingBookings));
 
-        alert(`Reservation Successful! 🎉\n\nThank you, ${guestName.trim()}.\nBooking ID: ${newBookingID}\nRoom: ${roomType}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\n\nThis booking has been logged to your Admin Portal.`);
+            alert(`Success! 🎉 Reservation confirmed.\n\nName: ${guestName.trim()}\nBooking ID: ${newBookingID}\nRoom: ${roomType}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\n\nYour data has been saved to the Admin Dashboard.`);
+        } catch (error) {
+            console.error("Storage error:", error);
+            alert("Could not save booking due to browser security restrictions. Try opening the site via a local server or regular browser tab.");
+        }
     };
 
-    // Trigger from main search button
+    // Attach listener to the main search/book bar button
     const searchBtn = document.querySelector('.search-availability-btn');
     if (searchBtn) {
         searchBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            handleBookingProcess();
+            processBooking();
         });
     }
 
-    // Trigger from individual room cards
+    // Attach listeners to individual room card buttons
     document.querySelectorAll('.quick-book-trigger').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             const roomName = btn.getAttribute('data-room');
-            handleBookingProcess(roomName);
+            processBooking(roomName);
         });
     });
 
