@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Management Portal | Udy Hotel and Suites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+    <!-- Login Container -->
+    <div id="adminLoginWrapper" class="admin-auth-container">
+        <div class="auth-card">
+            <h2>🏨 Udy Hotel Admin</h2>
+            <p>Secure management portal for authorized personnel only.</p>
+            <div class="form-group">
+                <label>Admin Username</label>
+                <input type="text" id="adminUser" placeholder="admin">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="adminPass" placeholder="password">
+            </div>
+            <button class="btn-primary" onclick="loginAdmin()">Login to Dashboard</button>
+            <p style="margin-top: 15px; font-size: 0.8rem; text-align: center;"><a href="index.html" style="color: #0284c7; text-decoration: none;">&larr; Back to Website</a></p>
+        </div>
+    </div>
+
+    <!-- Dashboard Container (Hidden until authenticated) -->
+    <div id="adminDashboardWrapper" style="display: none;">
+        <!-- Top Admin Header -->
+        <header class="admin-topbar">
+            <div class="container admin-topbar-flex">
+                <h2>Udy Hotel & Suites — Control Center</h2>
+                <div class="admin-user-info">
+                    <span>Logged in as <strong>Admin</strong></span>
+                    <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <main class="container admin-main">
+            <!-- Navigation Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('bookings')">📥 Bookings & Notifications (<span id="badgeCount">0</span>)</button>
+                <button class="tab-btn" onclick="switchTab('rooms')">🛏️ Manage Rooms & Availability</button>
+                <button class="tab-btn" onclick="switchTab('gallery')">🖼️ Manage Images & Gallery</button>
+            </div>
+
+            <!-- TAB 1: BOOKINGS -->
+            <div id="tabBookings" class="tab-content">
+                <div class="admin-stats-row">
+                    <div class="stat-box">
+                        <h3 id="totalBookingsCount">0</h3>
+                        <p>Total Reservations</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3 id="pendingBookingsCount" style="color: #eab308;">0</h3>
+                        <p>Pending Review</p>
+                    </div>
+                </div>
+
+                <h3>Incoming Reservations & Guest Notifications</h3>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Guest Details</th>
+                                <th>Room Booked</th>
+                                <th>Dates</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminBookingsTable">
+                            <!-- Filled by script -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 2: ROOM MANAGEMENT -->
+            <div id="tabRooms" class="tab-content" style="display: none;">
+                <div class="admin-header-flex">
+                    <h3>Room Availability & Pricing Control</h3>
+                    <button class="btn-primary" style="width: auto; padding: 8px 16px;" onclick="openAddRoomModal()">+ Add New Room</button>
+                </div>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Toggle rooms between **Available** or **Unavailable** instantly. Unavailable rooms cannot be booked by visitors on the website.</p>
+                
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Room Image</th>
+                                <th>Room Name</th>
+                                <th>Price (₦)</th>
+                                <th>Current Status</th>
+                                <th>Action Controls</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminRoomsTable">
+                            <!-- Filled by script -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 3: GALLERY & IMAGE MANAGEMENT -->
+            <div id="tabGallery" class="tab-content" style="display: none;">
+                <div class="admin-header-flex">
+                    <h3>Website Gallery & Lounge Photos</h3>
+                    <button class="btn-primary" style="width: auto; padding: 8px 16px;" onclick="openAddImageModal()">+ Add New Image</button>
+                </div>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">Manage photos displayed under the Lounge, Bar, and Restaurant sections.</p>
+                
+                <div class="admin-gallery-grid" id="adminGalleryGrid">
+                    <!-- Filled by script -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Add/Edit Room -->
+    <div id="roomModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeRoomModal()">&times;</span>
+            <h3 id="roomModalTitle">Add New Room</h3>
+            <form id="roomForm" onsubmit="saveRoom(event)">
+                <input type="hidden" id="editRoomId">
+                <div class="form-group">
+                    <label>Room Name</label>
+                    <input type="text" id="roomNameInput" required placeholder="e.g. Executive Suite">
+                </div>
+                <div class="form-group">
+                    <label>Price per Night (₦)</label>
+                    <input type="number" id="roomPriceInput" required placeholder="50000">
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="roomImgInput" required placeholder="https://images.unsplash.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="roomDescInput" required placeholder="Short room amenities description">
+                </div>
+                <div class="form-group">
+                    <label>Availability Status</label>
+                    <select id="roomStatusInput" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1;">
+                        <option value="Available">Available</option>
+                        <option value="Unavailable">Unavailable / Booked Out</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Save Room Details</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Add Image -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeImageModal()">&times;</span>
+            <h3>Add Gallery Photo</h3>
+            <form id="imageForm" onsubmit="saveImage(event)">
+                <div class="form-group">
+                    <label>Section Title (e.g. Havana Bar)</label>
+                    <input type="text" id="imgTitleInput" required placeholder="Havana Lobby Bar">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="imgDescInput" required placeholder="Enjoy chilled drinks...">
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="url" id="imgUrlInput" required placeholder="https://images.unsplash.com/...">
+                </div>
+                <button type="submit" class="btn-primary">Upload to Website</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
