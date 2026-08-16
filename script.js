@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. SET DEFAULT DATES FOR BOOKING BAR ---
-    const checkinInput = document.querySelectorAll('.booking-bar input[type="date"]')[0];
-    const checkoutInput = document.querySelectorAll('.booking-bar input[type="date"]')[1];
+    const checkinInput = document.getElementById('booking-checkin');
+    const checkoutInput = document.getElementById('booking-checkout');
 
     if (checkinInput && checkoutInput) {
         const today = new Date();
@@ -40,28 +40,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. SEARCH AVAILABILITY BUTTON INTERACTION ---
+    // --- 2. BOOKING LOGIC & ADMIN SYNC ---
+    const handleBookingProcess = (selectedRoomType = null) => {
+        const checkin = checkinInput ? checkinInput.value : '2026-06-01';
+        const checkout = checkoutInput ? checkoutInput.value : '2026-06-03';
+        const roomTypeSelect = document.getElementById('booking-room-select');
+        const roomType = selectedRoomType || (roomTypeSelect ? roomTypeSelect.value : 'Executive Suite');
+        
+        const guestName = prompt(`You are booking a ${roomType} at Udy Hotel & Suites.\n\nPlease enter your Full Name:`, "");
+        
+        if (!guestName || guestName.trim() === "") return;
+
+        const newBookingID = 'UDY-' + Math.floor(1000 + Math.random() * 9000);
+        const bookingRecord = {
+            id: newBookingID,
+            name: guestName.trim(),
+            room: roomType,
+            checkin: checkin,
+            checkout: checkout,
+            status: 'confirmed'
+        };
+
+        // Save to browser LocalStorage so admin dashboard updates instantly
+        let existingBookings = JSON.parse(localStorage.getItem('udy_bookings')) || [];
+        existingBookings.unshift(bookingRecord);
+        localStorage.setItem('udy_bookings', JSON.stringify(existingBookings));
+
+        alert(`Reservation Successful! 🎉\n\nThank you, ${guestName.trim()}.\nBooking ID: ${newBookingID}\nRoom: ${roomType}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\n\nThis booking has been logged to your Admin Portal.`);
+    };
+
+    // Trigger from main search button
     const searchBtn = document.querySelector('.search-availability-btn');
     if (searchBtn) {
         searchBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            const checkin = checkinInput ? checkinInput.value : 'Selected Date';
-            const checkout = checkoutInput ? checkoutInput.value : 'Selected Date';
-            
-            const originalText = searchBtn.textContent;
-            searchBtn.textContent = 'Checking...';
-            searchBtn.style.backgroundColor = 'var(--accent-gold)';
-            searchBtn.style.color = 'var(--primary-dark)';
-
-            setTimeout(() => {
-                searchBtn.textContent = originalText;
-                searchBtn.style.backgroundColor = '';
-                searchBtn.style.color = '';
-                alert(`Availability confirmed for Udy Hotel and Suites! Rooms are ready from ${checkin} to ${checkout}.`);
-            }, 600);
+            handleBookingProcess();
         });
     }
+
+    // Trigger from individual room cards
+    document.querySelectorAll('.quick-book-trigger').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const roomName = btn.getAttribute('data-room');
+            handleBookingProcess(roomName);
+        });
+    });
 
     // --- 3. NAVBAR SCROLL EFFECT ---
     const header = document.querySelector('header');
@@ -70,12 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
             header.style.background = 'rgba(18, 18, 18, 0.95)';
             header.style.padding = '5px 0';
         } else {
-            header.style.background = 'rgba(18, 18, 18, 0.85)';
+            header.style.background = 'rgba(18, 18, 18, 0.9)';
             header.style.padding = '0';
         }
     });
 
-    // --- 4. SMOOTH SCROLLING FOR ANCHOR LINKS ---
+    // --- 4. SMOOTH SCROLLING ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
