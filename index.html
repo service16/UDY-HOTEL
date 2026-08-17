@@ -75,15 +75,6 @@
         .sector-content h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 10px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .sector-content p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px; }
 
-        /* Modal Lightbox for Multiple Photos */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--white); padding: 30px; border-radius: 12px; max-width: 800px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); cursor: pointer; }
-        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; }
-        .modal-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .modal-gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .modal-gallery-grid img:hover { opacity: 0.85; transform: scale(1.02); }
-
         /* Testimonials */
         .reviews-section { background: #f1f5f9; padding: 60px 20px; scroll-margin-top: 100px; }
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
@@ -101,8 +92,27 @@
         .contact-box h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px; color: var(--primary); }
         .contact-box p { color: var(--text-gray); font-size: 0.95rem; }
 
-        footer { background: var(--primary); color: var(--white); padding: 40px 20px; text-align: center; }
-        footer p { opacity: 0.7; font-size: 0.9rem; }
+        /* Legal & Footer Links Section */
+        .legal-footer-section { background: #0b1120; border-top: 1px solid #1e293b; padding: 40px 20px; text-align: center; }
+        .legal-links-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
+        .legal-links-container a { color: #94a3b8; text-decoration: none; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .legal-links-container a:hover { color: var(--accent); }
+        .footer-copy { color: #64748b; font-size: 0.85rem; }
+
+        footer { background: var(--primary); color: var(--white); padding: 25px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+        footer p { opacity: 0.7; font-size: 0.85rem; }
+
+        /* Modal Lightbox for Multiple Photos / Policies */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--white); padding: 35px; border-radius: 12px; max-width: 800px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; text-align: left; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); cursor: pointer; }
+        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; }
+        .modal-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .modal-gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
+        .modal-gallery-grid img:hover { opacity: 0.85; transform: scale(1.02); }
+        .policy-body { font-size: 0.95rem; color: var(--text-gray); line-height: 1.7; }
+        .policy-body h4 { color: var(--primary); margin-top: 15px; margin-bottom: 5px; font-size: 1.05rem; }
+        .policy-body p { margin-bottom: 12px; }
     </style>
 </head>
 <body>
@@ -372,18 +382,30 @@
         </div>
     </section>
 
+    <!-- LEGAL & FOOTER LINKS SECTION -->
+    <div class="legal-footer-section">
+        <div class="legal-links-container">
+            <a onclick="openPolicy('privacy')">Privacy Policy</a>
+            <a onclick="openPolicy('terms')">Terms & Conditions</a>
+            <a onclick="openPolicy('booking')">Booking Policy</a>
+            <a onclick="openPolicy('whistleblowing')">Whistleblowing</a>
+            <a onclick="openPolicy('data-subject')">Data Subject Request</a>
+        </div>
+        <div class="footer-copy">&copy; 2026 udy Hotel Lagos. All rights reserved.</div>
+    </div>
+
     <footer>
-        <div class="logo" style="color: var(--white); margin-bottom: 10px;">UDYHOTEL & SUITES</div>
-        <p>&copy; 2026 Udyhotel & Suites. All rights reserved. Powered by Secure Cloud Database.</p>
+        <p>Udyhotel & Suites • Powered by Secure Cloud Database.</p>
     </footer>
 
-    <!-- PHOTO GALLERY MODAL -->
+    <!-- MODAL POPUP FOR GALLERIES & POLICIES -->
     <div id="galleryModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeGallery()">&times;</span>
-            <h3 id="modalTitle" class="modal-title">Photo Gallery</h3>
-            <div id="modalGrid" class="modal-gallery-grid">
-                <!-- Images injected dynamically -->
+            <h3 id="modalTitle" class="modal-title">Gallery / Policy</h3>
+            <div id="modalBodyContainer">
+                <div id="modalGrid" class="modal-gallery-grid"></div>
+                <div id="modalTextBody" class="policy-body" style="display: none;"></div>
             </div>
         </div>
     </div>
@@ -573,15 +595,93 @@
             }
         };
 
+        // Policies Data
+        const policies = {
+            'privacy': {
+                title: 'Privacy Policy',
+                html: `
+                    <p>At Udy Hotel Lagos, we are committed to safeguarding your personal data and respecting your privacy.</p>
+                    <h4>1. Information We Collect</h4>
+                    <p>We collect personal details such as your name, phone number, email address, and check-in/check-out dates when you make a reservation with us.</p>
+                    <h4>2. Use of Information</h4>
+                    <p>Your details are used solely to process bookings, verify room availability, provide customer support, and improve our hospitality services.</p>
+                    <h4>3. Data Security</h4>
+                    <p>All records are stored securely in encrypted cloud databases. We do not sell, trade, or transfer your personal information to third parties.</p>
+                `
+            },
+            'terms': {
+                title: 'Terms & Conditions',
+                html: `
+                    <p>Welcome to Udy Hotel Lagos. By accessing our website or booking our rooms and apartments, you agree to comply with the following terms:</p>
+                    <h4>1. Check-in & Check-out</h4>
+                    <p>Standard check-in time is 2:00 PM, and check-out is strictly by 12:00 PM noon. Late departures may incur additional charges.</p>
+                    <h4>2. Guest Conduct</h4>
+                    <p>We maintain a peaceful and secure environment. Any disruptive behavior, property damage, or violation of hotel rules may lead to immediate eviction without a refund.</p>
+                    <h4>3. Liability</h4>
+                    <p>Udy Hotel Lagos is not liable for loss or damage to un-deposited valuables left unattended in rooms or vehicles.</p>
+                `
+            },
+            'booking': {
+                title: 'Booking Policy',
+                html: `
+                    <p>Review our reservation guidelines to ensure a seamless stay experience:</p>
+                    <h4>1. Confirmations & References</h4>
+                    <p>Upon completing your online reservation form, a unique booking reference number is generated instantly and logged in our system.</p>
+                    <h4>2. Cancellations & Modifications</h4>
+                    <p>Cancellations must be communicated to the front desk at least 24 hours prior to the scheduled check-in date to qualify for adjustments.</p>
+                    <h4>3. Availability Guarantee</h4>
+                    <p>Our live availability system ensures that once your reservation is confirmed, your unit is locked out for your specified dates.</p>
+                `
+            },
+            'whistleblowing': {
+                title: 'Whistleblowing Policy',
+                html: `
+                    <p>Udy Hotel Lagos upholds the highest standards of integrity, transparency, and ethical conduct.</p>
+                    <h4>1. Reporting Misconduct</h4>
+                    <p>Employees, guests, and stakeholders are encouraged to report any unethical behavior, financial impropriety, or safety breaches confidentially.</p>
+                    <h4>2. Protection Against Retaliation</h4>
+                    <p>We guarantee full protection and anonymity to any whistleblower who reports genuine concerns in good faith.</p>
+                    <h4>3. Contact Channel</h4>
+                    <p>Reports can be sent directly to our compliance desk via email at support@udyhotel.com.</p>
+                `
+            },
+            'data-subject': {
+                title: 'Data Subject Request',
+                html: `
+                    <p>Under data privacy regulations, you have rights regarding your personal information held by Udy Hotel Lagos.</p>
+                    <h4>1. Your Rights</h4>
+                    <p>You have the right to request access, correction, or permanent deletion of your personal booking records from our databases.</p>
+                    <h4>2. How to Submit a Request</h4>
+                    <p>To exercise your data rights, please send a formal request to reservations@udyhotel.com with your full name and registered phone number.</p>
+                    <h4>3. Response Timeline</h4>
+                    <p>Our data protection officer will acknowledge and process your request within 7 business days.</p>
+                `
+            }
+        };
+
         window.openGallery = function(key) {
             const data = galleries[key];
             if (!data) return;
             document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalGrid').style.display = 'grid';
+            document.getElementById('modalTextBody').style.display = 'none';
+            
             const grid = document.getElementById('modalGrid');
             grid.innerHTML = "";
             data.images.forEach(imgUrl => {
                 grid.innerHTML += `<img src="${imgUrl}" alt="Gallery Image">`;
             });
+            document.getElementById('galleryModal').style.display = 'flex';
+        };
+
+        window.openPolicy = function(key) {
+            const data = policies[key];
+            if (!data) return;
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalGrid').style.display = 'none';
+            const textBody = document.getElementById('modalTextBody');
+            textBody.style.display = 'block';
+            textBody.innerHTML = data.html;
             document.getElementById('galleryModal').style.display = 'flex';
         };
 
