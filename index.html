@@ -66,7 +66,7 @@
         .amenity-card h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px; }
         .amenity-card p { color: var(--text-gray); font-size: 0.9rem; }
 
-        /* Rooms Showcase */
+        /* Rooms & Apartments Showcase */
         .rooms-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
         .room-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
@@ -102,7 +102,8 @@
     <nav>
         <div class="logo">UDYHOTEL & SUITES</div>
         <ul class="nav-links">
-            <li><a href="#rooms">Rooms & Apartments</a></li>
+            <li><a href="#rooms">Hotel Rooms</a></li>
+            <li><a href="#apartments">Luxury Apartments</a></li>
             <li><a href="#amenities">Amenities</a></li>
             <li><a href="#reviews">Testimonials</a></li>
         </ul>
@@ -112,7 +113,7 @@
     <!-- HERO SECTION -->
     <header class="hero">
         <h1>Redefining Luxury Living</h1>
-        <p>Experience world-class hospitality, immaculate apartments, and exquisite dining tailored for your comfort.</p>
+        <p>Experience world-class hospitality, immaculate hotel rooms, and serviced apartments tailored for your comfort.</p>
     </header>
 
     <!-- LIVE BOOKING WIDGET -->
@@ -130,12 +131,20 @@
                         <input type="text" id="cust-phone" required placeholder="080XXXXXXXX">
                     </div>
                     <div class="form-group">
-                        <label>Select Room / Apartment</label>
+                        <label>Select Room or Apartment</label>
                         <select id="cust-room" onchange="checkAvailability()">
-                            <option value="Standard Room (₦35,000)">Standard Room - ₦35,000 / night</option>
-                            <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60,000 / night</option>
-                            <option value="Executive VIP Suite (₦100,000)">Executive VIP Suite - ₦100,000 / night</option>
-                            <option value="Luxury 2-Bedroom Apartment (₦150,000)">Luxury 2-Bedroom Apartment - ₦150,000 / night</option>
+                            <!-- HOTEL ROOMS & SUITES -->
+                            <optgroup label="🏨 Hotel Rooms & Suites">
+                                <option value="Standard Room (₦35,000)">Standard Room - ₦35,000 / night</option>
+                                <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60,000 / night</option>
+                                <option value="Executive VIP Suite (₦100,000)">Executive VIP Suite - ₦100,000 / night</option>
+                            </optgroup>
+                            <!-- LUXURY APARTMENTS -->
+                            <optgroup label="🏢 Luxury Apartments">
+                                <option value="Luxury 1-Bedroom Apartment (₦120,000)">Luxury 1-Bedroom Apartment - ₦120,000 / night</option>
+                                <option value="Luxury 2-Bedroom Apartment (₦150,000)">Luxury 2-Bedroom Apartment - ₦150,000 / night</option>
+                                <option value="Executive 3-Bedroom Penthouse (₦250,000)">Executive 3-Bedroom Penthouse - ₦250,000 / night</option>
+                            </optgroup>
                         </select>
                         <span id="availability-status" class="availability-badge available">● Checking availability...</span>
                     </div>
@@ -165,6 +174,112 @@
         </div>
     </div>
 
+    <!-- ROOMS & APARTMENTS SHOWCASE -->
+    <section class="rooms-section" id="rooms">
+        <div class="section-header">
+            <h2>Hotel Rooms & Luxury Apartments</h2>
+            <p>Choose between our exquisite hotel rooms for short stays or our fully serviced luxury apartments for extended comfort.</p>
+        </div>
+        <div class="rooms-grid">
+            <!-- Room 1 -->
+            <div class="room-card">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80" alt="Standard Room">
+                    <div class="room-price-tag">₦35,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Standard Room (Hotel)</h3>
+                    <p>Cozy and beautifully furnished with modern amenities, plush queen bed, and a luxury walk-in shower.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
+                        <span><i class="fa-solid fa-wifi"></i> Free Wi-Fi</span>
+                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Room 2 -->
+            <div class="room-card">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80" alt="Deluxe Suite">
+                    <div class="room-price-tag">₦60,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Deluxe Suite (Hotel)</h3>
+                    <p>Spacious executive layout featuring a work desk, relaxing lounge chair, and panoramic city views.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> King Bed</span>
+                        <span><i class="fa-solid fa-mug-hot"></i> Breakfast Inc.</span>
+                        <span><i class="fa-solid fa-bath"></i> Bathtub</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Room 3 -->
+            <div class="room-card">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80" alt="Executive VIP Suite">
+                    <div class="room-price-tag">₦100,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Executive VIP Suite (Hotel)</h3>
+                    <p>The pinnacle of hotel luxury. Separate living area, premium king bed, minibar, and elite concierge service.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-crown"></i> VIP Lounge</span>
+                        <span><i class="fa-solid fa-wine-glass"></i> Minibar</span>
+                        <span><i class="fa-solid fa-wifi"></i> Ultra Wi-Fi</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Apartment 1 -->
+            <div class="room-card" id="apartments">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80" alt="Luxury 1-Bedroom Apartment">
+                    <div class="room-price-tag">₦120,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Luxury 1-Bedroom Apartment</h3>
+                    <p>Fully furnished serviced apartment featuring a private kitchen, cozy living room, and dining space.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-kitchen-set"></i> Kitchen</span>
+                        <span><i class="fa-solid fa-couch"></i> Living Room</span>
+                        <span><i class="fa-solid fa-shield"></i> Secure</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Apartment 2 -->
+            <div class="room-card">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80" alt="Luxury 2-Bedroom Apartment">
+                    <div class="room-price-tag">₦150,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Luxury 2-Bedroom Apartment</h3>
+                    <p>Ideal for families or groups. Features two en-suite bedrooms, a large modern kitchen, and expansive lounge.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> 2 Bedrooms</span>
+                        <span><i class="fa-solid fa-utensils"></i> Full Kitchen</span>
+                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Apartment 3 -->
+            <div class="room-card">
+                <div class="room-img-container">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Executive 3-Bedroom Penthouse">
+                    <div class="room-price-tag">₦250,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Executive 3-Bedroom Penthouse</h3>
+                    <p>Ultimate privacy and luxury living. Three grand bedrooms, master balcony view, and premium concierge service.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-building"></i> Penthouse</span>
+                        <span><i class="fa-solid fa-champagne-glasses"></i> Luxury Bar</span>
+                        <span><i class="fa-solid fa-car"></i> VIP Parking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- AMENITIES HIGHLIGHTS -->
     <section class="amenities-section" id="amenities">
         <div class="section-header">
@@ -191,64 +306,6 @@
                 <i class="fa-solid fa-car"></i>
                 <h4>Ample Parking & Concierge</h4>
                 <p>Spacious secure parking lot and dedicated concierge desk for all your travel needs.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ROOMS SHOWCASE -->
-    <section class="rooms-section" id="rooms">
-        <div class="section-header">
-            <h2>Luxury Rooms & Apartments</h2>
-            <p>Choose from our meticulously designed spaces built for absolute comfort and elegance.</p>
-        </div>
-        <div class="rooms-grid">
-            <!-- Room 1 -->
-            <div class="room-card">
-                <div class="room-img-container">
-                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80" alt="Standard Room">
-                    <div class="room-price-tag">₦35,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Standard Room</h3>
-                    <p>Cozy and beautifully furnished with modern amenities, plush queen bed, and a luxury walk-in shower.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
-                        <span><i class="fa-solid fa-wifi"></i> Free Wi-Fi</span>
-                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Room 2 -->
-            <div class="room-card">
-                <div class="room-img-container">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80" alt="Deluxe Suite">
-                    <div class="room-price-tag">₦60,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Deluxe Suite</h3>
-                    <p>Spacious executive layout featuring a work desk, relaxing lounge chair, and panoramic city views.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> King Bed</span>
-                        <span><i class="fa-solid fa-mug-hot"></i> Breakfast Inc.</span>
-                        <span><i class="fa-solid fa-bath">#</i> Bathtub</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Room 3 -->
-            <div class="room-card">
-                <div class="room-img-container">
-                    <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80" alt="Executive VIP Suite">
-                    <div class="room-price-tag">₦100,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Executive VIP Suite</h3>
-                    <p>The pinnacle of luxury. Separate living area, premium king bed, minibar, and elite concierge service.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-crown"></i> VIP Lounge</span>
-                        <span><i class="fa-solid fa-wine-glass"></i> Minibar</span>
-                        <span><i class="fa-solid fa-wifi"></i> Ultra Wi-Fi</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -349,7 +406,7 @@
                     }
                 });
 
-                // Assuming max limit of 6 rooms per category
+                // Assuming max limit of 6 units per category
                 const maxRooms = 6;
                 const remaining = maxRooms - activeCount;
 
@@ -358,10 +415,10 @@
                     statusEl.innerHTML = "● Booked Out (Fully Occupied)";
                 } else if (remaining <= 2) {
                     statusEl.className = "availability-badge booked-out";
-                    statusEl.innerHTML = `● Limited Availability (${remaining} rooms left)`;
+                    statusEl.innerHTML = `● Limited Availability (${remaining} left)`;
                 } else {
                     statusEl.className = "availability-badge available";
-                    statusEl.innerHTML = `● Rooms Available (${remaining} rooms left)`;
+                    statusEl.innerHTML = `● Available (${remaining} left)`;
                 }
             } catch (e) {
                 statusEl.className = "availability-badge available";
