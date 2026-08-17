@@ -3,74 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel Admin Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Udy Hotel & Suites | Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f4f7f6; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        h2 { margin-bottom: 5px; color: #121212; }
-        p.sub { color: #666; margin-bottom: 25px; font-size: 0.9rem; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-        th { background: #121212; color: #C5A059; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; }
-        .badge { background: #e1f5fe; color: #0288d1; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-        .no-data { text-align: center; color: #888; padding: 30px; font-style: italic; }
-        .refresh-btn { background: #C5A059; color: #121212; border: none; padding: 8px 16px; border-radius: 4px; font-weight: 600; cursor: pointer; float: right; }
-        .refresh-btn:hover { background: #b08d4c; }
+        :root {
+            --primary: #121212;
+            --accent: #C5A059;
+            --bg: #F4F7F6;
+            --white: #FFFFFF;
+            --gray: #666;
+            --border: #E0E0E0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--primary); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Sidebar */
+        aside { width: 260px; background: var(--primary); color: var(--white); display: flex; flex-direction: column; padding: 25px; }
+        aside h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--accent); margin-bottom: 40px; letter-spacing: 1px; }
+        aside nav a { color: #aaa; text-decoration: none; padding: 12px 15px; border-radius: 6px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; font-size: 0.9rem; transition: 0.3s; }
+        aside nav a.active, aside nav a:hover { background: var(--accent); color: var(--primary); font-weight: 600; }
+
+        /* Main Content Area */
+        main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        header { background: var(--white); padding: 20px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; }
+        
+        .content-body { padding: 30px 40px; }
+
+        /* Metrics Row */
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .metric-card { background: var(--white); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+        .metric-card span { font-size: 0.8rem; color: var(--gray); text-transform: uppercase; font-weight: 600; }
+        .metric-card h3 { font-size: 1.8rem; margin-top: 5px; color: var(--primary); }
+
+        /* Control / Filter Bar */
+        .control-bar { background: var(--white); padding: 20px; border-radius: 8px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .search-box { display: flex; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 15px; width: 350px; gap: 10px; }
+        .search-box input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
+        
+        .btn { background: var(--accent); color: var(--primary); border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn:hover { background: #b08d4c; }
+
+        /* Tables */
+        .table-container { background: var(--white); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px 20px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        th { background: #FAFAFA; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); }
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .status-confirmed { background: #E3FCEF; color: #006644; }
+        .status-active { background: #DEEBFF; color: #0747A6; }
+
+        /* Modal Styles for Walk-in Registration */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--white); width: 500px; padding: 30px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .modal-content h3 { margin-bottom: 20px; font-family: 'Playfair Display', serif; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--gray); margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; background: var(--bg); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        .btn-secondary { background: var(--border); color: var(--primary); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="refresh-btn" onclick="loadAdminBookings()"><i class="fa-solid fa-rotate"></i> Refresh List</button>
-        <h2>Udy Hotel Admin Portal</h2>
-        <p class="sub">Live guest reservation feed from homepage bookings.</p>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>Booking ID</th>
-                    <th>Guest Name</th>
-                    <th>Room Category</th>
-                    <th>Check-in</th>
-                    <th>Check-out</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="admin-booking-table-body">
-                <!-- Dynamically injected rows -->
-            </tbody>
-        </table>
+
+    <!-- SIDEBAR -->
+    <aside>
+        <h2>UDY ADMIN</h2>
+        <nav>
+            <a href="#" class="active"><i class="fa-solid fa-chart-pie"></i> Dashboard & Bookings</a>
+            <a href="index.html" target="_blank"><i class="fa-solid fa-globe"></i> View Live Site</a>
+        </nav>
+    </aside>
+
+    <!-- MAIN DASHBOARD -->
+    <main>
+        <header>
+            <h1>Reservation & Occupancy Control</h1>
+            <button class="btn" onclick="openModal()"><i class="fa-solid fa-user-plus"></i> Register Walk-in Guest</button>
+        </header>
+
+        <div class="content-body">
+            <!-- METRICS -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span>Total Bookings</span>
+                    <h3 id="stat-total">0</h3>
+                </div>
+                <div class="metric-card">
+                    <span>Active Guests In-House</span>
+                    <h3 id="stat-active">0</h3>
+                </div>
+                <div class="metric-card">
+                    <span>Available Rooms</span>
+                    <h3 id="stat-available">12</h3>
+                </div>
+                <div class="metric-card">
+                    <span>System Status</span>
+                    <h3 style="color: #006644; font-size: 1.2rem; margin-top: 10px;"><i class="fa-solid fa-circle-check"></i> Cloud Live</h3>
+                </div>
+            </div>
+
+            <!-- SEARCH & CONTROLS -->
+            <div class="control-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--gray);"></i>
+                    <input type="text" id="admin-search-input" placeholder="Search by guest name or room..." onkeyup="filterBookings()">
+                </div>
+                <button class="btn btn-secondary" onclick="loadBookings()"><i class="fa-solid fa-rotate"></i> Refresh Sync</button>
+            </div>
+
+            <!-- BOOKINGS TABLE -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Guest Name</th>
+                            <th>Phone / Contact</th>
+                            <th>Room / Apartment</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookings-table-body">
+                        <tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 40px;">Connecting to cloud database...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- WALK-IN GUEST MODAL -->
+    <div class="modal" id="walkin-modal">
+        <div class="modal-content">
+            <h3>Register Walk-in Guest</h3>
+            <form id="walkin-form" onsubmit="handleWalkinSubmit(event)">
+                <div class="form-group">
+                    <label>Guest Full Name</label>
+                    <input type="text" id="wi-name" required placeholder="e.g. Mr. & Mrs. Okafor">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="wi-phone" required placeholder="080XXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Select Room / Apartment</label>
+                    <select id="wi-room">
+                        <option>Double Room (₦25,000)</option>
+                        <option>Executive Suite (₦45,000)</option>
+                        <option>Deluxe Suite (₦60,000)</option>
+                        <option>Luxury 2-Bedroom Apartment (₦90,000)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Check-in Date</label>
+                    <input type="date" id="wi-checkin" required>
+                </div>
+                <div class="form-group">
+                    <label>Check-out Date</label>
+                    <input type="date" id="wi-checkout" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn">Confirm & Check In</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <script>
-        function loadAdminBookings() {
-            const tableBody = document.getElementById('admin-booking-table-body');
-            const bookings = JSON.parse(localStorage.getItem('udy_bookings')) || [];
+    <!-- FIREBASE INTEGRATION & SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-            if (bookings.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="6" class="no-data">No bookings recorded yet. Try booking a room on your homepage!</td></tr>`;
+        // TODO: Replace with your free Firebase project credentials
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "XXXXXX",
+            appId: "XXXXXX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allBookings = [];
+
+        window.loadBookings = async function() {
+            const tableBody = document.getElementById('bookings-table-body');
+            try {
+                const querySnapshot = await getDocs(collection(db, "udy_bookings"));
+                allBookings = [];
+                querySnapshot.forEach((doc) => {
+                    allBookings.push({ id: doc.id, ...doc.data() });
+                });
+
+                renderTable(allBookings);
+                updateMetrics(allBookings);
+            } catch (error) {
+                console.error("Error fetching bookings:", error);
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: red; padding: 30px;">Error connecting to cloud database. Please verify Firebase config.</td></tr>`;
+            }
+        };
+
+        function renderTable(data) {
+            const tableBody = document.getElementById('bookings-table-body');
+            if (data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--gray); padding: 40px;">No bookings found in the system.</td></tr>`;
                 return;
             }
 
             let html = '';
-            bookings.forEach(b => {
+            data.forEach(b => {
                 html += `
                     <tr>
-                        <td><strong>${b.id || 'N/A'}</strong></td>
-                        <td>${b.name || 'Guest'}</td>
-                        <td>${b.room || 'Standard Room'}</td>
-                        <td>${b.checkin || '-'}</td>
-                        <td>${b.checkout || '-'}</td>
-                        <td><span class="badge">${b.status || 'Confirmed'}</span></td>
+                        <td><strong>#${b.bookingId || b.id.substring(0,6).toUpperCase()}</strong></td>
+                        <td>${b.name}</td>
+                        <td>${b.phone || 'N/A'}</td>
+                        <td>${b.room}</td>
+                        <td>${b.checkin}</td>
+                        <td>${b.checkout}</td>
+                        <td><span class="status-badge status-active">${b.status || 'Checked In'}</span></td>
                     </tr>
                 `;
             });
             tableBody.innerHTML = html;
         }
 
-        // Load data on page open
-        window.addEventListener('DOMContentLoaded', loadAdminBookings);
+        function updateMetrics(data) {
+            document.getElementById('stat-total').innerText = data.length;
+            document.getElementById('stat-active').innerText = data.filter(b => b.status === 'Checked In' || b.status === 'Confirmed').length;
+        }
+
+        window.filterBookings = function() {
+            const query = document.getElementById('admin-search-input').value.toLowerCase();
+            const filtered = allBookings.filter(b => 
+                b.name.toLowerCase().includes(query) || 
+                b.room.toLowerCase().includes(query) || 
+                (b.phone && b.phone.includes(query))
+            );
+            renderTable(filtered);
+        };
+
+        window.handleWalkinSubmit = async function(e) {
+            e.preventDefault();
+            const newRecord = {
+                bookingId: 'UDY-' + Math.floor(1000 + Math.random() * 9000),
+                name: document.getElementById('wi-name').value,
+                phone: document.getElementById('wi-phone').value,
+                room: document.getElementById('wi-room').value,
+                checkin: document.getElementById('wi-checkin').value,
+                checkout: document.getElementById('wi-checkout').value,
+                status: 'Checked In',
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                await addDoc(collection(db, "udy_bookings"), newRecord);
+                alert("Walk-in guest successfully registered and saved to cloud!");
+                closeModal();
+                loadBookings();
+                document.getElementById('walkin-form').reset();
+            } catch (err) {
+                alert("Failed to save walk-in record: " + err.message);
+            }
+        };
+
+        // Modal triggers
+        window.openModal = () => document.getElementById('walkin-modal').style.display = 'flex';
+        window.closeModal = () => document.getElementById('walkin-modal').style.display = 'none';
+
+        // Initial Load on startup
+        window.addEventListener('DOMContentLoaded', loadBookings);
     </script>
 </body>
 </html>
