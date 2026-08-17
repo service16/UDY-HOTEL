@@ -25,7 +25,7 @@
         nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: var(--white); border-bottom: 1px solid var(--border); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.03); flex-wrap: wrap; gap: 15px; }
         .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
         .nav-links { display: flex; align-items: center; gap: 20px; list-style: none; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.9rem; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: var(--accent); }
 
         .hero { background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px; margin-top: 85px; }
@@ -51,27 +51,41 @@
         .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: var(--primary); margin-bottom: 15px; }
         .section-header p { color: var(--text-gray); font-size: 1rem; }
 
-        .rooms-section, .sector-section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; }
+        .rooms-section, .sector-section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; scroll-margin-top: 100px; }
         .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 30px; }
-        .room-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
-        .room-img-container { height: 230px; position: relative; overflow: hidden; }
-        .room-img-container img { width: 100%; height: 100%; object-fit: cover; }
+        .room-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .room-img-container { height: 230px; position: relative; overflow: hidden; cursor: pointer; }
+        .room-img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .room-img-container:hover img { transform: scale(1.05); }
         .room-price-tag { position: absolute; bottom: 15px; right: 15px; background: var(--primary); color: var(--accent); padding: 8px 15px; border-radius: 6px; font-weight: 700; font-size: 0.95rem; }
         .room-details { padding: 25px; }
         .room-details h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 10px; }
         .room-details p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 20px; }
         .room-features { display: flex; gap: 15px; color: var(--text-gray); font-size: 0.85rem; font-weight: 500; }
+        
+        .btn-gallery { background: #f1f5f9; border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--primary); margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-gallery:hover { background: var(--primary); color: var(--white); }
 
-        /* Sectors Grid (Gym, Restaurant, Car Park) */
+        /* Sectors Grid */
         .sectors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 30px; }
         .sector-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .sector-card img { width: 100%; height: 210px; object-fit: cover; }
+        .sector-card img { width: 100%; height: 210px; object-fit: cover; cursor: pointer; transition: transform 0.4s; }
+        .sector-card img:hover { transform: scale(1.05); }
         .sector-content { padding: 25px; }
         .sector-content h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 10px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .sector-content p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px; }
 
-        /* Testimonials / Customer Reviews */
-        .reviews-section { background: #f1f5f9; padding: 60px 20px; }
+        /* Modal Lightbox for Multiple Photos */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--white); padding: 30px; border-radius: 12px; max-width: 800px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); cursor: pointer; }
+        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 20px; }
+        .modal-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .modal-gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
+        .modal-gallery-grid img:hover { opacity: 0.85; transform: scale(1.02); }
+
+        /* Testimonials */
+        .reviews-section { background: #f1f5f9; padding: 60px 20px; scroll-margin-top: 100px; }
         .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         .review-card { background: var(--white); padding: 30px; border-radius: 10px; border: 1px solid var(--border); }
         .review-stars { color: #f59e0b; margin-bottom: 12px; font-size: 0.9rem; }
@@ -79,8 +93,8 @@
         .reviewer-info h4 { font-size: 1rem; color: var(--primary); }
         .reviewer-info p { font-size: 0.8rem; color: var(--text-gray); }
 
-        /* Contact & Address Section */
-        .contact-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        /* Contact & Address */
+        .contact-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; scroll-margin-top: 100px; }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .contact-box { background: var(--white); padding: 30px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
         .contact-box i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
@@ -98,7 +112,7 @@
         <ul class="nav-links">
             <li><a href="#hotel">Hotel Rooms</a></li>
             <li><a href="#apartments">Apartments</a></li>
-            <li><a href="#restaurant">Restaurant</a></li>
+            <li><a href="#restaurant">Restaurant & Bar</a></li>
             <li><a href="#gym">Gym & Fitness</a></li>
             <li><a href="#parking">Car Park</a></li>
             <li><a href="#reviews">Reviews</a></li>
@@ -106,7 +120,7 @@
         </ul>
     </nav>
 
-    <header class="hero" id="hotel">
+    <header class="hero" id="home">
         <h1>Redefining Luxury Living</h1>
         <p>Experience world-class hospitality, immaculate hotel rooms, and serviced apartments tailored for your comfort.</p>
     </header>
@@ -164,133 +178,176 @@
         </div>
     </div>
 
-    <!-- ROOMS & APARTMENTS SECTION -->
-    <section class="rooms-section">
+    <!-- HOTEL ROOMS SECTION -->
+    <section class="rooms-section" id="hotel">
         <div class="section-header">
-            <h2>Hotel Rooms & Luxury Apartments</h2>
-            <p>Choose between our exquisite hotel rooms for short stays or our fully serviced luxury apartments.</p>
+            <h2>Exquisite Hotel Rooms</h2>
+            <p>Designed for short stays, complete with plush comfort and 24/7 room service.</p>
         </div>
         <div class="rooms-grid">
             <div class="room-card">
-                <div class="room-img-container">
+                <div class="room-img-container" onclick="openGallery('hotel-standard')">
                     <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80" alt="Standard Room">
                     <div class="room-price-tag">₦35,000 / night</div>
                 </div>
                 <div class="room-details">
-                    <h3>Standard Room (Hotel)</h3>
-                    <p>Cozy and beautifully furnished with modern amenities, plush queen bed, and a luxury walk-in shower.</p>
+                    <h3>Standard Room</h3>
+                    <p>Cozy and beautifully furnished with modern amenities, queen bed, and luxury shower.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
                         <span><i class="fa-solid fa-wifi"></i> Free Wi-Fi</span>
                     </div>
+                    <button class="btn-gallery" onclick="openGallery('hotel-standard')"><i class="fa-solid fa-images"></i> View Photos</button>
                 </div>
             </div>
             <div class="room-card">
-                <div class="room-img-container">
+                <div class="room-img-container" onclick="openGallery('hotel-deluxe')">
                     <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80" alt="Deluxe Suite">
                     <div class="room-price-tag">₦60,000 / night</div>
                 </div>
                 <div class="room-details">
-                    <h3>Deluxe Suite (Hotel)</h3>
-                    <p>Spacious executive layout featuring a work desk, relaxing lounge chair, and panoramic city views.</p>
+                    <h3>Deluxe Suite</h3>
+                    <p>Spacious executive layout featuring a work desk, lounge chair, and panoramic city views.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-bed"></i> King Bed</span>
                         <span><i class="fa-solid fa-bath"></i> Bathtub</span>
                     </div>
+                    <button class="btn-gallery" onclick="openGallery('hotel-deluxe')"><i class="fa-solid fa-images"></i> View Photos</button>
                 </div>
             </div>
-            <div class="room-card" id="apartments">
-                <div class="room-img-container">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80" alt="Apartment">
+            <div class="room-card">
+                <div class="room-img-container" onclick="openGallery('hotel-vip')">
+                    <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80" alt="VIP Suite">
+                    <div class="room-price-tag">₦100,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Executive VIP Suite</h3>
+                    <p>Separate living area, premium king bed, minibar, and elite front-desk priority service.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-crown"></i> VIP Lounge</span>
+                        <span><i class="fa-solid fa-martini-glass"></i> Minibar</span>
+                    </div>
+                    <button class="btn-gallery" onclick="openGallery('hotel-vip')"><i class="fa-solid fa-images"></i> View Photos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LUXURY APARTMENTS SECTION -->
+    <section class="rooms-section" id="apartments">
+        <div class="section-header">
+            <h2>Luxury Apartments</h2>
+            <p>Fully serviced multi-room apartments for extended stays, families, and high privacy.</p>
+        </div>
+        <div class="rooms-grid">
+            <div class="room-card">
+                <div class="room-img-container" onclick="openGallery('apt-1bed')">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80" alt="1-Bedroom Apartment">
                     <div class="room-price-tag">₦120,000 / night</div>
                 </div>
                 <div class="room-details">
                     <h3>Luxury 1-Bedroom Apartment</h3>
-                    <p>Fully furnished serviced apartment featuring a private kitchen, cozy living room, and dining space.</p>
+                    <p>Features a private equipped kitchen, cozy living room, and dining space.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-kitchen-set"></i> Kitchen</span>
                         <span><i class="fa-solid fa-couch"></i> Living Room</span>
                     </div>
+                    <button class="btn-gallery" onclick="openGallery('apt-1bed')"><i class="fa-solid fa-images"></i> View Photos</button>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-img-container" onclick="openGallery('apt-2bed')">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80" alt="2-Bedroom Apartment">
+                    <div class="room-price-tag">₦150,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Luxury 2-Bedroom Apartment</h3>
+                    <p>Ideal for families with two en-suite bedrooms and a large modern kitchen.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-bed"></i> 2 Bedrooms</span>
+                        <span><i class="fa-solid fa-utensils"></i> Full Kitchen</span>
+                    </div>
+                    <button class="btn-gallery" onclick="openGallery('apt-2bed')"><i class="fa-solid fa-images"></i> View Photos</button>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-img-container" onclick="openGallery('apt-penthouse')">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Penthouse">
+                    <div class="room-price-tag">₦250,000 / night</div>
+                </div>
+                <div class="room-details">
+                    <h3>Executive 3-Bedroom Penthouse</h3>
+                    <p>Ultimate privacy, three grand bedrooms, master balcony view, and concierge service.</p>
+                    <div class="room-features">
+                        <span><i class="fa-solid fa-building"></i> Penthouse</span>
+                        <span><i class="fa-solid fa-car"></i> VIP Parking</span>
+                    </div>
+                    <button class="btn-gallery" onclick="openGallery('apt-penthouse')"><i class="fa-solid fa-images"></i> View Photos</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTORS VIEW BAR SECTION (Restaurant, Gym, Car Park) -->
+    <!-- SECTORS SECTION (Restaurant, Gym, Car Park) -->
     <section class="sector-section">
         <div class="section-header">
-            <h2>Explore Our Sectors & Facilities</h2>
-            <p>Discover our dedicated onsite sectors designed to elevate your stay experience.</p>
+            <h2>Explore Our Onsite Facilities</h2>
+            <p>World-class amenities built to cater to your every need during your stay.</p>
         </div>
         <div class="sectors-grid">
             <div class="sector-card" id="restaurant">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Restaurant & Bar">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Restaurant & Bar" onclick="openGallery('sector-restaurant')">
                 <div class="sector-content">
                     <h3><i class="fa-solid fa-utensils" style="color: var(--accent);"></i> Restaurant & Bar</h3>
-                    <p>Enjoy exquisite local and international culinary masterpieces prepared by world-class chefs, complemented by an elite lounge bar.</p>
-                    <span style="color: var(--success); font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-clock"></i> Open 24/7 Daily Services</span>
+                    <p>Exquisite local and international dishes crafted by master chefs, accompanied by an elite cocktail lounge bar.</p>
+                    <button class="btn-gallery" onclick="openGallery('sector-restaurant')"><i class="fa-solid fa-images"></i> View Restaurant Photos</button>
                 </div>
             </div>
             <div class="sector-card" id="gym">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80" alt="Gym & Fitness">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80" alt="Gym & Fitness" onclick="openGallery('sector-gym')">
                 <div class="sector-content">
                     <h3><i class="fa-solid fa-dumbbell" style="color: var(--accent);"></i> Gym & Fitness Center</h3>
-                    <p>Stay fit during your travels with our state-of-the-art gym equipment, professional trainers, and wellness fitness sessions.</p>
-                    <span style="color: var(--success); font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-check"></i> Complimentary for all guests</span>
+                    <p>State-of-the-art gym equipment, professional fitness instructors, and wellness sessions.</p>
+                    <button class="btn-gallery" onclick="openGallery('sector-gym')"><i class="fa-solid fa-images"></i> View Gym Photos</button>
                 </div>
             </div>
             <div class="sector-card" id="parking">
-                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80" alt="Car Park">
+                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80" alt="Car Park" onclick="openGallery('sector-parking')">
                 <div class="sector-content">
                     <h3><i class="fa-solid fa-square-parking" style="color: var(--accent);"></i> Secure Car Park</h3>
-                    <p>Spacious, fully paved, and heavily secured subterranean and surface parking bays monitored around the clock with CCTV.</p>
-                    <span style="color: var(--success); font-weight: 600; font-size: 0.85rem;"><i class="fa-solid fa-shield"></i> 24/7 Armed Security & CCTV</span>
+                    <p>Spacious, fully paved surface and underground parking bays secured 24/7 with CCTV and personnel.</p>
+                    <button class="btn-gallery" onclick="openGallery('sector-parking')"><i class="fa-solid fa-images"></i> View Parking Photos</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CUSTOMER REVIEWS SECTION -->
+    <!-- CUSTOMER REVIEWS -->
     <section class="reviews-section" id="reviews">
         <div class="section-header">
             <h2>What Our Guests Say</h2>
-            <p>Read honest reviews from valued customers who experienced our hospitality.</p>
+            <p>Honest reviews from valued customers who experienced our hospitality.</p>
         </div>
         <div class="reviews-grid">
             <div class="review-card">
-                <div class="review-stars">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                </div>
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                 <p class="review-text">"Udyhotel & Suites is simply breathtaking! The 2-bedroom apartment was immaculate, the room service was swift, and the security gave me total peace of mind."</p>
-                <div class="reviewer-info">
-                    <h4>Dr. Michael Adebayo</h4>
-                    <p>Verified Guest • Stayed July 2026</p>
-                </div>
+                <div class="reviewer-info"><h4>Dr. Michael Adebayo</h4><p>Verified Guest • Stayed July 2026</p></div>
             </div>
             <div class="review-card">
-                <div class="review-stars">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                </div>
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
                 <p class="review-text">"The restaurant meals are top-tier and the gym facility is cleaner than most standalone fitness centers. Highly recommend the Deluxe Suite!"</p>
-                <div class="reviewer-info">
-                    <h4>Sarah Jenkins</h4>
-                    <p>Verified Guest • Stayed August 2026</p>
-                </div>
+                <div class="reviewer-info"><h4>Sarah Jenkins</h4><p>Verified Guest • Stayed August 2026</p></div>
             </div>
             <div class="review-card">
-                <div class="review-stars">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                </div>
+                <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
                 <p class="review-text">"Seamless booking process and very courteous front desk staff. The parking lot is secure and well-spaced. Will definitely return."</p>
-                <div class="reviewer-info">
-                    <h4>Emeka Okafor</h4>
-                    <p>Verified Guest • Stayed August 2026</p>
-                </div>
+                <div class="reviewer-info"><h4>Emeka Okafor</h4><p>Verified Guest • Stayed August 2026</p></div>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT & ADDRESS SECTION -->
+    <!-- CONTACT & ADDRESS -->
     <section class="contact-section" id="contact">
         <div class="section-header">
             <h2>Contact & Address</h2>
@@ -320,7 +377,18 @@
         <p>&copy; 2026 Udyhotel & Suites. All rights reserved. Powered by Secure Cloud Database.</p>
     </footer>
 
-    <!-- FIREBASE & REAL-TIME OVERLAP AVAILABILITY SCRIPT -->
+    <!-- PHOTO GALLERY MODAL -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeGallery()">&times;</span>
+            <h3 id="modalTitle" class="modal-title">Photo Gallery</h3>
+            <div id="modalGrid" class="modal-gallery-grid">
+                <!-- Images injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE & SCRIPT LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -428,6 +496,105 @@
                 alert("Failed to submit booking. Please try again.");
             }
         };
+
+        // Photo Galleries Data
+        const galleries = {
+            'hotel-standard': {
+                title: 'Standard Room Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'hotel-deluxe': {
+                title: 'Deluxe Suite Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'hotel-vip': {
+                title: 'Executive VIP Suite Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-1bed': {
+                title: 'Luxury 1-Bedroom Apartment Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-2bed': {
+                title: 'Luxury 2-Bedroom Apartment Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-penthouse': {
+                title: 'Executive 3-Bedroom Penthouse Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-restaurant': {
+                title: 'Restaurant & Bar Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-gym': {
+                title: 'Gym & Fitness Center Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-parking': {
+                title: 'Secure Car Park Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=700&q=80'
+                ]
+            }
+        };
+
+        window.openGallery = function(key) {
+            const data = galleries[key];
+            if (!data) return;
+            document.getElementById('modalTitle').innerText = data.title;
+            const grid = document.getElementById('modalGrid');
+            grid.innerHTML = "";
+            data.images.forEach(imgUrl => {
+                grid.innerHTML += `<img src="${imgUrl}" alt="Gallery Image">`;
+            });
+            document.getElementById('galleryModal').style.display = 'flex';
+        };
+
+        window.closeGallery = function() {
+            document.getElementById('galleryModal').style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('galleryModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 </body>
 </html>
