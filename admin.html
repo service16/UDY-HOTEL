@@ -3,32 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udyhotel - Admin Portal</title>
+    <title>Udyhotel - Management & Reception Portal</title>
     <style>
         :root {
-            --primary: #007bff;
-            --success: #28a745;
-            --danger: #dc3545;
-            --dark: #343a40;
-            --light: #f8f9fa;
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --light: #f8fafc;
+            --border: #e2e8f0;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f4f7f6; color: #333; }
-        .container { max-width: 1050px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-        h2 { margin: 0; color: var(--dark); }
-        .controls { display: flex; gap: 10px; align-items: center; }
-        input[type="text"] { padding: 9px 12px; border: 1px solid #ccc; border-radius: 5px; width: 220px; font-size: 14px; }
-        button { padding: 9px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px; transition: background 0.2s; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f1f5f9; color: #334155; }
+        .container { max-width: 1200px; margin: auto; }
+        
+        /* Top Header */
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .header h2 { margin: 0; color: var(--primary); font-size: 24px; }
+        
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid var(--accent); }
+        .stat-card h4 { margin: 0 0 5px 0; color: #64748b; font-size: 13px; text-transform: uppercase; }
+        .stat-card p { margin: 0; font-size: 24px; font-weight: bold; color: var(--primary); }
+
+        /* Action Panel / Walk-in Form */
+        .panel { background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; align-items: flex-end; }
+        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #475569; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        
+        /* Controls & Tables */
+        .controls-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        input[type="text"] { padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; width: 280px; font-size: 14px; }
+        button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        .btn-primary { background: var(--accent); color: white; }
         .btn-refresh { background: var(--success); color: white; }
-        .btn-refresh:hover { background: #218838; }
-        .btn-action { background: var(--primary); color: white; padding: 5px 10px; font-size: 12px; }
-        .btn-delete { background: var(--danger); color: white; padding: 5px 10px; font-size: 12px; }
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #e9ecef; padding: 12px; text-align: left; font-size: 14px; }
-        th { background-color: var(--primary); color: white; }
-        tr:nth-child(even) { background-color: var(--light); }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; color: white; background: #17a2b8; }
+        .btn-action { background: #0284c7; color: white; padding: 6px 10px; font-size: 12px; }
+        .btn-delete { background: var(--danger); color: white; padding: 6px 10px; font-size: 12px; }
+        
+        .table-responsive { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow-x: auto; padding: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 12px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border); }
+        th { background-color: #f8fafc; color: var(--primary); font-weight: 600; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; background: #64748b; }
         .badge.Confirmed { background: var(--success); }
         .badge.Cancelled { background: var(--danger); }
         .text-center { text-align: center; }
@@ -37,15 +56,70 @@
 <body>
 
 <div class="container">
-    <div class="header-flex">
-        <h2>🏨 Udyhotel Admin Portal</h2>
-        <div class="controls">
-            <input type="text" id="search-input" placeholder="Search by guest or phone..." onkeyup="filterTable()">
-            <button class="btn-refresh" onclick="loadBookings()">🔄 Refresh Data</button>
+    <!-- Header -->
+    <div class="header">
+        <h2>🏨 Udyhotel Management & Reception Portal</h2>
+        <button class="btn-refresh" onclick="loadBookings()">🔄 Refresh Live Data</button>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h4>Total Bookings</h4>
+            <p id="stat-total">0</p>
+        </div>
+        <div class="stat-card" style="border-left-color: var(--success);">
+            <h4>Active / Confirmed</h4>
+            <p id="stat-confirmed">0</p>
+        </div>
+        <div class="stat-card" style="border-left-color: #eab308;">
+            <h4>Estimated Revenue</h4>
+            <p id="stat-revenue">₦0</p>
         </div>
     </div>
-    
+
+    <!-- Walk-in / New Reservation Panel (For Receptionist & Admin) -->
+    <div class="panel">
+        <h3>➕ Add Walk-In or Direct Reservation</h3>
+        <form id="walkin-form" onsubmit="addWalkInBooking(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Guest Full Name</label>
+                    <input type="text" id="walkin-name" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="walkin-phone" placeholder="e.g. 08012345678" required>
+                </div>
+                <div class="form-group">
+                    <label>Room Type</label>
+                    <select id="walkin-room">
+                        <option value="Standard Room (₦35,000)">Standard Room - ₦35k</option>
+                        <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60k</option>
+                        <option value="Executive VIP (₦100,000)">Executive VIP - ₦100k</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Check-in Date</label>
+                    <input type="date" id="walkin-checkin" required>
+                </div>
+                <div class="form-group">
+                    <label>Check-out Date</label>
+                    <input type="date" id="walkin-checkout" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary" style="width: 100%;">Save Reservation</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bookings Table Section -->
     <div class="table-responsive">
+        <div class="controls-flex" style="padding: 10px;">
+            <h3 style="margin: 0; color: var(--primary);">Guest Reservation Records</h3>
+            <input type="text" id="search-input" placeholder="🔍 Search by guest name or phone..." onkeyup="filterTable()">
+        </div>
         <table>
             <thead>
                 <tr>
@@ -60,7 +134,7 @@
                 </tr>
             </thead>
             <tbody id="bookings-table-body">
-                <tr><td colspan="8" class="text-center">Connecting to Firebase & loading bookings...</td></tr>
+                <tr><td colspan="8" class="text-center">Connecting to Firebase cloud database...</td></tr>
             </tbody>
         </table>
     </div>
@@ -69,7 +143,7 @@
 <!-- Firebase SDK Integration -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     // Your verified Firebase configuration keys
     const firebaseConfig = {
@@ -82,16 +156,15 @@
       measurementId: "G-FESSMGY7M9"
     };
 
-    // Initialize Firebase and Firestore
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
     let allBookings = [];
 
-    // Function to fetch bookings from Firestore collection "udy_bookings"
+    // Load Bookings from Firestore
     window.loadBookings = async function() {
         const tableBody = document.getElementById('bookings-table-body');
-        tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Fetching live records from cloud...</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Fetching records...</td></tr>`;
 
         try {
             const querySnapshot = await getDocs(collection(db, "udy_bookings"));
@@ -102,24 +175,25 @@
             });
 
             renderTable(allBookings);
+            updateStats(allBookings);
         } catch (error) {
             console.error("Error loading bookings: ", error);
-            tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: red;">Failed to load data. Please check your Firestore security rules.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: red;">Failed to load data. Check console.</td></tr>`;
         }
     };
 
-    // Render bookings list into HTML table rows
+    // Render Table Data
     function renderTable(bookings) {
         const tableBody = document.getElementById('bookings-table-body');
         tableBody.innerHTML = "";
 
         if (bookings.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="8" class="text-center">No bookings found in database.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="8" class="text-center">No reservations found in the database.</td></tr>`;
             return;
         }
 
         bookings.forEach((data) => {
-            const statusClass = data.status || 'Confirmed';
+            const status = data.status || 'Confirmed';
             const row = `<tr>
                 <td><strong>${data.bookingId || 'N/A'}</strong></td>
                 <td>${data.name || 'N/A'}</td>
@@ -127,9 +201,9 @@
                 <td>${data.room || 'N/A'}</td>
                 <td>${data.checkin || 'N/A'}</td>
                 <td>${data.checkout || 'N/A'}</td>
-                <td><span class="badge ${statusClass}">${statusClass}</span></td>
+                <td><span class="badge ${status}">${status}</span></td>
                 <td>
-                    <button class="btn-action" onclick="toggleStatus('${data.id}', '${data.status}')">Toggle Status</button>
+                    <button class="btn-action" onclick="toggleStatus('${data.id}', '${status}')">Toggle Status</button>
                     <button class="btn-delete" onclick="removeBooking('${data.id}')">Delete</button>
                 </td>
             </tr>`;
@@ -137,7 +211,49 @@
         });
     }
 
-    // Search/Filter function
+    // Update Statistics Bar
+    function updateStats(bookings) {
+        document.getElementById('stat-total').innerText = bookings.length;
+        const confirmed = bookings.filter(b => (!b.status || b.status === 'Confirmed')).length;
+        document.getElementById('stat-confirmed').innerText = confirmed;
+
+        // Calculate rough estimated revenue based on room strings
+        let revenue = 0;
+        bookings.forEach(b => {
+            if (b.room && b.room.includes('100,000')) revenue += 100000;
+            else if (b.room && b.room.includes('60,000')) revenue += 60000;
+            else revenue += 35000; // default standard room price
+        });
+        document.getElementById('stat-revenue').innerText = '₦' + revenue.toLocaleString();
+    }
+
+    // Add Walk-in / Reception Booking
+    window.addWalkInBooking = async function(event) {
+        event.preventDefault();
+        
+        const newBooking = {
+            bookingId: 'UDY-' + Math.floor(1000 + Math.random() * 9000),
+            name: document.getElementById('walkin-name').value,
+            phone: document.getElementById('walkin-phone').value,
+            room: document.getElementById('walkin-room').value,
+            checkin: document.getElementById('walkin-checkin').value,
+            checkout: document.getElementById('walkin-checkout').value,
+            status: 'Confirmed',
+            timestamp: new Date().toISOString()
+        };
+
+        try {
+            await addDoc(collection(db, "udy_bookings"), newBooking);
+            alert("Reservation successfully saved to cloud!");
+            document.getElementById('walkin-form').reset();
+            loadBookings();
+        } catch (e) {
+            console.error("Error adding reservation: ", e);
+            alert("Failed to save booking.");
+        }
+    };
+
+    // Filter Table Search
     window.filterTable = function() {
         const query = document.getElementById('search-input').value.toLowerCase();
         const filtered = allBookings.filter(b => 
@@ -148,33 +264,30 @@
         renderTable(filtered);
     };
 
-    // Update reservation status directly in Firestore
+    // Toggle Status
     window.toggleStatus = async function(docId, currentStatus) {
         const newStatus = currentStatus === 'Cancelled' ? 'Confirmed' : 'Cancelled';
         try {
-            const docRef = doc(db, "udy_bookings", docId);
-            await updateDoc(docRef, { status: newStatus });
+            await updateDoc(doc(db, "udy_bookings", docId), { status: newStatus });
             loadBookings();
         } catch (e) {
-            console.error("Error updating status: ", e);
             alert("Could not update status.");
         }
     };
 
-    // Delete a booking record from Firestore
+    // Delete Record
     window.removeBooking = async function(docId) {
-        if (confirm("Are you sure you want to delete this booking record?")) {
+        if (confirm("Are you sure you want to delete this guest reservation?")) {
             try {
                 await deleteDoc(doc(db, "udy_bookings", docId));
                 loadBookings();
             } catch (e) {
-                console.error("Error deleting document: ", e);
                 alert("Could not delete booking.");
             }
         }
     };
 
-    // Automatically trigger data load when the script initializes
+    // Initial Load
     loadBookings();
 </script>
 
