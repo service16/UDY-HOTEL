@@ -22,7 +22,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
         body { background: var(--bg); color: var(--text-dark); line-height: 1.6; }
 
-        /* Navigation */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 80px; background: var(--white); border-bottom: 1px solid var(--border); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
         .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
@@ -31,19 +30,16 @@
         .admin-btn { background: var(--primary); color: var(--white); padding: 10px 20px; border-radius: 6px; font-weight: 600; text-decoration: none; transition: 0.3s; }
         .admin-btn:hover { background: var(--accent); color: var(--primary); }
 
-        /* Hero Section */
         .hero { background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px; margin-top: 75px; }
         .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.8rem; margin-bottom: 15px; font-weight: 700; }
         .hero p { font-size: 1.25rem; max-width: 650px; margin-bottom: 30px; opacity: 0.9; }
 
-        /* Booking Engine Box */
         .booking-container { max-width: 1100px; margin: -60px auto 60px auto; position: relative; z-index: 10; padding: 0 20px; }
         .booking-card { background: var(--white); padding: 35px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid var(--border); }
         .booking-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; }
         .booking-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-gray); margin-bottom: 6px; }
         .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: var(--bg); color: var(--text-dark); outline: none; }
-        .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
         
         .availability-badge { font-size: 0.8rem; font-weight: 600; margin-top: 5px; display: block; }
         .available { color: var(--success); }
@@ -51,72 +47,50 @@
 
         .btn-submit { background: var(--accent); color: var(--primary); border: none; padding: 15px; width: 100%; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
         .btn-submit:hover { background: var(--accent-hover); color: var(--white); }
+        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; color: #64748b; }
 
-        /* Section Titles */
         .section-header { text-align: center; max-width: 700px; margin: 0 auto 50px auto; }
         .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); margin-bottom: 15px; }
         .section-header p { color: var(--text-gray); font-size: 1.05rem; }
 
-        /* Amenities Grid */
         .amenities-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         .amenities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .amenity-card { background: var(--white); padding: 30px; border-radius: 10px; text-align: center; border: 1px solid var(--border); transition: 0.3s; }
-        .amenity-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .amenity-card { background: var(--white); padding: 30px; border-radius: 10px; text-align: center; border: 1px solid var(--border); }
         .amenity-card i { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
         .amenity-card h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 10px; }
-        .amenity-card p { color: var(--text-gray); font-size: 0.9rem; }
 
-        /* Rooms & Apartments Showcase */
         .rooms-section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
         .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .room-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: 0.3s; }
-        .room-card:hover { box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
+        .room-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
         .room-img-container { height: 240px; position: relative; overflow: hidden; }
-        .room-img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .room-card:hover .room-img-container img { transform: scale(1.05); }
+        .room-img-container img { width: 100%; height: 100%; object-fit: cover; }
         .room-price-tag { position: absolute; bottom: 15px; right: 15px; background: var(--primary); color: var(--accent); padding: 8px 15px; border-radius: 6px; font-weight: 700; font-size: 1rem; }
         .room-details { padding: 25px; }
         .room-details h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 10px; }
         .room-details p { color: var(--text-gray); font-size: 0.92rem; margin-bottom: 20px; }
-        .room-features { display: flex; gap: 15px; margin-bottom: 20px; color: var(--text-gray); font-size: 0.85rem; font-weight: 500; }
-        .room-features span { display: flex; align-items: center; gap: 5px; }
+        .room-features { display: flex; gap: 15px; color: var(--text-gray); font-size: 0.85rem; font-weight: 500; }
 
-        /* Testimonials Section */
-        .reviews-section { background: #EEF2F6; padding: 80px 20px; margin-top: 40px; }
-        .reviews-container { max-width: 1200px; margin: 0 auto; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .review-card { background: var(--white); padding: 30px; border-radius: 10px; border: 1px solid var(--border); }
-        .stars { color: #F59E0B; margin-bottom: 15px; }
-        .review-card p { font-style: italic; color: var(--text-dark); margin-bottom: 20px; font-size: 0.95rem; }
-        .reviewer-info h5 { font-size: 1rem; font-weight: 700; color: var(--primary); }
-        .reviewer-info span { font-size: 0.8rem; color: var(--text-gray); }
-
-        /* Footer */
         footer { background: var(--primary); color: var(--white); padding: 50px 20px 20px 20px; text-align: center; }
         footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
     <nav>
         <div class="logo">UDYHOTEL & SUITES</div>
         <ul class="nav-links">
             <li><a href="#rooms">Hotel Rooms</a></li>
             <li><a href="#apartments">Luxury Apartments</a></li>
             <li><a href="#amenities">Amenities</a></li>
-            <li><a href="#reviews">Testimonials</a></li>
         </ul>
         <a href="admin.html" class="admin-link admin-btn"><i class="fa-solid fa-lock"></i> Staff Login</a>
     </nav>
 
-    <!-- HERO SECTION -->
     <header class="hero">
         <h1>Redefining Luxury Living</h1>
         <p>Experience world-class hospitality, immaculate hotel rooms, and serviced apartments tailored for your comfort.</p>
     </header>
 
-    <!-- LIVE BOOKING WIDGET -->
     <div class="booking-container">
         <div class="booking-card">
             <h3><i class="fa-solid fa-calendar-days" style="color: var(--accent);"></i> Book Your Stay Instantly</h3>
@@ -133,13 +107,11 @@
                     <div class="form-group">
                         <label>Select Room or Apartment</label>
                         <select id="cust-room" onchange="checkAvailability()">
-                            <!-- HOTEL ROOMS & SUITES -->
-                            <optgroup label="🏨 Hotel Rooms & Suites">
+                            <optgroup label="🏨 Hotel Rooms">
                                 <option value="Standard Room (₦35,000)">Standard Room - ₦35,000 / night</option>
                                 <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60,000 / night</option>
                                 <option value="Executive VIP Suite (₦100,000)">Executive VIP Suite - ₦100,000 / night</option>
                             </optgroup>
-                            <!-- LUXURY APARTMENTS -->
                             <optgroup label="🏢 Luxury Apartments">
                                 <option value="Luxury 1-Bedroom Apartment (₦120,000)">Luxury 1-Bedroom Apartment - ₦120,000 / night</option>
                                 <option value="Luxury 2-Bedroom Apartment (₦150,000)">Luxury 2-Bedroom Apartment - ₦150,000 / night</option>
@@ -169,19 +141,18 @@
                         <input type="date" id="cust-checkout" readonly style="background: #e2e8f0; cursor: not-allowed;">
                     </div>
                 </div>
-                <button type="submit" class="btn-submit">Confirm Reservation & Send to Front Desk</button>
+                <button type="submit" id="submit-btn" class="btn-submit">Confirm Reservation & Send to Front Desk</button>
             </form>
         </div>
     </div>
 
-    <!-- ROOMS & APARTMENTS SHOWCASE -->
+    <!-- ROOMS SHOWCASE -->
     <section class="rooms-section" id="rooms">
         <div class="section-header">
             <h2>Hotel Rooms & Luxury Apartments</h2>
-            <p>Choose between our exquisite hotel rooms for short stays or our fully serviced luxury apartments for extended comfort.</p>
+            <p>Choose between our exquisite hotel rooms for short stays or our fully serviced luxury apartments.</p>
         </div>
         <div class="rooms-grid">
-            <!-- Room 1 -->
             <div class="room-card">
                 <div class="room-img-container">
                     <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80" alt="Standard Room">
@@ -193,11 +164,9 @@
                     <div class="room-features">
                         <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
                         <span><i class="fa-solid fa-wifi"></i> Free Wi-Fi</span>
-                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
                     </div>
                 </div>
             </div>
-            <!-- Room 2 -->
             <div class="room-card">
                 <div class="room-img-container">
                     <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80" alt="Deluxe Suite">
@@ -208,12 +177,10 @@
                     <p>Spacious executive layout featuring a work desk, relaxing lounge chair, and panoramic city views.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-bed"></i> King Bed</span>
-                        <span><i class="fa-solid fa-mug-hot"></i> Breakfast Inc.</span>
                         <span><i class="fa-solid fa-bath"></i> Bathtub</span>
                     </div>
                 </div>
             </div>
-            <!-- Room 3 -->
             <div class="room-card">
                 <div class="room-img-container">
                     <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80" alt="Executive VIP Suite">
@@ -221,15 +188,13 @@
                 </div>
                 <div class="room-details">
                     <h3>Executive VIP Suite (Hotel)</h3>
-                    <p>The pinnacle of hotel luxury. Separate living area, premium king bed, minibar, and elite concierge service.</p>
+                    <p>The pinnacle of hotel luxury. Separate living area, premium king bed, minibar, and elite service.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-crown"></i> VIP Lounge</span>
-                        <span><i class="fa-solid fa-wine-glass"></i> Minibar</span>
-                        <span><i class="fa-solid fa-wifi"></i> Ultra Wi-Fi</span>
+                        <span><i class="fa-solid"></i> Minibar</span>
                     </div>
                 </div>
             </div>
-            <!-- Apartment 1 -->
             <div class="room-card" id="apartments">
                 <div class="room-img-container">
                     <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80" alt="Luxury 1-Bedroom Apartment">
@@ -241,11 +206,9 @@
                     <div class="room-features">
                         <span><i class="fa-solid fa-kitchen-set"></i> Kitchen</span>
                         <span><i class="fa-solid fa-couch"></i> Living Room</span>
-                        <span><i class="fa-solid fa-shield"></i> Secure</span>
                     </div>
                 </div>
             </div>
-            <!-- Apartment 2 -->
             <div class="room-card">
                 <div class="room-img-container">
                     <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80" alt="Luxury 2-Bedroom Apartment">
@@ -253,26 +216,23 @@
                 </div>
                 <div class="room-details">
                     <h3>Luxury 2-Bedroom Apartment</h3>
-                    <p>Ideal for families or groups. Features two en-suite bedrooms, a large modern kitchen, and expansive lounge.</p>
+                    <p>Ideal for families or groups. Features two en-suite bedrooms, large modern kitchen, and expansive lounge.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-bed"></i> 2 Bedrooms</span>
                         <span><i class="fa-solid fa-utensils"></i> Full Kitchen</span>
-                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
                     </div>
                 </div>
             </div>
-            <!-- Apartment 3 -->
             <div class="room-card">
                 <div class="room-img-container">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Executive 3-Bedroom Penthouse">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Executive Penthouse">
                     <div class="room-price-tag">₦250,000 / night</div>
                 </div>
                 <div class="room-details">
                     <h3>Executive 3-Bedroom Penthouse</h3>
-                    <p>Ultimate privacy and luxury living. Three grand bedrooms, master balcony view, and premium concierge service.</p>
+                    <p>Ultimate privacy and luxury living. Three grand bedrooms, master balcony view, and concierge service.</p>
                     <div class="room-features">
                         <span><i class="fa-solid fa-building"></i> Penthouse</span>
-                        <span><i class="fa-solid fa-champagne-glasses"></i> Luxury Bar</span>
                         <span><i class="fa-solid fa-car"></i> VIP Parking</span>
                     </div>
                 </div>
@@ -280,7 +240,7 @@
         </div>
     </section>
 
-    <!-- AMENITIES HIGHLIGHTS -->
+    <!-- AMENITIES -->
     <section class="amenities-section" id="amenities">
         <div class="section-header">
             <h2>World-Class Amenities</h2>
@@ -290,74 +250,36 @@
             <div class="amenity-card">
                 <i class="fa-solid fa-wifi"></i>
                 <h4>High-Speed Wi-Fi</h4>
-                <p>Uninterrupted high-speed fiber internet access across all rooms and apartments.</p>
+                <p>Uninterrupted fiber internet access across all units.</p>
             </div>
             <div class="amenity-card">
                 <i class="fa-solid fa-utensils"></i>
                 <h4>24/7 Room Service</h4>
-                <p>Enjoy gourmet meals and continental breakfast delivered straight to your door anytime.</p>
+                <p>Gourmet meals delivered straight to your door anytime.</p>
             </div>
             <div class="amenity-card">
                 <i class="fa-solid fa-shield-halved"></i>
                 <h4>Secure Environment</h4>
-                <p>Advanced security, CCTV monitoring, and professional guard personnel on duty 24/7.</p>
+                <p>Advanced security and CCTV monitoring 24/7.</p>
             </div>
             <div class="amenity-card">
                 <i class="fa-solid fa-car"></i>
-                <h4>Ample Parking & Concierge</h4>
-                <p>Spacious secure parking lot and dedicated concierge desk for all your travel needs.</p>
+                <h4>Ample Parking</h4>
+                <p>Spacious secure parking lot and concierge desk.</p>
             </div>
         </div>
     </section>
 
-    <!-- CUSTOMER REVIEWS -->
-    <section class="reviews-section" id="reviews">
-        <div class="reviews-container">
-            <div class="section-header">
-                <h2>What Our Guests Say</h2>
-                <p>Read authentic feedback from guests who have stayed with us.</p>
-            </div>
-            <div class="reviews-grid">
-                <div class="review-card">
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p>"Udyhotel feels like a 5-star resort. The staff were extremely polite, room service was prompt, and the bed was heavenly. Highly recommended!"</p>
-                    <div class="reviewer-info">
-                        <h5>Dr. Emeka Okafor</h5>
-                        <span>Verified Guest</span>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p>"I booked the Deluxe Suite for my business trip. Very clean, quiet workspace, and excellent internet speed. Will definitely stay here again."</p>
-                    <div class="reviewer-info">
-                        <h5>Aisha Bello</h5>
-                        <span>Corporate Traveler</span>
-                    </div>
-                </div>
-                <div class="review-card">
-                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p>"Absolute perfection! The booking process online was seamless, and when I arrived, my reservation was already waiting at the front desk."</p>
-                    <div class="reviewer-info">
-                        <h5>Mr. & Mrs. Adeleke</h5>
-                        <span>Vacationers</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
     <footer>
         <div class="logo" style="color: var(--white); margin-bottom: 10px;">UDYHOTEL & SUITES</div>
         <p>&copy; 2026 Udyhotel & Suites. All rights reserved. Powered by Secure Cloud Database.</p>
     </footer>
 
-    <!-- FIREBASE INTEGRATION & LOGIC SCRIPT -->
+    <!-- FIREBASE & REAL-TIME OVERLAP AVAILABILITY SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your verified Firebase configuration keys
         const firebaseConfig = {
           apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
           authDomain: "udyhotel-1c419.firebaseapp.com",
@@ -371,15 +293,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Auto set check-in date to today
         window.addEventListener('DOMContentLoaded', () => {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('cust-checkin').value = today;
             calculateCheckout();
-            checkAvailability();
         });
 
-        // Calculate checkout date dynamically based on days selected
         window.calculateCheckout = function() {
             const checkinVal = document.getElementById('cust-checkin').value;
             const daysCount = parseInt(document.getElementById('cust-days').value) || 1;
@@ -389,44 +308,62 @@
                 checkinDate.setDate(checkinDate.getDate() + daysCount);
                 document.getElementById('cust-checkout').value = checkinDate.toISOString().split('T')[0];
             }
+            checkAvailability();
         };
 
-        // Real-time room availability checker from Firebase
+        // Real-Time Date Overlap Checking Engine
         window.checkAvailability = async function() {
             const roomType = document.getElementById('cust-room').value;
+            const requestedCheckin = document.getElementById('cust-checkin').value;
+            const requestedCheckout = document.getElementById('cust-checkout').value;
             const statusEl = document.getElementById('availability-status');
-            
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (!requestedCheckin || !requestedCheckout) return;
+
+            statusEl.className = "availability-badge";
+            statusEl.innerHTML = "● Checking real-time dates...";
+
             try {
                 const snapshot = await getDocs(collection(db, "udy_bookings"));
-                let activeCount = 0;
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    if(data.room === roomType && data.status !== 'Cancelled') {
-                        activeCount++;
+                let bookedUnitsCount = 0;
+                
+                // Assuming we have 3 independent units/rooms for each category
+                const totalUnitsPerCategory = 3;
+
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.snap ? {} : docSnap.data();
+                    if (data.room === roomType && data.status === 'Confirmed') {
+                        // Check date overlap formula: 
+                        // (StartA < EndB) and (EndA > StartB)
+                        if (requestedCheckin < data.checkout && requestedCheckout > data.checkin) {
+                            bookedUnitsCount++;
+                        }
                     }
                 });
 
-                // Assuming max limit of 6 units per category
-                const maxRooms = 6;
-                const remaining = maxRooms - activeCount;
+                const remaining = totalUnitsPerCategory - bookedUnitsCount;
 
                 if (remaining <= 0) {
                     statusEl.className = "availability-badge booked-out";
-                    statusEl.innerHTML = "● Booked Out (Fully Occupied)";
-                } else if (remaining <= 2) {
-                    statusEl.className = "availability-badge booked-out";
-                    statusEl.innerHTML = `● Limited Availability (${remaining} left)`;
+                    statusEl.innerHTML = "● Fully Booked for these specific dates!";
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = "0.5";
                 } else {
                     statusEl.className = "availability-badge available";
-                    statusEl.innerHTML = `● Available (${remaining} left)`;
+                    statusEl.innerHTML = `● Available (${remaining} of ${totalUnitsPerCategory} units left for these dates)`;
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = "1";
                 }
             } catch (e) {
+                console.error(e);
                 statusEl.className = "availability-badge available";
-                statusEl.innerHTML = "● Rooms Available";
+                statusEl.innerHTML = "● Available for booking";
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
             }
         };
 
-        // Handle Customer Booking Submission
         window.submitCustomerBooking = async function(e) {
             e.preventDefault();
 
@@ -447,7 +384,6 @@
                 document.getElementById('public-booking-form').reset();
                 window.location.reload();
             } catch (err) {
-                console.error("Booking error: ", err);
                 alert("Failed to submit booking. Please try again.");
             }
         };
