@@ -16,31 +16,27 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f1f5f9; color: #334155; }
         .container { max-width: 1200px; margin: auto; }
         
-        /* Top Header */
         .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .header h2 { margin: 0; color: var(--primary); font-size: 24px; }
         
-        /* Stats Cards */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
         .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid var(--accent); }
         .stat-card h4 { margin: 0 0 5px 0; color: #64748b; font-size: 13px; text-transform: uppercase; }
         .stat-card p { margin: 0; font-size: 24px; font-weight: bold; color: var(--primary); }
 
-        /* Action Panel / Walk-in Form */
         .panel { background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; }
         .panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; align-items: flex-end; }
         .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #475569; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; box-sizing: border-box; }
         
-        /* Controls & Tables */
         .controls-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         input[type="text"] { padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; width: 280px; font-size: 14px; }
         button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: opacity 0.2s; }
         button:hover { opacity: 0.9; }
         .btn-primary { background: var(--accent); color: white; }
         .btn-refresh { background: var(--success); color: white; }
-        .btn-action { background: #0284c7; color: white; padding: 6px 10px; font-size: 12px; }
+        .btn-checkout { background: var(--success); color: white; padding: 6px 10px; font-size: 12px; }
         .btn-delete { background: var(--danger); color: white; padding: 6px 10px; font-size: 12px; }
         
         .table-responsive { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow-x: auto; padding: 10px; }
@@ -49,27 +45,25 @@
         th { background-color: #f8fafc; color: var(--primary); font-weight: 600; }
         .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; background: #64748b; }
         .badge.Confirmed { background: var(--success); }
-        .badge.Cancelled { background: var(--danger); }
+        .badge.CheckedOut { background: #64748b; }
         .text-center { text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Header -->
     <div class="header">
         <h2>🏨 Udyhotel Management & Reception Portal</h2>
         <button class="btn-refresh" onclick="loadBookings()">🔄 Refresh Live Data</button>
     </div>
 
-    <!-- Stats Dashboard -->
     <div class="stats-grid">
         <div class="stat-card">
-            <h4>Total Bookings</h4>
+            <h4>Total Active Guests</h4>
             <p id="stat-total">0</p>
         </div>
         <div class="stat-card" style="border-left-color: var(--success);">
-            <h4>Active / Confirmed</h4>
+            <h4>Confirmed Bookings</h4>
             <p id="stat-confirmed">0</p>
         </div>
         <div class="stat-card" style="border-left-color: #eab308;">
@@ -78,7 +72,6 @@
         </div>
     </div>
 
-    <!-- Walk-in / New Reservation Panel (For Receptionist & Admin) -->
     <div class="panel">
         <h3>➕ Add Walk-In or Direct Reservation</h3>
         <form id="walkin-form" onsubmit="addWalkInBooking(event)">
@@ -92,11 +85,18 @@
                     <input type="text" id="walkin-phone" placeholder="e.g. 08012345678" required>
                 </div>
                 <div class="form-group">
-                    <label>Room Type</label>
+                    <label>Room / Apartment Type</label>
                     <select id="walkin-room">
-                        <option value="Standard Room (₦35,000)">Standard Room - ₦35k</option>
-                        <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60k</option>
-                        <option value="Executive VIP (₦100,000)">Executive VIP - ₦100k</option>
+                        <optgroup label="🏨 Hotel Rooms">
+                            <option value="Standard Room (₦35,000)">Standard Room - ₦35k</option>
+                            <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60k</option>
+                            <option value="Executive VIP Suite (₦100,000)">Executive VIP - ₦100k</option>
+                        </optgroup>
+                        <optgroup label="🏢 Luxury Apartments">
+                            <option value="Luxury 1-Bedroom Apartment (₦120,000)">1-Bedroom Apt - ₦120k</option>
+                            <option value="Luxury 2-Bedroom Apartment (₦150,000)">2-Bedroom Apt - ₦150k</option>
+                            <option value="Executive 3-Bedroom Penthouse (₦250,000)">Penthouse - ₦250k</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
@@ -114,7 +114,6 @@
         </form>
     </div>
 
-    <!-- Bookings Table Section -->
     <div class="table-responsive">
         <div class="controls-flex" style="padding: 10px;">
             <h3 style="margin: 0; color: var(--primary);">Guest Reservation Records</h3>
@@ -126,7 +125,7 @@
                     <th>Booking ID</th>
                     <th>Guest Name</th>
                     <th>Phone</th>
-                    <th>Room Type</th>
+                    <th>Room / Apartment</th>
                     <th>Check-in</th>
                     <th>Check-out</th>
                     <th>Status</th>
@@ -140,12 +139,10 @@
     </div>
 </div>
 
-<!-- Firebase SDK Integration -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Your verified Firebase configuration keys
     const firebaseConfig = {
       apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
       authDomain: "udyhotel-1c419.firebaseapp.com",
@@ -161,7 +158,6 @@
 
     let allBookings = [];
 
-    // Load Bookings from Firestore
     window.loadBookings = async function() {
         const tableBody = document.getElementById('bookings-table-body');
         tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Fetching records...</td></tr>`;
@@ -169,20 +165,17 @@
         try {
             const querySnapshot = await getDocs(collection(db, "udy_bookings"));
             allBookings = [];
-            
             querySnapshot.forEach((docSnap) => {
                 allBookings.push({ id: docSnap.id, ...docSnap.data() });
             });
-
             renderTable(allBookings);
             updateStats(allBookings);
         } catch (error) {
             console.error("Error loading bookings: ", error);
-            tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: red;">Failed to load data. Check console.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: red;">Failed to load data.</td></tr>`;
         }
     };
 
-    // Render Table Data
     function renderTable(bookings) {
         const tableBody = document.getElementById('bookings-table-body');
         tableBody.innerHTML = "";
@@ -203,7 +196,7 @@
                 <td>${data.checkout || 'N/A'}</td>
                 <td><span class="badge ${status}">${status}</span></td>
                 <td>
-                    <button class="btn-action" onclick="toggleStatus('${data.id}', '${status}')">Toggle Status</button>
+                    <button class="btn-checkout" onclick="checkoutGuest('${data.id}')">🚪 Check Out</button>
                     <button class="btn-delete" onclick="removeBooking('${data.id}')">Delete</button>
                 </td>
             </tr>`;
@@ -211,26 +204,25 @@
         });
     }
 
-    // Update Statistics Bar
     function updateStats(bookings) {
-        document.getElementById('stat-total').innerText = bookings.length;
-        const confirmed = bookings.filter(b => (!b.status || b.status === 'Confirmed')).length;
-        document.getElementById('stat-confirmed').innerText = confirmed;
+        const active = bookings.filter(b => b.status === 'Confirmed');
+        document.getElementById('stat-total').innerText = active.length;
+        document.getElementById('stat-confirmed').innerText = active.length;
 
-        // Calculate rough estimated revenue based on room strings
         let revenue = 0;
-        bookings.forEach(b => {
-            if (b.room && b.room.includes('100,000')) revenue += 100000;
+        active.forEach(b => {
+            if (b.room && b.room.includes('250,000')) revenue += 250000;
+            else if (b.room && b.room.includes('150,000')) revenue += 150000;
+            else if (b.room && b.room.includes('120,000')) revenue += 120000;
+            else if (b.room && b.room.includes('100,000')) revenue += 100000;
             else if (b.room && b.room.includes('60,000')) revenue += 60000;
-            else revenue += 35000; // default standard room price
+            else revenue += 35000;
         });
         document.getElementById('stat-revenue').innerText = '₦' + revenue.toLocaleString();
     }
 
-    // Add Walk-in / Reception Booking
     window.addWalkInBooking = async function(event) {
         event.preventDefault();
-        
         const newBooking = {
             bookingId: 'UDY-' + Math.floor(1000 + Math.random() * 9000),
             name: document.getElementById('walkin-name').value,
@@ -248,12 +240,10 @@
             document.getElementById('walkin-form').reset();
             loadBookings();
         } catch (e) {
-            console.error("Error adding reservation: ", e);
             alert("Failed to save booking.");
         }
     };
 
-    // Filter Table Search
     window.filterTable = function() {
         const query = document.getElementById('search-input').value.toLowerCase();
         const filtered = allBookings.filter(b => 
@@ -264,20 +254,21 @@
         renderTable(filtered);
     };
 
-    // Toggle Status
-    window.toggleStatus = async function(docId, currentStatus) {
-        const newStatus = currentStatus === 'Cancelled' ? 'Confirmed' : 'Cancelled';
-        try {
-            await updateDoc(doc(db, "udy_bookings", docId), { status: newStatus });
-            loadBookings();
-        } catch (e) {
-            alert("Could not update status.");
+    // Check out guest (Removes record or marks checked out to free dates instantly)
+    window.checkoutGuest = async function(docId) {
+        if (confirm("Check out this guest? This will instantly free up the room dates for other customers.")) {
+            try {
+                await deleteDoc(doc(db, "udy_bookings", docId));
+                loadBookings();
+                alert("Guest checked out successfully. Room dates are now available.");
+            } catch (e) {
+                alert("Could not process check-out.");
+            }
         }
     };
 
-    // Delete Record
     window.removeBooking = async function(docId) {
-        if (confirm("Are you sure you want to delete this guest reservation?")) {
+        if (confirm("Are you sure you want to delete this record?")) {
             try {
                 await deleteDoc(doc(db, "udy_bookings", docId));
                 loadBookings();
@@ -287,9 +278,7 @@
         }
     };
 
-    // Initial Load
     loadBookings();
 </script>
-
 </body>
 </html>
