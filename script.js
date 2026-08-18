@@ -1,128 +1,78 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. SET DEFAULT DATES FOR BOOKING BAR ---
-    const checkinInput = document.getElementById('booking-checkin');
-    const checkoutInput = document.getElementById('booking-checkout');
+// Import Firebase SDKs (using modular CDN versions)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    if (checkinInput && checkoutInput) {
-        const today = new Date();
-        
-        const formatDate = (date) => {
-            const d = new Date(date);
-            let month = '' + (d.getMonth() + 1);
-            let day = '' + d.getDate();
-            const year = d.getFullYear();
+// TODO: Replace this configuration with your actual Firebase project configuration from Step 1
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
 
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-            return [year, month, day].join('-');
-        };
-
-        const checkinDate = new Date(today);
-        checkinDate.setDate(today.getDate() + 1);
-
-        const checkoutDate = new Date(today);
-        checkoutDate.setDate(today.getDate() + 3);
-
-        checkinInput.value = formatDate(checkinDate);
-        checkoutInput.value = formatDate(checkoutDate);
-
-        checkinInput.addEventListener('change', (e) => {
-            const selectedCheckin = new Date(e.target.value);
-            const currentCheckout = new Date(checkoutInput.value);
-
-            if (selectedCheckin >= currentCheckout) {
-                const newCheckout = new Date(selectedCheckin);
-                newCheckout.setDate(selectedCheckin.getDate() + 2);
-                checkoutInput.value = formatDate(newCheckout);
-            }
-            checkoutInput.min = e.target.value;
+// --- REAL-TIME UNITS (ROOMS & APARTMENTS) LISTENER ---
+export function listenToUnits(callback) {
+    const colRef = collection(db, "units");
+    // onSnapshot listens to live changes automatically across all screens!
+    onSnapshot(colRef, (snapshot) => {
+        const units = [];
+        snapshot.forEach((docSnap) => {
+            units.push({ id: docSnap.id, ...docSnap.data() });
         });
+        callback(units);
+    });
+}
+
+// --- ADD NEW UNIT ---
+export async function addUnit(unitData) {
+    try {
+        await addDoc(collection(db, "units"), unitData);
+    } catch (e) {
+        console.error("Error adding unit: ", e);
     }
+}
 
-    // --- 2. ROBUST BOOKING & LOCALSTORAGE SYNC FUNCTION ---
-    const processBooking = (forcedRoomType = null) => {
-        const checkin = checkinInput ? checkinInput.value : '2026-06-01';
-        const checkout = checkoutInput ? checkoutInput.value : '2026-06-03';
-        const roomTypeSelect = document.getElementById('booking-room-select');
-        const roomType = forcedRoomType || (roomTypeSelect ? roomTypeSelect.value : 'Executive Suite');
-        
-        const guestName = prompt(`You are reserving a ${roomType}.\n\nPlease enter your Full Name to confirm your booking:`, "");
-        
-        if (!guestName || guestName.trim() === "") {
-            alert("Booking cancelled. Name is required.");
-            return;
-        }
-
-        const newBookingID = 'UDY-' + Math.floor(1000 + Math.random() * 9000);
-        const newRecord = {
-            id: newBookingID,
-            name: guestName.trim(),
-            room: roomType,
-            checkin: checkin,
-            checkout: checkout,
-            status: 'confirmed'
-        };
-
-        try {
-            // Retrieve existing array or create empty list under 'udy_bookings'
-            let existingBookings = JSON.parse(localStorage.getItem('udy_bookings')) || [];
-            existingBookings.unshift(newRecord);
-            
-            // Save back into LocalStorage securely
-            localStorage.setItem('udy_bookings', JSON.stringify(existingBookings));
-
-            alert(`Success! 🎉 Reservation confirmed.\n\nName: ${guestName.trim()}\nBooking ID: ${newBookingID}\nRoom: ${roomType}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\n\nYour data has been saved to the Admin Dashboard.`);
-        } catch (error) {
-            console.error("Storage error:", error);
-            alert("Could not save booking due to browser security restrictions. Try opening the site via a local server or regular browser tab.");
-        }
-    };
-
-    // Attach listener to the main search/book bar button
-    const searchBtn = document.querySelector('.search-availability-btn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            processBooking();
-        });
+// --- UPDATE UNIT ---
+export async function updateUnit(id, updatedData) {
+    try {
+        const unitRef = doc(db, "units", id);
+        await updateDoc(unitRef, updatedData);
+    } catch (e) {
+        console.error("Error updating unit: ", e);
     }
+}
 
-    // Attach listeners to individual room card buttons
-    document.querySelectorAll('.quick-book-trigger').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const roomName = btn.getAttribute('data-room');
-            processBooking(roomName);
+// --- DELETE UNIT ---
+export async function deleteUnitData(id) {
+    try {
+        await deleteDoc(doc(db, "units", id));
+    } catch (e) {
+        console.error("Error deleting unit: ", e);
+    }
+}
+
+// --- REAL-TIME BOOKINGS ---
+export function listenToBookings(callback) {
+    const colRef = collection(db, "bookings");
+    onSnapshot(colRef, (snapshot) => {
+        const bookings = [];
+        snapshot.forEach((docSnap) => {
+            bookings.push({ id: docSnap.id, ...docSnap.data() });
         });
+        callback(bookings);
     });
+}
 
-    // --- 3. NAVBAR SCROLL EFFECT ---
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.style.background = 'rgba(18, 18, 18, 0.95)';
-            header.style.padding = '5px 0';
-        } else {
-            header.style.background = 'rgba(18, 18, 18, 0.9)';
-            header.style.padding = '0';
-        }
-    });
-
-    // --- 4. SMOOTH SCROLLING ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href');
-            if (targetId !== '#') {
-                e.preventDefault();
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
-});
+export async function createBooking(bookingData) {
+    try {
+        await addDoc(collection(db, "bookings"), bookingData);
+    } catch (e) {
+        console.error("Error creating booking: ", e);
+    }
+}
