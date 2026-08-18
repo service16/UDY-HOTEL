@@ -3,149 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Reception Portal | Udyhotel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Udy Hotel - Front Desk Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --primary: #0F172A; --accent: #C5A059; --bg: #F8FAFC; --white: #FFFFFF; --text-dark: #1E293B; --text-gray: #64748B; --border: #E2E8F0; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text-dark); padding: 20px; }
-        .login-screen { max-width: 400px; margin: 120px auto; background: var(--white); padding: 35px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.05); text-align: center; }
-        .login-screen h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 10px; }
-        .login-screen p { color: var(--text-gray); font-size: 0.88rem; margin-bottom: 20px; }
-        .login-screen input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 15px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; outline: none; }
-        .portal-container { display: none; max-width: 1200px; margin: 0 auto; padding-top: 20px; }
-        .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
-        .portal-header h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
-        .portal-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
-        .stat-card h4 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-gray); margin-bottom: 5px; }
-        .stat-card .number { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
-        .portal-table-container { background: var(--white); border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
-        .portal-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; white-space: nowrap; }
-        .portal-table th { background: #f1f5f9; color: var(--primary); padding: 14px 16px; font-weight: 600; border-bottom: 1px solid var(--border); }
-        .portal-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
-        .status-pill { padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
-        .status-confirmed { background: #dcfce7; color: #166534; }
-        .status-checkedin { background: #dbeafe; color: #1e40af; }
-        .status-checkedout { background: #f1f5f9; color: #475569; }
-        .btn-action { padding: 6px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; margin-right: 5px; }
-        .btn-checkin { background: #2563eb; color: white; }
-        .btn-checkout { background: #64748b; color: white; }
-        .btn-submit { background: var(--accent); color: var(--primary); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
-    </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col justify-between">
+            <div>
+                <div class="px-6 py-6 border-b border-slate-800 flex items-center space-x-3">
+                    <i class="fa-solid fa-hotel text-amber-400 text-2xl"></i>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-wide block leading-tight">Udy Hotel</span>
+                        <span class="text-xs text-amber-400 font-medium">Front Desk</span>
+                    </div>
+                </div>
+                <nav class="mt-6 px-4 space-y-1">
+                    <a href="admin.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-chart-pie w-5"></i><span>Admin Dashboard</span></a>
+                    <a href="hotel-desk.html" class="flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-semibold rounded-lg shadow-sm transition"><i class="fa-solid fa-hotel w-5"></i><span>Hotel Desk</span></a>
+                    <a href="apartment-desk.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-house-chimney w-5"></i><span>Apartment Desk</span></a>
+                </nav>
+            </div>
+        </aside>
 
-    <div id="loginScreen" class="login-screen">
-        <h3><i class="fa-solid fa-hotel" style="color: var(--accent);"></i> Hotel Desk Portal</h3>
-        <p>Enter staff desk PIN assigned by Admin</p>
-        <input type="password" id="pinInput" placeholder="Enter PIN">
-        <button class="btn-submit" onclick="verifyPin()">Access Hotel Desk</button>
-        <br><br>
-        <a href="index.html" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Return to Website</a>
-    </div>
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
+                <h1 class="text-xl font-bold text-slate-800">Hotel Reception Desk (Live Rooms)</h1>
+                <span class="text-sm font-medium text-slate-600">Status: <strong class="text-emerald-600">Active</strong></span>
+            </header>
 
-    <div id="portalContainer" class="portal-container">
-        <div class="portal-header">
-            <h2><i class="fa-solid fa-hotel" style="color: var(--accent);"></i> Hotel Front Desk Portal</h2>
-            <a href="index.html" class="btn-action btn-checkout" style="text-decoration: none;">Exit to Website</a>
-        </div>
-        <div class="portal-stats">
-            <div class="stat-card"><h4>Active Hotel Guests</h4><div class="number" id="hotel-active-count">0</div></div>
-            <div class="stat-card"><h4>Pending Arrivals</h4><div class="number" id="hotel-pending-count">0</div></div>
-        </div>
-        <div class="portal-table-container">
-            <table class="portal-table">
-                <thead>
-                    <tr>
-                        <th>Ref ID</th><th>Guest Name</th><th>Phone</th><th>Room Type</th><th>Check-in</th><th>Check-out</th><th>Status</th><th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="hotelTableBody"></tbody>
-            </table>
+            <main class="p-8 space-y-8">
+                <!-- Room Grid Status -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-slate-800">Live Hotel Room Status & Check-Ins</h2>
+                    </div>
+                    <div id="hotel-units-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { db } from './firebase-config.js';
+        import { collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase/firestore.js";
 
-        const firebaseConfig = {
-          apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
-          authDomain: "udyhotel-1c419.firebaseapp.com",
-          projectId: "udyhotel-1c419",
-          storageBucket: "udyhotel-1c419.firebasestorage.app",
-          messagingSenderId: "714050804978",
-          appId: "1:714050804978:web:a5cb029b2e45069c97c46b"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.verifyPin = async function() {
-            const enteredPin = document.getElementById('pinInput').value;
-            try {
-                const settingsDoc = await getDoc(doc(db, "udy_settings", "access_pins"));
-                const currentHotelPin = settingsDoc.exists() ? settingsDoc.data().hotelPin : '1122';
-
-                if (enteredPin === currentHotelPin) {
-                    document.getElementById('loginScreen').style.display = 'none';
-                    document.getElementById('portalContainer').style.display = 'block';
-                    loadHotelBookings();
-                } else {
-                    alert('Incorrect PIN! Please contact the Master Admin for the current PIN.');
-                }
-            } catch (e) {
-                alert('Error verifying PIN. Check connection.');
-            }
-        };
-
-        async function loadHotelBookings() {
-            try {
-                const snapshot = await getDocs(collection(db, "udy_bookings"));
-                let html = '';
-                let active = 0, pending = 0;
-
-                snapshot.forEach(docSnap => {
-                    const item = docSnap.data();
-                    const docId = docSnap.id;
-                    
-                    // Show only hotel bookings
-                    if (item.category !== 'hotel') return;
-
-                    let statusClass = 'status-confirmed';
-                    if (item.status === 'Checked-In') { statusClass = 'status-checkedin'; active++; }
-                    else if (item.status === 'Checked-Out') { statusClass = 'status-checkedout'; }
-                    else { pending++; }
-
-                    html += `
-                        <tr>
-                            <td><b>#${item.bookingId || 'N/A'}</b></td>
-                            <td>${item.name}</td>
-                            <td>${item.phone}</td>
-                            <td>${item.room}</td>
-                            <td>${item.checkin}</td>
-                            <td>${item.checkout}</td>
-                            <td><span class="status-pill ${statusClass}">${item.status}</span></td>
-                            <td>
-                                <button class="btn-action btn-checkin" onclick="updateStatus('${docId}', 'Checked-In')">Check-In</button>
-                                <button class="btn-action btn-checkout" onclick="updateStatus('${docId}', 'Checked-Out')">Check-Out</button>
-                            </td>
-                        </tr>
+        onSnapshot(collection(db, "units"), (snapshot) => {
+            const grid = document.getElementById('hotel-units-grid');
+            grid.innerHTML = '';
+            snapshot.forEach((docSnap) => {
+                let unit = { id: docSnap.id, ...docSnap.data() };
+                if (unit.category === 'Hotel Room') {
+                    let badgeColor = unit.status === 'Available' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700';
+                    grid.innerHTML += `
+                        <div class="border border-slate-200 rounded-xl p-4 shadow-sm bg-white space-y-3">
+                            <img src="${unit.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945'}" class="w-full h-36 object-cover rounded-lg">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="font-bold text-slate-900">${unit.name}</h3>
+                                    <p class="text-sm text-emerald-600 font-semibold">$${unit.price} / night</p>
+                                </div>
+                                <span class="px-2.5 py-1 ${badgeColor} rounded-full text-xs font-semibold">${unit.status}</span>
+                            </div>
+                            <div class="flex space-x-2 pt-2">
+                                <button onclick="window.updateStatus('${unit.id}', 'Available')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium">Set Available</button>
+                                <button onclick="window.updateStatus('${unit.id}', 'Booked')" class="flex-1 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-xs font-bold">Mark Booked</button>
+                            </div>
+                        </div>
                     `;
-                });
+                }
+            });
+        });
 
-                document.getElementById('hotelTableBody').innerHTML = html || '<tr><td colspan="8" style="text-align:center;">No hotel reservations found.</td></tr>';
-                document.getElementById('hotel-active-count').innerText = active;
-                document.getElementById('hotel-pending-count').innerText = pending;
-            } catch (e) { console.error(e); }
+        window.updateStatus = async function(id, newStatus) {
+            try {
+                await updateDoc(doc(db, "units", id), { status: newStatus });
+            } catch(err) {
+                alert("Error updating status");
+            }
         }
-
-        window.updateStatus = async function(docId, newStatus) {
-            await updateDoc(doc(db, "udy_bookings", docId), { status: newStatus });
-            loadHotelBookings();
-        };
     </script>
 </body>
 </html>
