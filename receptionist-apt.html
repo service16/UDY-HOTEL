@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reception Desk - Udy Apartments</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Udy Apartments - Front Desk (City Annex)</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="admin.html">Admin Portal</a>
+      <a href="receptionist-hotel.html">Hotel Desk</a>
+      <a href="receptionist-apt.html">Apartment Desk</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Apartment Front Desk Management</h2>
+
+    <div class="card">
+      <h3>Apartment Walk-In Guest Registration</h3>
+      <form id="aptWalkInForm">
+        <label>Guest Full Name</label>
+        <input type="text" id="aptGuestName" placeholder="John Smith" required>
+
+        <label>Select Apartment Unit</label>
+        <select id="aptRoomSelect" required>
+          <option value="">Loading apartments...</option>
+        </select>
+
+        <label>Check-In Date</label>
+        <input type="date" id="aptCheckInDate" required>
+
+        <label>Check-Out Date</label>
+        <input type="date" id="aptCheckOutDate" required>
+
+        <button type="submit">Check-In Guest</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Active Apartment Guests & History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Guest Name</th>
+            <th>Unit</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="aptBookingsTable">
+          <tr><td colspan="5">Loading guest records...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="module">
+    import { db, collection, addDoc, onSnapshot } from "./app.js";
+
+    const aptRoomSelect = document.getElementById('aptRoomSelect');
+    const aptBookingsTable = document.getElementById('aptBookingsTable');
+    const aptWalkInForm = document.getElementById('aptWalkInForm');
+
+    // Real-time listener for apartments
+    onSnapshot(collection(db, "rooms"), (snapshot) => {
+      let options = '<option value="">Select an apartment</option>';
+      snapshot.forEach((doc) => {
+        const room = doc.data();
+        if (room.propertyType === 'apartment') {
+          options += `<option value="${room.name}">${room.name} ($${room.price}/night)</option>`;
+        }
+      });
+      aptRoomSelect.innerHTML = options;
+    });
+
+    // Handle walk-in booking for apartments
+    aptWalkInForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const guestName = document.getElementById('aptGuestName').value;
+      const roomName = aptRoomSelect.value;
+      const checkIn = document.getElementById('aptCheckInDate').value;
+      const checkOut = document.getElementById('aptCheckOutDate').value;
+
+      try {
+        await addDoc(collection(db, "bookings"), {
+          propertyType: 'apartment',
+          guestName,
+          roomName,
+          checkIn,
+          checkOut,
+          status: 'Checked-In',
+          createdAt: new Date()
+        });
+        alert('Apartment guest checked in successfully!');
+        aptWalkInForm.reset();
+      } catch (error) {
+        console.error("Error checking in guest:", error);
+        alert('Failed to register booking.');
+      }
+    });
+
+    // Real-time listener for apartment bookings
+    onSnapshot(collection(db, "bookings"), (snapshot) => {
+      let html = '';
+      snapshot.forEach((doc) => {
+        const b = doc.data();
+        if (b.propertyType === 'apartment') {
+          html += `
+            <tr>
+              <td>${b.guestName}</td>
+              <td>${b.roomName}</td>
+              <td>${b.checkIn}</td>
+              <td>${b.checkOut}</td>
+              <td>${b.status}</td>
+            </tr>
+          `;
+        }
+      });
+      if (html === '') html = '<tr><td colspan="5">No active guests at the apartments.</td></tr>';
+      aptBookingsTable.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
