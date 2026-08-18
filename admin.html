@@ -3,46 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel & Apartments - Supervisor Admin Portal</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Udy Hotel & Apartments | Supervisor Control Center</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
 </head>
 <body class="bg-slate-950 font-sans antialiased text-slate-100">
 
     <div class="flex h-screen overflow-hidden">
         
         <!-- Sidebar Supervisor Control -->
-        <aside class="w-72 bg-slate-900 border-r border-slate-800 hidden md:flex flex-col justify-between">
+        <aside class="w-72 bg-slate-900 border-r border-slate-800/80 hidden md:flex flex-col justify-between">
             <div>
                 <div class="px-6 py-6 border-b border-slate-800 flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 font-black shadow-lg">
+                    <div class="w-10 h-10 rounded-2xl bg-amber-500 flex items-center justify-center text-slate-950 font-black shadow-lg">
                         <i class="fa-solid fa-crown"></i>
                     </div>
                     <div>
-                        <span class="text-base font-extrabold text-white block leading-tight">UDY SUPERVISOR</span>
+                        <span class="text-sm font-extrabold text-white block tracking-wide">UDY SUPERVISOR</span>
                         <span class="text-[10px] text-amber-400 font-bold uppercase tracking-widest">Master Management</span>
                     </div>
                 </div>
                 <nav class="mt-6 px-4 space-y-1.5">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-bold rounded-xl shadow transition text-sm">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-bold rounded-2xl shadow transition text-sm">
                         <i class="fa-solid fa-chart-pie w-5"></i><span>Dashboard & Units</span>
                     </button>
-                    <button onclick="switchTab('history')" id="nav-history" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl transition text-sm font-medium">
+                    <button onclick="switchTab('history')" id="nav-history" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800/80 text-slate-300 hover:text-white rounded-2xl transition text-sm font-medium">
                         <i class="fa-solid fa-book-bookmark w-5"></i><span>Customer History & Logs</span>
                     </button>
-                    <a href="hotel-desk.html" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl transition text-sm font-medium">
+                    <div class="pt-4 pb-2 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Front Desks</div>
+                    <a href="hotel-desk.html" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800/80 text-slate-300 hover:text-white rounded-2xl transition text-sm font-medium">
                         <i class="fa-solid fa-hotel w-5"></i><span>Hotel Front Desk</span>
                     </a>
-                    <a href="apartment-desk.html" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl transition text-sm font-medium">
+                    <a href="apartment-desk.html" class="w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800/80 text-slate-300 hover:text-white rounded-2xl transition text-sm font-medium">
                         <i class="fa-solid fa-house-chimney w-5"></i><span>Apartment Desk</span>
                     </a>
                 </nav>
             </div>
             <div class="p-4 border-t border-slate-800">
-                <a href="index.html" class="w-full flex items-center justify-center space-x-2 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition font-semibold text-xs">
-                    <i class="fa-solid fa-globe"></i>
+                <a href="index.html" class="w-full flex items-center justify-center space-x-2 py-3 bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl transition font-semibold text-xs">
+                    <i class="fa-solid fa-globe text-amber-400"></i>
                     <span>View Public Website</span>
                 </a>
             </div>
@@ -52,11 +58,14 @@
         <div class="flex-1 flex flex-col overflow-y-auto">
             
             <!-- Top Header -->
-            <header class="bg-slate-900 border-b border-slate-800 h-20 flex items-center justify-between px-8 z-10">
-                <h1 id="header-title" class="text-xl font-bold text-white">Master Supervisor Dashboard</h1>
+            <header class="bg-slate-900 border-b border-slate-800/80 h-20 flex items-center justify-between px-8 z-10">
+                <h1 id="header-title" class="text-lg font-extrabold text-white">Master Supervisor Dashboard</h1>
                 <div class="flex items-center space-x-4">
-                    <span class="text-xs font-semibold px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full" id="connection-status">Connecting Database...</span>
-                    <div class="h-10 w-10 rounded-xl bg-amber-500 text-slate-950 font-black flex items-center justify-center shadow">SP</div>
+                    <span class="text-xs font-bold px-3 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="connection-status">Live Database Online</span>
+                    </span>
+                    <div class="h-10 w-10 rounded-2xl bg-amber-500 text-slate-950 font-black flex items-center justify-center shadow">SP</div>
                 </div>
             </header>
 
@@ -67,62 +76,62 @@
                 <div id="tab-content-dashboard" class="space-y-8">
                     <!-- Metrics Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-lg">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex items-center justify-between shadow-xl">
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Revenue</p>
+                                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Total Revenue</p>
                                 <h3 class="text-2xl font-black text-white mt-1" id="stat-revenue">$0</h3>
                             </div>
-                            <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl"><i class="fa-solid fa-dollar-sign text-xl"></i></div>
+                            <div class="p-3.5 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20"><i class="fa-solid fa-dollar-sign text-lg"></i></div>
                         </div>
-                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-lg">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex items-center justify-between shadow-xl">
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Units</p>
+                                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Total Units</p>
                                 <h3 class="text-2xl font-black text-white mt-1" id="stat-active">0</h3>
                             </div>
-                            <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl"><i class="fa-solid fa-door-open text-xl"></i></div>
+                            <div class="p-3.5 bg-blue-500/10 text-blue-400 rounded-2xl border border-blue-500/20"><i class="fa-solid fa-door-open text-lg"></i></div>
                         </div>
-                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-lg">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex items-center justify-between shadow-xl">
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Booked Units</p>
+                                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Booked Units</p>
                                 <h3 class="text-2xl font-black text-white mt-1" id="stat-booked">0</h3>
                             </div>
-                            <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl"><i class="fa-solid fa-bookmark text-xl"></i></div>
+                            <div class="p-3.5 bg-amber-500/10 text-amber-400 rounded-2xl border border-amber-500/20"><i class="fa-solid fa-bookmark text-lg"></i></div>
                         </div>
-                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-lg">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex items-center justify-between shadow-xl">
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Bookings</p>
+                                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Total Bookings</p>
                                 <h3 class="text-2xl font-black text-white mt-1" id="stat-total-bookings">0</h3>
                             </div>
-                            <div class="p-3 bg-purple-500/10 text-purple-400 rounded-xl"><i class="fa-solid fa-clipboard-list text-xl"></i></div>
+                            <div class="p-3.5 bg-purple-500/10 text-purple-400 rounded-2xl border border-purple-500/20"><i class="fa-solid fa-clipboard-list text-lg"></i></div>
                         </div>
                     </div>
 
                     <!-- Rooms & Apartments Unit Management Table -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
                         <div class="px-6 py-5 border-b border-slate-800 flex flex-wrap justify-between items-center gap-4">
                             <div class="flex items-center space-x-3">
                                 <h2 class="text-base font-bold text-white">Manage Hotel Rooms & Apartments</h2>
                                 <div class="inline-flex rounded-xl border border-slate-800 p-1 bg-slate-950">
-                                    <button onclick="setUnitFilter('all')" id="filter-all" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition">All</button>
-                                    <button onclick="setUnitFilter('Hotel Room')" id="filter-hotel" class="px-3 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">Hotel Rooms</button>
-                                    <button onclick="setUnitFilter('Apartment')" id="filter-apt" class="px-3 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">Apartments</button>
+                                    <button onclick="setUnitFilter('all')" id="filter-all" class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition">All</button>
+                                    <button onclick="setUnitFilter('Hotel Room')" id="filter-hotel" class="px-3.5 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">Hotel Rooms</button>
+                                    <button onclick="setUnitFilter('Apartment')" id="filter-apt" class="px-3.5 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">Apartments</button>
                                 </div>
                             </div>
-                            <button onclick="openAddUnitModal()" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl text-xs transition shadow-lg flex items-center space-x-2">
-                                <i class="fa-solid fa-plus"></i>
+                            <button onclick="openAddUnitModal()" class="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-2xl text-xs transition shadow-lg shadow-amber-500/20 flex items-center space-x-2">
+                                <i class="fa-solid fa-plus text-xs"></i>
                                 <span>Add New Unit</span>
                             </button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-950/50 text-slate-500 text-[10px] uppercase tracking-wider border-b border-slate-800">
-                                        <th class="py-3 px-6">Picture</th>
-                                        <th class="py-3 px-6">Unit Name</th>
-                                        <th class="py-3 px-6">Category</th>
-                                        <th class="py-3 px-6">Price / Night</th>
-                                        <th class="py-3 px-6">Status</th>
-                                        <th class="py-3 px-6 text-right">Actions</th>
+                                    <tr class="bg-slate-950/60 text-slate-500 text-[10px] font-extrabold uppercase tracking-wider border-b border-slate-800">
+                                        <th class="py-4 px-6">Picture</th>
+                                        <th class="py-4 px-6">Unit Name</th>
+                                        <th class="py-4 px-6">Category</th>
+                                        <th class="py-4 px-6">Price / Night</th>
+                                        <th class="py-4 px-6">Status</th>
+                                        <th class="py-4 px-6 text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="units-table-body" class="divide-y divide-slate-800/60 text-sm text-slate-300">
@@ -135,24 +144,24 @@
 
                 <!-- TAB 2: CUSTOMER HISTORY & DOCUMENTATION -->
                 <div id="tab-content-history" class="space-y-6 hidden">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
                         <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center">
                             <div>
                                 <h2 class="text-base font-bold text-white">Comprehensive Customer History & Documentation</h2>
-                                <p class="text-xs text-slate-400 mt-0.5">Complete permanent record of all past and present hotel & apartment reservations.</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Permanent record of all past and present guest reservations across hotel and apartments.</p>
                             </div>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-950/50 text-slate-500 text-[10px] uppercase tracking-wider border-b border-slate-800">
-                                        <th class="py-3 px-6">Booking Ref</th>
-                                        <th class="py-3 px-6">Guest Name & Email</th>
-                                        <th class="py-3 px-6">Unit Booked</th>
-                                        <th class="py-3 px-6">Check-In / Check-Out</th>
-                                        <th class="py-3 px-6">Billing</th>
-                                        <th class="py-3 px-6">Status</th>
-                                        <th class="py-3 px-6 text-right">Supervisor Action</th>
+                                    <tr class="bg-slate-950/60 text-slate-500 text-[10px] font-extrabold uppercase tracking-wider border-b border-slate-800">
+                                        <th class="py-4 px-6">Booking Ref</th>
+                                        <th class="py-4 px-6">Guest Name & Email</th>
+                                        <th class="py-4 px-6">Unit Booked</th>
+                                        <th class="py-4 px-6">Check-In / Check-Out</th>
+                                        <th class="py-4 px-6">Billing</th>
+                                        <th class="py-4 px-6">Status</th>
+                                        <th class="py-4 px-6 text-right">Supervisor Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="history-table-body" class="divide-y divide-slate-800/60 text-sm text-slate-300">
@@ -168,17 +177,17 @@
     </div>
 
     <!-- Edit/Add Unit Modal -->
-    <div id="unit-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
+    <div id="unit-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center z-50 p-4">
         <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg p-8 shadow-2xl space-y-6">
             <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                 <h3 id="modal-title" class="text-lg font-bold text-white">Add/Edit Unit</h3>
-                <button onclick="closeUnitModal()" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="closeUnitModal()" class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="unit-form" onsubmit="handleUnitSubmit(event)" class="space-y-4">
                 <input type="hidden" id="unit-id">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Unit Name / Number</label>
-                    <input type="text" id="unit-name" required class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500 text-sm">
+                    <input type="text" id="unit-name" required placeholder="e.g. Presidential Suite 501" class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500 text-sm">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -190,7 +199,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Price / Night ($)</label>
-                        <input type="number" id="unit-price" required class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500 text-sm">
+                        <input type="number" id="unit-price" required placeholder="250" class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-amber-500 text-sm">
                     </div>
                 </div>
                 <div>
@@ -255,24 +264,23 @@
             renderHistoryTable();
         });
 
-        // Tab Switcher
         window.switchTab = function(tab) {
             ['dashboard', 'history'].forEach(t => {
                 document.getElementById(`tab-content-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).className = "w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl transition text-sm font-medium";
+                document.getElementById(`nav-${t}`).className = "w-full flex items-center space-x-3 px-4 py-3 hover:bg-slate-800/80 text-slate-300 hover:text-white rounded-2xl transition text-sm font-medium";
             });
             document.getElementById(`tab-content-${tab}`).classList.remove('hidden');
-            document.getElementById(`nav-${tab}`).className = "w-full flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-bold rounded-xl shadow transition text-sm";
+            document.getElementById(`nav-${tab}`).className = "w-full flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-bold rounded-2xl shadow transition text-sm";
             document.getElementById('header-title').innerText = tab === 'dashboard' ? 'Master Supervisor Dashboard' : 'Customer History & Documentation';
         }
 
         window.setUnitFilter = function(category) {
             currentUnitFilter = category;
             ['all', 'hotel', 'apt'].forEach(id => {
-                document.getElementById(`filter-${id}`).className = "px-3 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
+                document.getElementById(`filter-${id}`).className = "px-3.5 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
             });
             const activeId = category === 'all' ? 'filter-all' : (category === 'Hotel Room' ? 'filter-hotel' : 'filter-apt');
-            document.getElementById(activeId).className = "px-3 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition";
+            document.getElementById(activeId).className = "px-3.5 py-1.5 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition";
             renderUnitsTable();
         }
 
@@ -285,19 +293,24 @@
                 filtered = allUnits.filter(u => u.category === currentUnitFilter);
             }
 
+            if(filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-12 text-slate-500">No units found. Click 'Add New Unit' to create one.</td></tr>`;
+                return;
+            }
+
             filtered.forEach(unit => {
                 let badgeClass = unit.status === 'Available' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20';
                 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/40 transition">
-                        <td class="py-3 px-6"><img src="${unit.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945'}" class="w-14 h-10 object-cover rounded-lg border border-slate-800"></td>
-                        <td class="py-3 px-6 font-bold text-white">${unit.name}</td>
-                        <td class="py-3 px-6"><span class="px-2.5 py-1 bg-slate-950 border border-slate-800 text-slate-300 rounded-lg text-xs">${unit.category}</span></td>
-                        <td class="py-3 px-6 font-bold text-amber-400">$${unit.price}</td>
-                        <td class="py-3 px-6"><span class="px-2.5 py-1 border ${badgeClass} rounded-full text-xs font-bold">${unit.status}</span></td>
-                        <td class="py-3 px-6 text-right space-x-2">
-                            <button onclick="window.openEditUnitModal('${unit.id}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl text-xs font-bold transition">Edit</button>
-                            <button onclick="window.deleteUnit('${unit.id}')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold transition">Delete</button>
+                        <td class="py-4 px-6"><img src="${unit.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945'}" class="w-16 h-11 object-cover rounded-xl border border-slate-800 shadow-sm"></td>
+                        <td class="py-4 px-6 font-bold text-white">${unit.name}</td>
+                        <td class="py-4 px-6"><span class="px-3 py-1 bg-slate-950 border border-slate-800 text-slate-300 rounded-xl text-xs font-semibold">${unit.category}</span></td>
+                        <td class="py-4 px-6 font-bold text-amber-400">$${unit.price}</td>
+                        <td class="py-4 px-6"><span class="px-3 py-1 border ${badgeClass} rounded-full text-xs font-bold">${unit.status}</span></td>
+                        <td class="py-4 px-6 text-right space-x-2">
+                            <button onclick="window.openEditUnitModal('${unit.id}')" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl text-xs font-bold transition">Edit</button>
+                            <button onclick="window.deleteUnit('${unit.id}')" class="px-3.5 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold transition">Delete</button>
                         </td>
                     </tr>
                 `;
@@ -320,17 +333,17 @@
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-800/40 transition">
-                        <td class="py-3 px-6 font-mono text-xs text-amber-400">#${b.id.slice(-6).toUpperCase()}</td>
-                        <td class="py-3 px-6">
+                        <td class="py-4 px-6 font-mono text-xs text-amber-400 font-bold">#${b.id.slice(-6).toUpperCase()}</td>
+                        <td class="py-4 px-6">
                             <div class="font-bold text-white">${b.guestName || 'Guest'}</div>
-                            <div class="text-xs text-slate-500">${b.guestEmail || 'No email'}</div>
+                            <div class="text-xs text-slate-500">${b.guestEmail || 'No email provided'}</div>
                         </td>
-                        <td class="py-3 px-6 font-medium text-slate-300">${b.unitName || 'Unit'}</td>
-                        <td class="py-3 px-6 text-xs text-slate-400">${b.checkIn || 'N/A'} &rarr; ${b.checkOut || 'N/A'}</td>
-                        <td class="py-3 px-6 font-bold text-emerald-400">$${b.totalPrice || 200}</td>
-                        <td class="py-3 px-6"><span class="px-2.5 py-1 border ${badge} rounded-full text-xs font-bold">${b.status || 'Confirmed'}</span></td>
-                        <td class="py-3 px-6 text-right space-x-2">
-                            ${b.status !== 'Cancelled' ? `<button onclick="window.updateBookingStatus('${b.id}', 'Cancelled')" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold transition">Cancel</button>` : `<span class="text-xs text-slate-500">Closed</span>`}
+                        <td class="py-4 px-6 font-medium text-slate-300">${b.unitName || 'Unit'}</td>
+                        <td class="py-4 px-6 text-xs text-slate-400">${b.checkIn || 'N/A'} &rarr; ${b.checkOut || 'N/A'}</td>
+                        <td class="py-4 px-6 font-bold text-emerald-400">$${b.totalPrice || 200}</td>
+                        <td class="py-4 px-6"><span class="px-3 py-1 border ${badge} rounded-full text-xs font-bold">${b.status || 'Confirmed'}</span></td>
+                        <td class="py-4 px-6 text-right space-x-2">
+                            ${b.status !== 'Cancelled' ? `<button onclick="window.updateBookingStatus('${b.id}', 'Cancelled')" class="px-3.5 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-bold transition">Cancel</button>` : `<span class="text-xs text-slate-500 font-semibold">Closed</span>`}
                         </td>
                     </tr>
                 `;
@@ -386,7 +399,7 @@
         }
 
         window.deleteUnit = async function(id) {
-            if(confirm("Are you sure you want to permanently delete this unit?")) {
+            if(confirm("Are you sure you want to permanently delete this unit from the system?")) {
                 try {
                     await deleteDoc(doc(db, "units", id));
                 } catch (err) {
