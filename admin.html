@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel - Admin Dashboard</title>
+    <title>Udy Hotel & Apartments - Admin Portal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -17,15 +17,18 @@
         <aside class="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col justify-between">
             <div>
                 <div class="px-6 py-6 border-b border-slate-800 flex items-center space-x-3">
-                    <i class="fa-solid fa-hotel text-amber-400 text-2xl"></i>
-                    <span class="text-xl font-bold text-white tracking-wide">Udy Hotel</span>
+                    <i class="fa-solid fa-building-user text-amber-400 text-2xl"></i>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-wide block leading-tight">Udy Hotel</span>
+                        <span class="text-xs text-amber-400 font-medium">& Apartments</span>
+                    </div>
                 </div>
                 <nav class="mt-6 px-4 space-y-1">
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-semibold rounded-lg shadow-sm"><i class="fa-solid fa-chart-pie w-5"></i><span>Dashboard</span></a>
-                    <a href="#rooms-section" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-bed w-5"></i><span>Rooms & Pricing</span></a>
-                    <a href="#bookings-section" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-calendar-check w-5"></i><span>Bookings</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-users w-5"></i><span>Guests</span></a>
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-gear w-5"></i><span>Settings</span></a>
+                    <a href="#" onclick="switchTab('dashboard')" id="nav-dashboard" class="flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-semibold rounded-lg shadow-sm transition"><i class="fa-solid fa-chart-pie w-5"></i><span>Dashboard</span></a>
+                    <a href="#" onclick="switchTab('units')" id="nav-units" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-door-open w-5"></i><span>Rooms & Apartments</span></a>
+                    <a href="#" onclick="switchTab('bookings')" id="nav-bookings" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-calendar-check w-5"></i><span>Bookings</span></a>
+                    <a href="#" onclick="switchTab('guests')" id="nav-guests" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-users w-5"></i><span>Guests</span></a>
+                    <a href="#" onclick="switchTab('settings')" id="nav-settings" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-gear w-5"></i><span>Settings</span></a>
                 </nav>
             </div>
             <div class="p-4 border-t border-slate-800">
@@ -42,10 +45,10 @@
             <!-- Top Header -->
             <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
                 <div class="flex items-center space-x-4">
-                    <h1 class="text-xl font-bold text-slate-800">Admin Control Panel</h1>
+                    <h1 id="page-title" class="text-xl font-bold text-slate-800">Unified Management Dashboard</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <span class="text-sm font-medium text-slate-600">Welcome, <strong class="text-slate-900">Admin</strong></span>
+                    <span class="text-sm font-medium text-slate-600">Admin Mode: <strong class="text-slate-900">Master Control</strong></span>
                     <div class="h-10 w-10 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center shadow">AD</div>
                 </div>
             </header>
@@ -58,85 +61,71 @@
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
                         <div>
                             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Revenue</p>
-                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="total-revenue">$24,580</h3>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-revenue">$38,450</h3>
                         </div>
                         <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fa-solid fa-dollar-sign text-xl"></i></div>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
                         <div>
-                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Rooms</p>
-                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="active-rooms">18 / 20</h3>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Units</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-active">28 / 30</h3>
                         </div>
-                        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-door-open text-xl"></i></div>
+                        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-hotel text-xl"></i></div>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
                         <div>
-                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Booked Rooms</p>
-                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="booked-rooms">12</h3>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Booked Units</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-booked">16</h3>
                         </div>
                         <div class="p-3 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-bookmark text-xl"></i></div>
                     </div>
                     <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
                         <div>
                             <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Bookings</p>
-                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="total-bookings">148</h3>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-total-bookings">214</h3>
                         </div>
                         <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-clipboard-list text-xl"></i></div>
                     </div>
                 </div>
 
-                <!-- Rooms Management Section -->
-                <div id="rooms-section" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center">
-                        <h2 class="text-lg font-bold text-slate-800">Manage Rooms & Pricing</h2>
-                        <button onclick="openAddRoomModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
-                            <i class="fa-solid fa-plus mr-2"></i>Add New Room
+                <!-- Rooms & Apartments Management Section -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-4">
+                        <div class="flex items-center space-x-3">
+                            <h2 class="text-lg font-bold text-slate-800">Manage Rooms & Apartments</h2>
+                            <div class="inline-flex rounded-lg border border-slate-200 p-1 bg-slate-50">
+                                <button onclick="filterCategory('all')" id="filter-all" class="px-3 py-1 text-xs font-semibold rounded-md bg-white text-slate-800 shadow-sm transition">All</button>
+                                <button onclick="filterCategory('Hotel Room')" id="filter-hotel" class="px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition">Hotel Rooms</button>
+                                <button onclick="filterCategory('Apartment')" id="filter-apt" class="px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition">Apartments</button>
+                            </div>
+                        </div>
+                        <button onclick="openAddModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
+                            <i class="fa-solid fa-plus mr-2"></i>Add New Unit
                         </button>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse" id="rooms-table">
+                        <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="bg-slate-50 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200">
-                                    <th class="py-3 px-6">Room Picture</th>
-                                    <th class="py-3 px-6">Room Name</th>
-                                    <th class="py-3 px-6">Type</th>
+                                    <th class="py-3 px-6">Picture</th>
+                                    <th class="py-3 px-6">Name / Title</th>
+                                    <th class="py-3 px-6">Category</th>
                                     <th class="py-3 px-6">Price / Night</th>
                                     <th class="py-3 px-6">Status</th>
                                     <th class="py-3 px-6 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
-                                <tr>
-                                    <td class="py-3 px-6"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39" alt="Deluxe Suite" class="w-16 h-12 object-cover rounded-lg shadow-sm"></td>
-                                    <td class="py-3 px-6 font-semibold text-slate-900">Deluxe Ocean Suite</td>
-                                    <td class="py-3 px-6">Suite</td>
-                                    <td class="py-3 px-6 font-medium text-emerald-600">$250</td>
-                                    <td class="py-3 px-6"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold">Available</span></td>
-                                    <td class="py-3 px-6 text-right">
-                                        <button onclick="openEditRoomModal(1, 'Deluxe Ocean Suite', 'Suite', 250, 'https://images.unsplash.com/photo-1618773928121-c32242e63f39')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-medium transition mr-2">Edit</button>
-                                        <button onclick="deleteRoom(this)" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-medium transition">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-6"><img src="https://images.unsplash.com/photo-1591088398332-8a7791972843" alt="Executive Room" class="w-16 h-12 object-cover rounded-lg shadow-sm"></td>
-                                    <td class="py-3 px-6 font-semibold text-slate-900">Executive King Room</td>
-                                    <td class="py-3 px-6">Double</td>
-                                    <td class="py-3 px-6 font-medium text-emerald-600">$180</td>
-                                    <td class="py-3 px-6"><span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-semibold">Booked</span></td>
-                                    <td class="py-3 px-6 text-right">
-                                        <button onclick="openEditRoomModal(2, 'Executive King Room', 'Double', 180, 'https://images.unsplash.com/photo-1591088398332-8a7791972843')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-medium transition mr-2">Edit</button>
-                                        <button onclick="deleteRoom(this)" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-medium transition">Delete</button>
-                                    </td>
-                                </tr>
+                            <tbody id="units-table-body" class="divide-y divide-slate-200 text-sm text-slate-700">
+                                <!-- Dynamic rows populated via JS -->
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 <!-- Recent Bookings Section -->
-                <div id="bookings-section" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="px-6 py-5 border-b border-slate-200">
-                        <h2 class="text-lg font-bold text-slate-800">Recent Customer Bookings</h2>
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center">
+                        <h2 class="text-lg font-bold text-slate-800">Recent Reservations (Hotel & Apartments)</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -144,36 +133,15 @@
                                 <tr class="bg-slate-50 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200">
                                     <th class="py-3 px-6">Booking ID</th>
                                     <th class="py-3 px-6">Guest Name</th>
-                                    <th class="py-3 px-6">Room Type</th>
+                                    <th class="py-3 px-6">Unit Booked</th>
                                     <th class="py-3 px-6">Check-In</th>
                                     <th class="py-3 px-6">Check-Out</th>
                                     <th class="py-3 px-6">Status</th>
                                     <th class="py-3 px-6 text-right">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200 text-sm text-slate-700">
-                                <tr>
-                                    <td class="py-3 px-6 font-mono font-medium text-slate-900">#BK-9021</td>
-                                    <td class="py-3 px-6 font-medium text-slate-900">Sarah Jenkins</td>
-                                    <td class="py-3 px-6">Executive King Room</td>
-                                    <td class="py-3 px-6">Aug 20, 2026</td>
-                                    <td class="py-3 px-6">Aug 25, 2026</td>
-                                    <td class="py-3 px-6"><span class="px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold">Confirmed</span></td>
-                                    <td class="py-3 px-6 text-right">
-                                        <button onclick="cancelBooking(this)" class="text-red-600 hover:text-red-900 font-medium text-xs">Cancel</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-3 px-6 font-mono font-medium text-slate-900">#BK-9020</td>
-                                    <td class="py-3 px-6 font-medium text-slate-900">Michael Brown</td>
-                                    <td class="py-3 px-6">Deluxe Ocean Suite</td>
-                                    <td class="py-3 px-6">Aug 15, 2026</td>
-                                    <td class="py-3 px-6">Aug 18, 2026</td>
-                                    <td class="py-3 px-6"><span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-semibold">Completed</span></td>
-                                    <td class="py-3 px-6 text-right">
-                                        <button class="text-slate-400 hover:text-slate-600 font-medium text-xs">Details</button>
-                                    </td>
-                                </tr>
+                            <tbody id="bookings-table-body" class="divide-y divide-slate-200 text-sm text-slate-700">
+                                <!-- Dynamic bookings populated via JS -->
                             </tbody>
                         </table>
                     </div>
@@ -183,94 +151,246 @@
         </div>
     </div>
 
-    <!-- Edit/Add Room Modal -->
-    <div id="room-modal" class="fixed inset-0 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+    <!-- Edit/Add Unit Modal -->
+    <div id="unit-modal" class="fixed inset-0 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-2xl border border-slate-200">
             <div class="flex justify-between items-center mb-4">
-                <h3 id="modal-title" class="text-lg font-bold text-slate-900">Edit Room Details</h3>
+                <h3 id="modal-title" class="text-lg font-bold text-slate-900">Edit Unit</h3>
                 <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <form id="room-form" onsubmit="saveRoom(event)" class="space-y-4">
-                <input type="hidden" id="room-id">
+            <form id="unit-form" onsubmit="saveUnit(event)" class="space-y-4">
+                <input type="hidden" id="unit-id">
                 <div>
-                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Room Name</label>
-                    <input type="text" id="room-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Unit Name / Number</label>
+                    <input type="text" id="unit-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Room Type</label>
-                        <select id="room-type" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
-                            <option value="Suite">Suite</option>
-                            <option value="Double">Double</option>
-                            <option value="Single">Single</option>
-                            <option value="Penthouse">Penthouse</option>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Category Type</label>
+                        <select id="unit-category" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Hotel Room">Hotel Room</option>
+                            <option value="Apartment">Apartment</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Price per Night ($)</label>
-                        <input type="number" id="room-price" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="number" id="unit-price" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                     </div>
                 </div>
                 <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Status</label>
+                    <select id="unit-status" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="Available">Available</option>
+                        <option value="Booked">Booked</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div>
                     <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Upload Picture</label>
-                    <input type="file" id="room-image-file" accept="image/*" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                    <input type="file" id="unit-image-file" accept="image/*" onchange="previewImage(event)" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                    <input type="hidden" id="unit-image-url" value="">
+                    <div class="mt-2">
+                        <img id="image-preview" src="" alt="Preview" class="w-24 h-16 object-cover rounded-lg hidden border">
+                    </div>
                 </div>
                 <div class="flex justify-end space-x-3 mt-6">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-sm font-bold shadow-sm">Save Changes</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-sm font-bold shadow-sm">Save Unit</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript Actions -->
+    <!-- JavaScript Application Logic -->
     <script>
-        function openEditRoomModal(id, name, type, price, image) {
-            document.getElementById('modal-title').innerText = "Edit Room & Price";
-            document.getElementById('room-id').value = id;
-            document.getElementById('room-name').value = name;
-            document.getElementById('room-type').value = type;
-            document.getElementById('room-price').value = price;
-            document.getElementById('room-modal').classList.remove('hidden');
+        // Initial Database State for Rooms and Apartments
+        let units = [
+            { id: 1, name: 'Deluxe Ocean Suite', category: 'Hotel Room', price: 250, status: 'Available', image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39' },
+            { id: 2, name: 'Executive King Room', category: 'Hotel Room', price: 180, status: 'Booked', image: 'https://images.unsplash.com/photo-1591088398332-8a7791972843' },
+            { id: 3, name: 'Luxury 2-Bedroom Penthouse Apt', category: 'Apartment', price: 450, status: 'Available', image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267' },
+            { id: 4, name: 'Cozy 1-Bedroom Studio Apartment', category: 'Apartment', price: 150, status: 'Booked', image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688' }
+        ];
+
+        let bookings = [
+            { id: '#BK-9021', guest: 'Sarah Jenkins', unit: 'Executive King Room', checkin: 'Aug 20, 2026', checkout: 'Aug 25, 2026', status: 'Confirmed' },
+            { id: '#BK-9022', guest: 'David Mark', unit: 'Luxury 2-Bedroom Penthouse Apt', checkin: 'Aug 22, 2026', checkout: 'Aug 30, 2026', status: 'Confirmed' },
+            { id: '#BK-9020', guest: 'Michael Brown', unit: 'Deluxe Ocean Suite', checkin: 'Aug 15, 2026', checkout: 'Aug 18, 2026', status: 'Completed' }
+        ];
+
+        let currentFilter = 'all';
+
+        function renderUnits(filter = 'all') {
+            const tbody = document.getElementById('units-table-body');
+            tbody.innerHTML = '';
+            
+            let filtered = units;
+            if(filter !== 'all') {
+                filtered = units.filter(u => u.category === filter);
+            }
+
+            filtered.forEach(unit => {
+                let badgeClass = 'bg-emerald-50 text-emerald-700';
+                if(unit.status === 'Booked') badgeClass = 'bg-amber-50 text-amber-700';
+                if(unit.status === 'Maintenance') badgeClass = 'bg-red-50 text-red-700';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="py-3 px-6"><img src="${unit.image}" alt="${unit.name}" class="w-16 h-12 object-cover rounded-lg shadow-sm"></td>
+                        <td class="py-3 px-6 font-semibold text-slate-900">${unit.name}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-medium">${unit.category}</span></td>
+                        <td class="py-3 px-6 font-medium text-emerald-600">$${unit.price}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 ${badgeClass} rounded-full text-xs font-semibold">${unit.status}</span></td>
+                        <td class="py-3 px-6 text-right">
+                            <button onclick="openEditModal(${unit.id})" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-medium transition mr-2">Edit</button>
+                            <button onclick="deleteUnit(${unit.id})" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-medium transition">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
-        function openAddRoomModal() {
-            document.getElementById('modal-title').innerText = "Add New Room";
-            document.getElementById('room-form').reset();
-            document.getElementById('room-id').value = '';
-            document.getElementById('room-modal').classList.remove('hidden');
+        function renderBookings() {
+            const tbody = document.getElementById('bookings-table-body');
+            tbody.innerHTML = '';
+            bookings.forEach(b => {
+                let statusBadge = 'bg-blue-50 text-blue-700';
+                if(b.status === 'Completed') statusBadge = 'bg-emerald-50 text-emerald-700';
+                if(b.status === 'Cancelled') statusBadge = 'bg-red-50 text-red-700';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="py-3 px-6 font-mono font-medium text-slate-900">${b.id}</td>
+                        <td class="py-3 px-6 font-medium text-slate-900">${b.guest}</td>
+                        <td class="py-3 px-6">${b.unit}</td>
+                        <td class="py-3 px-6">${b.checkin}</td>
+                        <td class="py-3 px-6">${b.checkout}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 ${statusBadge} rounded-full text-xs font-semibold">${b.status}</span></td>
+                        <td class="py-3 px-6 text-right">
+                            ${b.status === 'Confirmed' ? `<button onclick="cancelBooking('${b.id}')" class="text-red-600 hover:text-red-900 font-medium text-xs">Cancel</button>` : `<span class="text-slate-400 text-xs">Closed</span>`}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterCategory(category) {
+            currentFilter = category;
+            ['all', 'hotel', 'apt'].forEach(id => {
+                const btn = document.getElementById(`filter-${id}`);
+                btn.className = "px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition";
+            });
+            const activeBtnId = category === 'all' ? 'filter-all' : (category === 'Hotel Room' ? 'filter-hotel' : 'filter-apt');
+            document.getElementById(activeBtnId).className = "px-3 py-1 text-xs font-semibold rounded-md bg-white text-slate-800 shadow-sm transition";
+            renderUnits(category);
+        }
+
+        function openAddModal() {
+            document.getElementById('modal-title').innerText = "Add New Room or Apartment";
+            document.getElementById('unit-form').reset();
+            document.getElementById('unit-id').value = '';
+            document.getElementById('unit-image-url').value = 'https://images.unsplash.com/photo-1566073771259-6a8506099945';
+            document.getElementById('image-preview').classList.add('hidden');
+            document.getElementById('unit-modal').classList.remove('hidden');
+        }
+
+        function openEditModal(id) {
+            const unit = units.find(u => u.id === id);
+            if(!unit) return;
+            document.getElementById('modal-title').innerText = "Edit " + unit.category;
+            document.getElementById('unit-id').value = unit.id;
+            document.getElementById('unit-name').value = unit.name;
+            document.getElementById('unit-category').value = unit.category;
+            document.getElementById('unit-price').value = unit.price;
+            document.getElementById('unit-status').value = unit.status;
+            document.getElementById('unit-image-url').value = unit.image;
+            
+            const preview = document.getElementById('image-preview');
+            preview.src = unit.image;
+            preview.classList.remove('hidden');
+
+            document.getElementById('unit-modal').classList.remove('hidden');
         }
 
         function closeModal() {
-            document.getElementById('room-modal').classList.add('hidden');
+            document.getElementById('unit-modal').classList.add('hidden');
         }
 
-        function saveRoom(event) {
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('unit-image-url').value = e.target.result;
+                    const preview = document.getElementById('image-preview');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveUnit(event) {
             event.preventDefault();
-            alert("Room details updated successfully! Push this change code directly to your GitHub repository.");
+            const id = document.getElementById('unit-id').value;
+            const name = document.getElementById('unit-name').value;
+            const category = document.getElementById('unit-category').value;
+            const price = parseFloat(document.getElementById('unit-price').value);
+            const status = document.getElementById('unit-status').value;
+            const image = document.getElementById('unit-image-url').value || 'https://images.unsplash.com/photo-1566073771259-6a8506099945';
+
+            if(id) {
+                // Edit existing
+                const unit = units.find(u => u.id == id);
+                if(unit) {
+                    unit.name = name;
+                    unit.category = category;
+                    unit.price = price;
+                    unit.status = status;
+                    unit.image = image;
+                }
+            } else {
+                // Add new
+                const newId = units.length > 0 ? Math.max(...units.map(u => u.id)) + 1 : 1;
+                units.push({ id: newId, name, category, price, status, image });
+            }
+
+            renderUnits(currentFilter);
             closeModal();
+            alert("Database updated successfully! Replace your code on GitHub to reflect changes.");
         }
 
-        function deleteRoom(btn) {
-            if(confirm("Are you sure you want to delete this room?")) {
-                btn.closest('tr').remove();
+        function deleteUnit(id) {
+            if(confirm("Are you sure you want to delete this unit?")) {
+                units = units.filter(u => u.id !== id);
+                renderUnits(currentFilter);
             }
         }
 
-        function cancelBooking(btn) {
-            if(confirm("Are you sure you want to cancel this booking?")) {
-                const badge = btn.closest('tr').querySelector('span');
-                badge.className = "px-2.5 py-1 bg-red-50 text-red-700 rounded-full text-xs font-semibold";
-                badge.innerText = "Cancelled";
-                btn.remove();
+        function cancelBooking(bookingId) {
+            if(confirm("Are you sure you want to cancel booking " + bookingId + "?")) {
+                const b = bookings.find(x => x.id === bookingId);
+                if(b) b.status = 'Cancelled';
+                renderBookings();
             }
+        }
+
+        function switchTab(tabName) {
+            ['dashboard', 'units', 'bookings', 'guests', 'settings'].forEach(t => {
+                document.getElementById(`nav-${t}`)?.classList.remove('bg-amber-500', 'text-slate-950', 'font-semibold');
+            });
+            document.getElementById(`nav-${tabName}`)?.classList.add('bg-amber-500', 'text-slate-950', 'font-semibold');
+            document.getElementById('page-title').innerText = tabName.charAt(0).toUpperCase() + tabName.slice(1) + " Management";
         }
 
         function handleLogout() {
-            if(confirm("Are you sure you want to log out of the admin panel?")) {
+            if(confirm("Are you sure you want to log out?")) {
                 alert("Logged out securely.");
             }
         }
+
+        // Initial Load
+        renderUnits('all');
+        renderBookings();
     </script>
 </body>
 </html>
