@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Reception Portal | Udyhotel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #0F172A; --accent: #C5A059; --bg: #F8FAFC; --white: #FFFFFF; --text-dark: #1E293B; --text-gray: #64748B; --border: #E2E8F0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-dark); padding: 20px; }
+        
+        .login-screen { max-width: 400px; margin: 120px auto; background: var(--white); padding: 35px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.05); text-align: center; }
+        .login-screen h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); margin-bottom: 10px; }
+        .login-screen p { color: var(--text-gray); font-size: 0.88rem; margin-bottom: 20px; }
+        .login-screen input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 15px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; outline: none; }
+        
+        .portal-container { display: none; max-width: 1200px; margin: 0 auto; padding-top: 20px; }
+        .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+        .portal-header h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        
+        .portal-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+        .stat-card h4 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-gray); margin-bottom: 5px; }
+        .stat-card .number { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        
+        .portal-table-container { background: var(--white); border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
+        .portal-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; white-space: nowrap; }
+        .portal-table th { background: #f1f5f9; color: var(--primary); padding: 14px 16px; font-weight: 600; border-bottom: 1px solid var(--border); }
+        .portal-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        
+        .status-pill { padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+        .status-confirmed { background: #dcfce7; color: #166534; }
+        .status-checkedin { background: #dbeafe; color: #1e40af; }
+        .status-checkedout { background: #f1f5f9; color: #475569; }
+
+        .btn-action { padding: 6px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; margin-right: 5px; }
+        .btn-checkin { background: #2563eb; color: white; }
+        .btn-checkout { background: #64748b; color: white; }
+        .btn-delete { background: #dc2626; color: white; }
+        .btn-submit { background: var(--accent); color: var(--primary); border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="login-screen">
+        <h3><i class="fa-solid fa-hotel" style="color: var(--accent);"></i> Hotel Reception Portal</h3>
+        <p>Enter staff desk PIN (Default PIN: <b>1122</b>)</p>
+        <input type="password" id="pinInput" placeholder="Enter PIN">
+        <button class="btn-submit" onclick="verifyPin()">Access Hotel Desk</button>
+        <br><br>
+        <a href="index.html" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Return to Website</a>
+    </div>
+
+    <div id="portalContainer" class="portal-container">
+        <div class="portal-header">
+            <h2><i class="fa-solid fa-hotel" style="color: var(--accent);"></i> Hotel Front Desk Receptionist</h2>
+            <a href="index.html" class="btn-action btn-checkout" style="text-decoration: none;">Exit to Website</a>
+        </div>
+
+        <div class="portal-stats">
+            <div class="stat-card">
+                <h4>Active Hotel Guests</h4>
+                <div class="number" id="hotel-active-count">0</div>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Arrivals</h4>
+                <div class="number" id="hotel-pending-count">0</div>
+            </div>
+        </div>
+
+        <div class="portal-table-container">
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Ref ID</th>
+                        <th>Guest Name</th>
+                        <th>Phone</th>
+                        <th>Room Type</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="hotelTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
+          authDomain: "udyhotel-1c419.firebaseapp.com",
+          projectId: "udyhotel-1c419",
+          storageBucket: "udyhotel-1c419.firebasestorage.app",
+          messagingSenderId: "714050804978",
+          appId: "1:714050804978:web:a5cb029b2e45069c97c46b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.verifyPin = function() {
+            const pin = document.getElementById('pinInput').value;
+            if (pin === '1122') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('portalContainer').style.display = 'block';
+                loadHotelBookings();
+            } else {
+                alert('Incorrect PIN! Default Hotel PIN is 1122.');
+            }
+        };
+
+        async function loadHotelBookings() {
+            try {
+                const snapshot = await getDocs(collection(db, "udy_bookings"));
+                let html = '';
+                let active = 0, pending = 0;
+
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
+                    const docId = docSnap.id;
+                    const isApartment = item.room.toLowerCase().includes('apartment') || item.room.toLowerCase().includes('penthouse');
+                    
+                    if (isApartment) return; // Skip apartments for hotel portal
+
+                    let statusClass = 'status-confirmed';
+                    if (item.status === 'Checked-In') { statusClass = 'status-checkedin'; active++; }
+                    else if (item.status === 'Checked-Out') { statusClass = 'status-checkedout'; }
+                    else { pending++; }
+
+                    html += `
+                        <tr>
+                            <td><b>#${item.bookingId || 'N/A'}</b></td>
+                            <td>${item.name}</td>
+                            <td>${item.phone}</td>
+                            <td>${item.room}</td>
+                            <td>${item.checkin}</td>
+                            <td>${item.checkout}</td>
+                            <td><span class="status-pill ${statusClass}">${item.status}</span></td>
+                            <td>
+                                <button class="btn-action btn-checkin" onclick="updateStatus('${docId}', 'Checked-In')">Check-In</button>
+                                <button class="btn-action btn-checkout" onclick="updateStatus('${docId}', 'Checked-Out')">Check-Out</button>
+                                <button class="btn-action btn-delete" onclick="deleteRecord('${docId}')"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                document.getElementById('hotelTableBody').innerHTML = html || '<tr><td colspan="8" style="text-align:center;">No hotel reservations found.</td></tr>';
+                document.getElementById('hotel-active-count').innerText = active;
+                document.getElementById('hotel-pending-count').innerText = pending;
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        window.updateStatus = async function(docId, newStatus) {
+            await updateDoc(doc(db, "udy_bookings", docId), { status: newStatus });
+            loadHotelBookings();
+        };
+
+        window.deleteRecord = async function(docId) {
+            if (confirm("Delete this reservation?")) {
+                await deleteDoc(doc(db, "udy_bookings", docId));
+                loadHotelBookings();
+            }
+        };
+    </script>
+</body>
+</html>
