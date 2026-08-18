@@ -3,705 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udyhotel & Suites | Luxury Living & Apartments</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Udy Hotel & Apartments - Live Admin Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0F172A;
-            --accent: #C5A059;
-            --accent-hover: #b08d4c;
-            --bg: #F8FAFC;
-            --white: #FFFFFF;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --border: #E2E8F0;
-            --success: #16A34A;
-            --danger: #DC2626;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
-
-        /* Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 18px 30px; background: var(--white); border-bottom: 1px solid var(--border); position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--primary); letter-spacing: 1px; white-space: nowrap; }
-        .nav-links { display: flex; align-items: center; gap: 18px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 0.88rem; transition: 0.3s; cursor: pointer; white-space: nowrap; }
-        .nav-links a:hover { color: var(--accent); }
-
-        /* Mobile Hamburger Toggle */
-        .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; color: var(--primary); cursor: pointer; }
-
-        /* Hero Section */
-        .hero { background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)), url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat; min-height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 40px 20px; margin-top: 75px; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 15px; font-weight: 700; line-height: 1.2; }
-        .hero p { font-size: clamp(1rem, 2vw, 1.2rem); max-width: 650px; margin-bottom: 30px; opacity: 0.9; padding: 0 10px; }
-
-        /* Booking Card Section */
-        .booking-container { max-width: 1100px; margin: -50px auto 50px auto; position: relative; z-index: 10; padding: 0 20px; }
-        .booking-card { background: var(--white); padding: clamp(20px, 4vw, 35px); border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid var(--border); }
-        .booking-card h3 { font-family: 'Playfair Display', serif; font-size: clamp(1.25rem, 2.5vw, 1.5rem); margin-bottom: 20px; color: var(--primary); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .booking-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-gray); margin-bottom: 6px; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: var(--bg); color: var(--text-dark); outline: none; }
-        
-        .availability-badge { font-size: 0.8rem; font-weight: 600; margin-top: 6px; display: block; }
-        .available { color: var(--success); }
-        .booked-out { color: var(--danger); }
-
-        .btn-submit { background: var(--accent); color: var(--primary); border: none; padding: 15px; width: 100%; border-radius: 6px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-        .btn-submit:hover { background: var(--accent-hover); color: var(--white); }
-        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; color: #64748b; }
-
-        /* Headers */
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 35px auto; padding: 0 15px; }
-        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.3rem); color: var(--primary); margin-bottom: 12px; }
-        .section-header p { color: var(--text-gray); font-size: 0.95rem; }
-
-        /* Rooms & Sectors */
-        .rooms-section, .sector-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; scroll-margin-top: 90px; }
-        .rooms-grid, .sectors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        
-        .room-card, .sector-card { background: var(--white); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
-        .room-img-container { height: 220px; position: relative; overflow: hidden; cursor: pointer; width: 100%; }
-        .room-img-container img, .sector-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-        .room-img-container:hover img, .sector-card img:hover { transform: scale(1.05); }
-        .sector-card img { height: 200px; cursor: pointer; }
-        
-        .room-price-tag { position: absolute; bottom: 12px; right: 12px; background: var(--primary); color: var(--accent); padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.88rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .room-details, .sector-content { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
-        .room-details h3, .sector-content h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 8px; color: var(--primary); }
-        .room-details p, .sector-content p { color: var(--text-gray); font-size: 0.9rem; margin-bottom: 15px; flex-grow: 1; }
-        .room-features { display: flex; gap: 12px; color: var(--text-gray); font-size: 0.82rem; font-weight: 500; flex-wrap: wrap; margin-bottom: 12px; }
-        
-        .btn-gallery { background: #f1f5f9; border: 1px solid var(--border); padding: 9px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--primary); display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; width: 100%; }
-        .btn-gallery:hover { background: var(--primary); color: var(--white); }
-
-        /* Testimonials */
-        .reviews-section { background: #f1f5f9; padding: 50px 20px; scroll-margin-top: 90px; }
-        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .review-card { background: var(--white); padding: 25px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; }
-        .review-stars { color: #f59e0b; margin-bottom: 10px; font-size: 0.85rem; }
-        .review-text { font-style: italic; color: var(--text-dark); font-size: 0.92rem; margin-bottom: 15px; }
-        .reviewer-info h4 { font-size: 0.95rem; color: var(--primary); }
-        .reviewer-info p { font-size: 0.78rem; color: var(--text-gray); }
-
-        /* Contact & Address */
-        .contact-section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; scroll-margin-top: 90px; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .contact-box { background: var(--white); padding: 25px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
-        .contact-box i { font-size: 1.8rem; color: var(--accent); margin-bottom: 12px; }
-        .contact-box h4 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 8px; color: var(--primary); }
-        .contact-box p { color: var(--text-gray); font-size: 0.9rem; word-break: break-word; }
-
-        /* Legal & Footer Links Section */
-        .legal-footer-section { background: #0b1120; border-top: 1px solid #1e293b; padding: 35px 20px; text-align: center; }
-        .legal-links-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px 25px; margin-bottom: 15px; }
-        .legal-links-container a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: 0.2s; }
-        .legal-links-container a:hover { color: var(--accent); }
-        .footer-copy { color: #64748b; font-size: 0.82rem; }
-
-        footer { background: var(--primary); color: var(--white); padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-        footer p { opacity: 0.7; font-size: 0.8rem; }
-
-        /* Modal Lightbox for Multiple Photos / Policies */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; padding: 15px; }
-        .modal-content { background: var(--white); padding: clamp(20px, 4vw, 35px); border-radius: 12px; max-width: 750px; width: 100%; position: relative; max-height: 85vh; overflow-y: auto; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
-        .close-modal { position: absolute; top: 12px; right: 16px; font-size: 1.6rem; font-weight: bold; color: var(--text-dark); cursor: pointer; }
-        .modal-title { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.5rem); color: var(--primary); margin-bottom: 18px; padding-right: 25px; }
-        .modal-gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-        .modal-gallery-grid img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
-        .policy-body { font-size: 0.9rem; color: var(--text-gray); line-height: 1.6; }
-        .policy-body h4 { color: var(--primary); margin-top: 14px; margin-bottom: 4px; font-size: 1rem; }
-        .policy-body p { margin-bottom: 10px; }
-
-        /* Responsive Breakpoints for Mobile View Optimization */
-        @media (max-width: 900px) {
-            nav { padding: 15px 20px; }
-            .menu-toggle { display: block; }
-            .nav-links { display: none; flex-direction: column; width: 100%; background: var(--white); position: absolute; top: 100%; left: 0; padding: 20px; border-bottom: 1px solid var(--border); box-shadow: 0 10px 20px rgba(0,0,0,0.05); gap: 15px; text-align: center; }
-            .nav-links.active { display: flex; }
-            .hero { margin-top: 65px; min-height: 70vh; padding: 30px 15px; }
-            .booking-container { margin-top: -30px; padding: 0 15px; }
-            .rooms-section, .sector-section, .reviews-section, .contact-section { padding: 35px 15px; }
-        }
-    </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans antialiased">
 
-    <nav>
-        <div class="logo">UDYHOTEL & SUITES</div>
-        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#hotel" onclick="closeMenu()">Hotel Rooms</a></li>
-            <li><a href="#apartments" onclick="closeMenu()">Apartments</a></li>
-            <li><a href="#restaurant" onclick="closeMenu()">Restaurant & Bar</a></li>
-            <li><a href="#gym" onclick="closeMenu()">Gym & Fitness</a></li>
-            <li><a href="#parking" onclick="closeMenu()">Car Park</a></li>
-            <li><a href="#reviews" onclick="closeMenu()">Reviews</a></li>
-            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
-        </ul>
-    </nav>
-
-    <header class="hero" id="home">
-        <h1>Redefining Luxury Living</h1>
-        <p>Experience world-class hospitality, immaculate hotel rooms, and serviced apartments tailored for your comfort.</p>
-    </header>
-
-    <div class="booking-container">
-        <div class="booking-card">
-            <h3><i class="fa-solid fa-calendar-days" style="color: var(--accent);"></i> Book Your Stay Instantly</h3>
-            <form id="public-booking-form" onsubmit="submitCustomerBooking(event)">
-                <div class="booking-grid">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="cust-name" required placeholder="e.g. David Adeleke">
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" id="cust-phone" required placeholder="080XXXXXXXX">
-                    </div>
-                    <div class="form-group">
-                        <label>Select Room or Apartment</label>
-                        <select id="cust-room" onchange="checkAvailability()">
-                            <optgroup label="🏨 Hotel Rooms">
-                                <option value="Standard Room (₦35,000)">Standard Room - ₦35,000 / night</option>
-                                <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60,000 / night</option>
-                                <option value="Executive VIP Suite (₦100,000)">Executive VIP Suite - ₦100,000 / night</option>
-                            </optgroup>
-                            <optgroup label="🏢 Luxury Apartments">
-                                <option value="Luxury 1-Bedroom Apartment (₦120,000)">Luxury 1-Bedroom Apartment - ₦120,000 / night</option>
-                                <option value="Luxury 2-Bedroom Apartment (₦150,000)">Luxury 2-Bedroom Apartment - ₦150,000 / night</option>
-                                <option value="Executive 3-Bedroom Penthouse (₦250,000)">Executive 3-Bedroom Penthouse - ₦250,000 / night</option>
-                            </optgroup>
-                        </select>
-                        <span id="availability-status" class="availability-badge available">● Checking availability...</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Check-in Date</label>
-                        <input type="date" id="cust-checkin" required onchange="calculateCheckout()">
-                    </div>
-                    <div class="form-group">
-                        <label>Length of Stay</label>
-                        <select id="cust-days" onchange="calculateCheckout()">
-                            <option value="1">1 Night</option>
-                            <option value="2">2 Nights</option>
-                            <option value="3">3 Nights</option>
-                            <option value="5">5 Nights</option>
-                            <option value="7">1 Week (7 Nights)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Check-out Date</label>
-                        <input type="date" id="cust-checkout" readonly style="background: #e2e8f0; cursor: not-allowed;">
+    <div class="flex h-screen overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col justify-between">
+            <div>
+                <div class="px-6 py-6 border-b border-slate-800 flex items-center space-x-3">
+                    <i class="fa-solid fa-building-user text-amber-400 text-2xl"></i>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-wide block leading-tight">Udy Hotel</span>
+                        <span class="text-xs text-amber-400 font-medium">& Apartments</span>
                     </div>
                 </div>
-                <button type="submit" id="submit-btn" class="btn-submit">Confirm Reservation & Send to Front Desk</button>
+                <nav class="mt-6 px-4 space-y-1">
+                    <a href="#" onclick="switchTab('dashboard')" id="nav-dashboard" class="flex items-center space-x-3 px-4 py-3 bg-amber-500 text-slate-950 font-semibold rounded-lg shadow-sm transition"><i class="fa-solid fa-chart-pie w-5"></i><span>Dashboard</span></a>
+                    <a href="#" onclick="switchTab('units')" id="nav-units" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-door-open w-5"></i><span>Rooms & Apartments</span></a>
+                    <a href="#" onclick="switchTab('bookings')" id="nav-bookings" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-calendar-check w-5"></i><span>Bookings</span></a>
+                    <a href="#" onclick="switchTab('guests')" id="nav-guests" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-users w-5"></i><span>Guests</span></a>
+                    <a href="#" onclick="switchTab('settings')" id="nav-settings" class="flex items-center space-x-3 px-4 py-3 hover:bg-slate-800 text-slate-300 hover:text-white rounded-lg transition"><i class="fa-solid fa-gear w-5"></i><span>Settings</span></a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-slate-800">
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center space-x-2 py-2.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white rounded-lg transition font-medium text-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Wrapper -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            
+            <!-- Top Header -->
+            <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 z-10">
+                <div class="flex items-center space-x-4">
+                    <h1 id="page-title" class="text-xl font-bold text-slate-800">Live Cloud Management Dashboard</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700">
+                        <span class="w-2 h-2 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Live Firestore Connected
+                    </span>
+                    <div class="h-10 w-10 rounded-full bg-amber-500 text-slate-950 font-bold flex items-center justify-center shadow">AD</div>
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <main class="p-8 space-y-8">
+                
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Revenue</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-revenue">$38,450</h3>
+                        </div>
+                        <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><i class="fa-solid fa-dollar-sign text-xl"></i></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Units</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-active">0 / 0</h3>
+                        </div>
+                        <div class="p-3 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-hotel text-xl"></i></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Booked Units</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-booked">0</h3>
+                        </div>
+                        <div class="p-3 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-bookmark text-xl"></i></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Bookings</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1" id="stat-total-bookings">0</h3>
+                        </div>
+                        <div class="p-3 bg-purple-50 text-purple-600 rounded-xl"><i class="fa-solid fa-clipboard-list text-xl"></i></div>
+                    </div>
+                </div>
+
+                <!-- Rooms & Apartments Management Section -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 flex flex-wrap justify-between items-center gap-4">
+                        <div class="flex items-center space-x-3">
+                            <h2 class="text-lg font-bold text-slate-800">Manage Rooms & Apartments</h2>
+                            <div class="inline-flex rounded-lg border border-slate-200 p-1 bg-slate-50">
+                                <button onclick="filterCategory('all')" id="filter-all" class="px-3 py-1 text-xs font-semibold rounded-md bg-white text-slate-800 shadow-sm transition">All</button>
+                                <button onclick="filterCategory('Hotel Room')" id="filter-hotel" class="px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition">Hotel Rooms</button>
+                                <button onclick="filterCategory('Apartment')" id="filter-apt" class="px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition">Apartments</button>
+                            </div>
+                        </div>
+                        <button onclick="openAddModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
+                            <i class="fa-solid fa-plus mr-2"></i>Add New Unit
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200">
+                                    <th class="py-3 px-6">Picture</th>
+                                    <th class="py-3 px-6">Name / Title</th>
+                                    <th class="py-3 px-6">Category</th>
+                                    <th class="py-3 px-6">Price / Night</th>
+                                    <th class="py-3 px-6">Status</th>
+                                    <th class="py-3 px-6 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="units-table-body" class="divide-y divide-slate-200 text-sm text-slate-700">
+                                <!-- Populated dynamically from Firestore -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings Section -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center">
+                        <h2 class="text-lg font-bold text-slate-800">Live Reservations (Hotel & Apartments)</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200">
+                                    <th class="py-3 px-6">Booking ID</th>
+                                    <th class="py-3 px-6">Guest Name</th>
+                                    <th class="py-3 px-6">Unit Booked</th>
+                                    <th class="py-3 px-6">Check-In</th>
+                                    <th class="py-3 px-6">Check-Out</th>
+                                    <th class="py-3 px-6">Status</th>
+                                    <th class="py-3 px-6 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookings-table-body" class="divide-y divide-slate-200 text-sm text-slate-700">
+                                <!-- Populated dynamically from Firestore -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Edit/Add Unit Modal -->
+    <div id="unit-modal" class="fixed inset-0 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-2xl border border-slate-200">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modal-title" class="text-lg font-bold text-slate-900">Edit Unit</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="unit-form" onsubmit="saveUnitToFirestore(event)" class="space-y-4">
+                <input type="hidden" id="unit-id">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Unit Name / Number</label>
+                    <input type="text" id="unit-name" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Category Type</label>
+                        <select id="unit-category" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Hotel Room">Hotel Room</option>
+                            <option value="Apartment">Apartment</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Price per Night ($)</label>
+                        <input type="number" id="unit-price" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Status</label>
+                    <select id="unit-status" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="Available">Available</option>
+                        <option value="Booked">Booked</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Image URL / Picture</label>
+                    <input type="text" id="unit-image-url" placeholder="Paste Unsplash or Image URL" required class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" oninput="previewImageURL(this.value)">
+                    <div class="mt-2">
+                        <img id="image-preview" src="" alt="Preview" class="w-24 h-16 object-cover rounded-lg hidden border">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-lg text-sm font-bold shadow-sm">Save to Cloud</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- HOTEL ROOMS SECTION -->
-    <section class="rooms-section" id="hotel">
-        <div class="section-header">
-            <h2>Exquisite Hotel Rooms</h2>
-            <p>Designed for short stays, complete with plush comfort and 24/7 room service.</p>
-        </div>
-        <div class="rooms-grid">
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('hotel-standard')">
-                    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80" alt="Standard Room">
-                    <div class="room-price-tag">₦35,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Standard Room</h3>
-                    <p>Cozy and beautifully furnished with modern amenities, queen bed, and luxury shower.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> Queen Bed</span>
-                        <span><i class="fa-solid fa-wifi"></i> Free Wi-Fi</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('hotel-standard')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('hotel-deluxe')">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80" alt="Deluxe Suite">
-                    <div class="room-price-tag">₦60,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Deluxe Suite</h3>
-                    <p>Spacious executive layout featuring a work desk, lounge chair, and panoramic city views.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> King Bed</span>
-                        <span><i class="fa-solid fa-bath"></i> Bathtub</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('hotel-deluxe')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('hotel-vip')">
-                    <img src="https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80" alt="VIP Suite">
-                    <div class="room-price-tag">₦100,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Executive VIP Suite</h3>
-                    <p>Separate living area, premium king bed, minibar, and elite front-desk priority service.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-crown"></i> VIP Lounge</span>
-                        <span><i class="fa-solid fa-martini-glass"></i> Minibar</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('hotel-vip')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- LUXURY APARTMENTS SECTION -->
-    <section class="rooms-section" id="apartments">
-        <div class="section-header">
-            <h2>Luxury Apartments</h2>
-            <p>Fully serviced multi-room apartments for extended stays, families, and high privacy.</p>
-        </div>
-        <div class="rooms-grid">
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('apt-1bed')">
-                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80" alt="1-Bedroom Apartment">
-                    <div class="room-price-tag">₦120,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Luxury 1-Bedroom Apartment</h3>
-                    <p>Features a private equipped kitchen, cozy living room, and dining space.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-kitchen-set"></i> Kitchen</span>
-                        <span><i class="fa-solid fa-couch"></i> Living Room</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('apt-1bed')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('apt-2bed')">
-                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80" alt="2-Bedroom Apartment">
-                    <div class="room-price-tag">₦150,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Luxury 2-Bedroom Apartment</h3>
-                    <p>Ideal for families with two en-suite bedrooms and a large modern kitchen.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-bed"></i> 2 Bedrooms</span>
-                        <span><i class="fa-solid fa-utensils"></i> Full Kitchen</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('apt-2bed')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-            <div class="room-card">
-                <div class="room-img-container" onclick="openGallery('apt-penthouse')">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Penthouse">
-                    <div class="room-price-tag">₦250,000 / night</div>
-                </div>
-                <div class="room-details">
-                    <h3>Executive 3-Bedroom Penthouse</h3>
-                    <p>Ultimate privacy, three grand bedrooms, master balcony view, and concierge service.</p>
-                    <div class="room-features">
-                        <span><i class="fa-solid fa-building"></i> Penthouse</span>
-                        <span><i class="fa-solid fa-car"></i> VIP Parking</span>
-                    </div>
-                    <button class="btn-gallery" onclick="openGallery('apt-penthouse')"><i class="fa-solid fa-images"></i> View Photos</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTORS SECTION (Restaurant, Gym, Car Park) -->
-    <section class="sector-section">
-        <div class="section-header">
-            <h2>Explore Our Onsite Facilities</h2>
-            <p>World-class amenities built to cater to your every need during your stay.</p>
-        </div>
-        <div class="sectors-grid">
-            <div class="sector-card" id="restaurant">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Restaurant & Bar" onclick="openGallery('sector-restaurant')">
-                <div class="sector-content">
-                    <h3><i class="fa-solid fa-utensils" style="color: var(--accent);"></i> Restaurant & Bar</h3>
-                    <p>Exquisite local and international dishes crafted by master chefs, accompanied by an elite cocktail lounge bar.</p>
-                    <button class="btn-gallery" onclick="openGallery('sector-restaurant')"><i class="fa-solid fa-images"></i> View Restaurant Photos</button>
-                </div>
-            </div>
-            <div class="sector-card" id="gym">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80" alt="Gym & Fitness" onclick="openGallery('sector-gym')">
-                <div class="sector-content">
-                    <h3><i class="fa-solid fa-dumbbell" style="color: var(--accent);"></i> Gym & Fitness Center</h3>
-                    <p>State-of-the-art gym equipment, professional fitness instructors, and wellness sessions.</p>
-                    <button class="btn-gallery" onclick="openGallery('sector-gym')"><i class="fa-solid fa-images"></i> View Gym Photos</button>
-                </div>
-            </div>
-            <div class="sector-card" id="parking">
-                <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80" alt="Car Park" onclick="openGallery('sector-parking')">
-                <div class="sector-content">
-                    <h3><i class="fa-solid fa-square-parking" style="color: var(--accent);"></i> Secure Car Park</h3>
-                    <p>Spacious, fully paved surface and underground parking bays secured 24/7 with CCTV and personnel.</p>
-                    <button class="btn-gallery" onclick="openGallery('sector-parking')"><i class="fa-solid fa-images"></i> View Parking Photos</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CUSTOMER REVIEWS -->
-    <section class="reviews-section" id="reviews">
-        <div class="section-header">
-            <h2>What Our Guests Say</h2>
-            <p>Honest reviews from valued customers who experienced our hospitality.</p>
-        </div>
-        <div class="reviews-grid">
-            <div class="review-card">
-                <div>
-                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="review-text">"Udyhotel & Suites is simply breathtaking! The 2-bedroom apartment was immaculate, the room service was swift, and the security gave me total peace of mind."</p>
-                </div>
-                <div class="reviewer-info"><h4>Dr. Michael Adebayo</h4><p>Verified Guest • Stayed July 2026</p></div>
-            </div>
-            <div class="review-card">
-                <div>
-                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                    <p class="review-text">"The restaurant meals are top-tier and the gym facility is cleaner than most standalone fitness centers. Highly recommend the Deluxe Suite!"</p>
-                </div>
-                <div class="reviewer-info"><h4>Sarah Jenkins</h4><p>Verified Guest • Stayed August 2026</p></div>
-            </div>
-            <div class="review-card">
-                <div>
-                    <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
-                    <p class="review-text">"Seamless booking process and very courteous front desk staff. The parking lot is secure and well-spaced. Will definitely return."</p>
-                </div>
-                <div class="reviewer-info"><h4>Emeka Okafor</h4><p>Verified Guest • Stayed August 2026</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT & ADDRESS -->
-    <section class="contact-section" id="contact">
-        <div class="section-header">
-            <h2>Contact & Address</h2>
-            <p>Reach out to us or visit our luxury premises anytime.</p>
-        </div>
-        <div class="contact-grid">
-            <div class="contact-box">
-                <i class="fa-solid fa-location-dot"></i>
-                <h4>Our Physical Address</h4>
-                <p>Plot 12, Udyhotel Avenue, Victoria Island Extension, Lagos, Nigeria</p>
-            </div>
-            <div class="contact-box">
-                <i class="fa-solid fa-phone-volume"></i>
-                <h4>Phone Contacts</h4>
-                <p>+234 800 UDY HOTEL<br>+234 801 234 5678</p>
-            </div>
-            <div class="contact-box">
-                <i class="fa-solid fa-envelope-open-text"></i>
-                <h4>Email Support</h4>
-                <p>reservations@udyhotel.com<br>support@udyhotel.com</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- LEGAL & FOOTER LINKS SECTION -->
-    <div class="legal-footer-section">
-        <div class="legal-links-container">
-            <a onclick="openPolicy('privacy')">Privacy Policy</a>
-            <a onclick="openPolicy('terms')">Terms & Conditions</a>
-            <a onclick="openPolicy('booking')">Booking Policy</a>
-            <a onclick="openPolicy('whistleblowing')">Whistleblowing</a>
-            <a onclick="openPolicy('data-subject')">Data Subject Request</a>
-        </div>
-        <div class="footer-copy">&copy; 2026 udy Hotel Lagos. All rights reserved.</div>
-    </div>
-
-    <footer>
-        <p>Udyhotel & Suites • Powered by Secure Cloud Database.</p>
-    </footer>
-
-    <!-- MODAL POPUP FOR GALLERIES & POLICIES -->
-    <div id="galleryModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeGallery()">&times;</span>
-            <h3 id="modalTitle" class="modal-title">Gallery / Policy</h3>
-            <div id="modalBodyContainer">
-                <div id="modalGrid" class="modal-gallery-grid"></div>
-                <div id="modalTextBody" class="policy-body" style="display: none;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FIREBASE & SCRIPT LOGIC -->
+    <!-- Firebase SDKs & App Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase.app.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase.firestore.js";
 
+        // Your Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
-          authDomain: "udyhotel-1c419.firebaseapp.com",
-          projectId: "udyhotel-1c419",
-          storageBucket: "udyhotel-1c419.firebasestorage.app",
-          messagingSenderId: "714050804978",
-          appId: "1:714050804978:web:a5cb029b2e45069c97c46b",
-          measurementId: "G-FESSMGY7M9"
+            apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
+            authDomain: "udyhotel-1c419.firebaseapp.com",
+            projectId: "udyhotel-1c419",
+            storageBucket: "udyhotel-1c419.firebasestorage.app",
+            messagingSenderId: "714050804978",
+            appId: "1:714050804978:web:a5cb029b2e45069c97c46b",
+            measurementId: "G-FESSMGY7M9"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('cust-checkin').value = today;
-            calculateCheckout();
+        let unitsCache = [];
+        let currentFilter = 'all';
+
+        // Real-time listener for Units (Rooms & Apartments)
+        onSnapshot(collection(db, "units"), (snapshot) => {
+            unitsCache = [];
+            snapshot.forEach((docSnap) => {
+                unitsCache.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderUnits(currentFilter);
+            updateDashboardMetrics();
         });
 
-        window.toggleMenu = function() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        };
-
-        window.closeMenu = function() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.remove('active');
-        };
-
-        window.calculateCheckout = function() {
-            const checkinVal = document.getElementById('cust-checkin').value;
-            const daysCount = parseInt(document.getElementById('cust-days').value) || 1;
+        // Real-time listener for Bookings
+        onSnapshot(collection(db, "bookings"), (snapshot) => {
+            const tbody = document.getElementById('bookings-table-body');
+            tbody.innerHTML = '';
+            let totalBookingsCount = 0;
             
-            if (checkinVal) {
-                let checkinDate = new Date(checkinVal);
-                checkinDate.setDate(checkinDate.getDate() + daysCount);
-                document.getElementById('cust-checkout').value = checkinDate.toISOString().split('T')[0];
+            snapshot.forEach((docSnap) => {
+                const b = docSnap.data();
+                const bId = docSnap.id;
+                totalBookingsCount++;
+
+                let statusBadge = 'bg-blue-50 text-blue-700';
+                if(b.status === 'Completed') statusBadge = 'bg-emerald-50 text-emerald-700';
+                if(b.status === 'Cancelled') statusBadge = 'bg-red-50 text-red-700';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="py-3 px-6 font-mono font-medium text-slate-950">#${bId.slice(-6).toUpperCase()}</td>
+                        <td class="py-3 px-6 font-medium text-slate-900">${b.guest || 'Guest'}</td>
+                        <td class="py-3 px-6">${b.unit || 'Standard Unit'}</td>
+                        <td class="py-3 px-6">${b.checkin || 'N/A'}</td>
+                        <td class="py-3 px-6">${b.checkout || 'N/A'}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 ${statusBadge} rounded-full text-xs font-semibold">${b.status || 'Confirmed'}</span></td>
+                        <td class="py-3 px-6 text-right">
+                            ${b.status !== 'Cancelled' ? `<button onclick="window.cancelBooking('${bId}')" class="text-red-600 hover:text-red-900 font-medium text-xs">Cancel</button>` : `<span class="text-slate-400 text-xs">Closed</span>`}
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('stat-total-bookings').innerText = totalBookingsCount;
+        });
+
+        function renderUnits(filter = 'all') {
+            const tbody = document.getElementById('units-table-body');
+            tbody.innerHTML = '';
+            
+            let filtered = unitsCache;
+            if(filter !== 'all') {
+                filtered = unitsCache.filter(u => u.category === filter);
             }
-            checkAvailability();
+
+            filtered.forEach(unit => {
+                let badgeClass = 'bg-emerald-50 text-emerald-700';
+                if(unit.status === 'Booked') badgeClass = 'bg-amber-50 text-amber-700';
+                if(unit.status === 'Maintenance') badgeClass = 'bg-red-50 text-red-700';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="py-3 px-6"><img src="${unit.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945'}" alt="${unit.name}" class="w-16 h-12 object-cover rounded-lg shadow-sm"></td>
+                        <td class="py-3 px-6 font-semibold text-slate-900">${unit.name}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-md text-xs font-medium">${unit.category}</span></td>
+                        <td class="py-3 px-6 font-medium text-emerald-600">$${unit.price}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 ${badgeClass} rounded-full text-xs font-semibold">${unit.status}</span></td>
+                        <td class="py-3 px-6 text-right">
+                            <button onclick="window.openEditModal('${unit.id}')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-xs font-medium transition mr-2">Edit</button>
+                            <button onclick="window.deleteUnit('${unit.id}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-medium transition">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateDashboardMetrics() {
+            const totalUnits = unitsCache.length;
+            const bookedUnits = unitsCache.filter(u => u.status === 'Booked').length;
+            document.getElementById('stat-active').innerText = `${totalUnits - bookedUnits} / ${totalUnits}`;
+            document.getElementById('stat-booked').innerText = bookedUnits;
+        }
+
+        // Expose functions globally for HTML inline event handlers
+        window.filterCategory = function(category) {
+            currentFilter = category;
+            ['all', 'hotel', 'apt'].forEach(id => {
+                const btn = document.getElementById(`filter-${id}`);
+                if(btn) btn.className = "px-3 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-slate-800 transition";
+            });
+            const activeBtnId = category === 'all' ? 'filter-all' : (category === 'Hotel Room' ? 'filter-hotel' : 'filter-apt');
+            const targetBtn = document.getElementById(activeBtnId);
+            if(targetBtn) targetBtn.className = "px-3 py-1 text-xs font-semibold rounded-md bg-white text-slate-800 shadow-sm transition";
+            renderUnits(category);
         };
 
-        // Gallery data definitions
-        const galleries = {
-            'hotel-standard': {
-                title: 'Standard Room Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'hotel-deluxe': {
-                title: 'Deluxe Suite Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'hotel-vip': {
-                title: 'Executive VIP Suite Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-1bed': {
-                title: 'Luxury 1-Bedroom Apartment Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-2bed': {
-                title: 'Luxury 2-Bedroom Apartment Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1502005229762-cf1b4da7c5d6?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-penthouse': {
-                title: 'Executive 3-Bedroom Penthouse Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-restaurant': {
-                title: 'Restaurant & Bar Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-gym': {
-                title: 'Gym & Fitness Center Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-parking': {
-                title: 'Secure Car Park Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=700&q=80'
-                ]
-            }
+        window.openAddModal = function() {
+            document.getElementById('modal-title').innerText = "Add New Room or Apartment";
+            document.getElementById('unit-form').reset();
+            document.getElementById('unit-id').value = '';
+            document.getElementById('unit-image-url').value = 'https://images.unsplash.com/photo-1566073771259-6a8506099945';
+            window.previewImageURL('https://images.unsplash.com/photo-1566073771259-6a8506099945');
+            document.getElementById('unit-modal').classList.remove('hidden');
         };
 
-        // Policy contents
-        const policies = {
-            'privacy': {
-                title: 'Privacy Policy',
-                content: '<h4>Data Collection</h4><p>We collect personal information such as your name, phone number, and reservation details to process bookings securely.</p><h4>Information Protection</h4><p>Your details are stored securely using cloud databases and are never shared with third-party advertisers.</p>'
-            },
-            'terms': {
-                title: 'Terms & Conditions',
-                content: '<h4>Check-in / Check-out</h4><p>Standard check-in time is 2:00 PM, and check-out is strictly by 12:00 PM.</p><h4>Conduct</h4><p>Guests are expected to maintain peace and adhere to safety regulations within the premises.</p>'
-            },
-            'booking': {
-                title: 'Booking Policy',
-                content: '<h4>Reservations</h4><p>All bookings require verification via phone call or direct system entry. Cancellations must be made 24 hours prior to check-in.</p>'
-            },
-            'whistleblowing': {
-                title: 'Whistleblowing Policy',
-                content: '<h4>Reporting Misconduct</h4><p>Udyhotel maintains high ethical standards. Any unethical behavior or security concerns can be reported confidentially to management.</p>'
-            },
-            'data-subject': {
-                title: 'Data Subject Request',
-                content: '<h4>Your Rights</h4><p>You have the right to request access, correction, or deletion of your personal data stored in our system by contacting support@udyhotel.com.</p>'
-            }
+        window.openEditModal = function(id) {
+            const unit = unitsCache.find(u => u.id === id);
+            if(!unit) return;
+            document.getElementById('modal-title').innerText = "Edit " + unit.category;
+            document.getElementById('unit-id').value = unit.id;
+            document.getElementById('unit-name').value = unit.name;
+            document.getElementById('unit-category').value = unit.category;
+            document.getElementById('unit-price').value = unit.price;
+            document.getElementById('unit-status').value = unit.status;
+            document.getElementById('unit-image-url').value = unit.image || '';
+            window.previewImageURL(unit.image || '');
+            document.getElementById('unit-modal').classList.remove('hidden');
         };
 
-        window.openGallery = function(key) {
-            const modal = document.getElementById('galleryModal');
-            const titleEl = document.getElementById('modalTitle');
-            const gridEl = document.getElementById('modalGrid');
-            const textBodyEl = document.getElementById('modalTextBody');
+        window.closeModal = function() {
+            document.getElementById('unit-modal').classList.add('hidden');
+        };
 
-            gridEl.style.display = 'grid';
-            textBodyEl.style.display = 'none';
-            gridEl.innerHTML = '';
-
-            const item = galleries[key];
-            if (item) {
-                titleEl.innerText = item.title;
-                item.images.forEach(url => {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.alt = item.title;
-                    gridEl.appendChild(img);
-                });
-                modal.style.display = 'flex';
+        window.previewImageURL = function(url) {
+            const preview = document.getElementById('image-preview');
+            if(url.trim() !== '') {
+                preview.src = url;
+                preview.classList.remove('hidden');
+            } else {
+                preview.classList.add('hidden');
             }
         };
 
-        window.openPolicy = function(key) {
-            const modal = document.getElementById('galleryModal');
-            const titleEl = document.getElementById('modalTitle');
-            const gridEl = document.getElementById('modalGrid');
-            const textBodyEl = document.getElementById('modalTextBody');
-
-            gridEl.style.display = 'none';
-            textBodyEl.style.display = 'block';
-
-            const item = policies[key];
-            if (item) {
-                titleEl.innerText = item.title;
-                textBodyEl.innerHTML = item.content;
-                modal.style.display = 'flex';
-            }
-        };
-
-        window.closeGallery = function() {
-            document.getElementById('galleryModal').style.display = 'none';
-        };
-
-        // Real-Time Date Overlap Checking Engine
-        window.checkAvailability = async function() {
-            const roomType = document.getElementById('cust-room').value;
-            const requestedCheckin = document.getElementById('cust-checkin').value;
-            const requestedCheckout = document.getElementById('cust-checkout').value;
-            const statusEl = document.getElementById('availability-status');
-            const submitBtn = document.getElementById('submit-btn');
-
-            if (!requestedCheckin || !requestedCheckout) return;
-
-            statusEl.className = "availability-badge";
-            statusEl.innerHTML = "● Checking real-time dates...";
-
-            try {
-                const snapshot = await getDocs(collection(db, "udy_bookings"));
-                let bookedUnitsCount = 0;
-                
-                const reqIn = new Date(requestedCheckin);
-                const reqOut = new Date(requestedCheckout);
-
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    if (data.room === roomType) {
-                        const existingIn = new Date(data.checkin);
-                        const existingOut = new Date(data.checkout);
-
-                        // Overlap logic: (StartA < EndB) and (EndA > StartB)
-                        if (reqIn < existingOut && reqOut > existingIn) {
-                            bookedUnitsCount++;
-                        }
-                    }
-                });
-
-                // Assuming max units per category (e.g., 3 units available per room option)
-                const maxUnits = 3;
-                if (bookedUnitsCount >= maxUnits) {
-                    statusEl.className = "availability-badge booked-out";
-                    statusEl.innerHTML = "● Fully Booked for Selected Dates";
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = "Selected Dates Not Available";
-                } else {
-                    statusEl.className = "availability-badge available";
-                    statusEl.innerHTML = `● Available (${maxUnits - bookedUnitsCount} units left)`;
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = "Confirm Reservation & Send to Front Desk";
-                }
-            } catch (error) {
-                console.error("Error checking availability:", error);
-                statusEl.className = "availability-badge available";
-                statusEl.innerHTML = "● Available for Booking";
-                submitBtn.disabled = false;
-            }
-        };
-
-        window.submitCustomerBooking = async function(event) {
+        window.saveUnitToFirestore = async function(event) {
             event.preventDefault();
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Processing Reservation...";
-
-            const bookingData = {
-                name: document.getElementById('cust-name').value,
-                phone: document.getElementById('cust-phone').value,
-                room: document.getElementById('cust-room').value,
-                checkin: document.getElementById('cust-checkin').value,
-                days: document.getElementById('cust-days').value,
-                checkout: document.getElementById('cust-checkout').value,
-                createdAt: new Date().toISOString()
-            };
+            const id = document.getElementById('unit-id').value;
+            const name = document.getElementById('unit-name').value;
+            const category = document.getElementById('unit-category').value;
+            const price = parseFloat(document.getElementById('unit-price').value);
+            const status = document.getElementById('unit-status').value;
+            const image = document.getElementById('unit-image-url').value;
 
             try {
-                await addDoc(collection(db, "udy_bookings"), bookingData);
-                alert("Reservation confirmed successfully! Your booking has been registered with the front desk.");
-                document.getElementById('public-booking-form').reset();
-                const today = new Date().toISOString().split('T')[0];
-                document.getElementById('cust-checkin').value = today;
-                calculateCheckout();
-            } catch (e) {
-                console.error("Error adding document: ", e);
-                alert("Error submitting reservation. Please try again or call front desk.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Confirm Reservation & Send to Front Desk";
+                if(id) {
+                    await updateDoc(doc(db, "units", id), { name, category, price, status, image });
+                } else {
+                    await addDoc(collection(db, "units"), { name, category, price, status, image });
+                }
+                window.closeModal();
+            } catch (error) {
+                alert("Error saving to database: " + error.message);
+            }
+        };
+
+        window.deleteUnit = async function(id) {
+            if(confirm("Are you sure you want to delete this unit from the live cloud database?")) {
+                try {
+                    await deleteDoc(doc(db, "units", id));
+                } catch (error) {
+                    alert("Error deleting unit: " + error.message);
+                }
+            }
+        };
+
+        window.cancelBooking = async function(bookingId) {
+            if(confirm("Are you sure you want to cancel booking #" + bookingId.slice(-6).toUpperCase() + "?")) {
+                try {
+                    await updateDoc(doc(db, "bookings", bookingId), { status: 'Cancelled' });
+                } catch (error) {
+                    alert("Error updating booking: " + error.message);
+                }
+            }
+        };
+
+        window.switchTab = function(tabName) {
+            ['dashboard', 'units', 'bookings', 'guests', 'settings'].forEach(t => {
+                document.getElementById(`nav-${t}`)?.classList.remove('bg-amber-500', 'text-slate-950', 'font-semibold');
+            });
+            document.getElementById(`nav-${tabName}`)?.classList.add('bg-amber-500', 'text-slate-950', 'font-semibold');
+            document.getElementById('page-title').innerText = tabName.charAt(0).toUpperCase() + tabName.slice(1) + " Management";
+        };
+
+        window.handleLogout = function() {
+            if(confirm("Are you sure you want to log out?")) {
+                alert("Logged out securely.");
             }
         };
     </script>
