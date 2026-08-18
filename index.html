@@ -475,6 +475,150 @@
             checkAvailability();
         };
 
+        // Gallery data definitions
+        const galleries = {
+            'hotel-standard': {
+                title: 'Standard Room Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'hotel-deluxe': {
+                title: 'Deluxe Suite Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'hotel-vip': {
+                title: 'Executive VIP Suite Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-1bed': {
+                title: 'Luxury 1-Bedroom Apartment Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-2bed': {
+                title: 'Luxury 2-Bedroom Apartment Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1502005229762-cf1b4da7c5d6?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'apt-penthouse': {
+                title: 'Executive 3-Bedroom Penthouse Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-restaurant': {
+                title: 'Restaurant & Bar Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-gym': {
+                title: 'Gym & Fitness Center Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=700&q=80'
+                ]
+            },
+            'sector-parking': {
+                title: 'Secure Car Park Gallery',
+                images: [
+                    'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=700&q=80',
+                    'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=700&q=80'
+                ]
+            }
+        };
+
+        // Policy contents
+        const policies = {
+            'privacy': {
+                title: 'Privacy Policy',
+                content: '<h4>Data Collection</h4><p>We collect personal information such as your name, phone number, and reservation details to process bookings securely.</p><h4>Information Protection</h4><p>Your details are stored securely using cloud databases and are never shared with third-party advertisers.</p>'
+            },
+            'terms': {
+                title: 'Terms & Conditions',
+                content: '<h4>Check-in / Check-out</h4><p>Standard check-in time is 2:00 PM, and check-out is strictly by 12:00 PM.</p><h4>Conduct</h4><p>Guests are expected to maintain peace and adhere to safety regulations within the premises.</p>'
+            },
+            'booking': {
+                title: 'Booking Policy',
+                content: '<h4>Reservations</h4><p>All bookings require verification via phone call or direct system entry. Cancellations must be made 24 hours prior to check-in.</p>'
+            },
+            'whistleblowing': {
+                title: 'Whistleblowing Policy',
+                content: '<h4>Reporting Misconduct</h4><p>Udyhotel maintains high ethical standards. Any unethical behavior or security concerns can be reported confidentially to management.</p>'
+            },
+            'data-subject': {
+                title: 'Data Subject Request',
+                content: '<h4>Your Rights</h4><p>You have the right to request access, correction, or deletion of your personal data stored in our system by contacting support@udyhotel.com.</p>'
+            }
+        };
+
+        window.openGallery = function(key) {
+            const modal = document.getElementById('galleryModal');
+            const titleEl = document.getElementById('modalTitle');
+            const gridEl = document.getElementById('modalGrid');
+            const textBodyEl = document.getElementById('modalTextBody');
+
+            gridEl.style.display = 'grid';
+            textBodyEl.style.display = 'none';
+            gridEl.innerHTML = '';
+
+            const item = galleries[key];
+            if (item) {
+                titleEl.innerText = item.title;
+                item.images.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.alt = item.title;
+                    gridEl.appendChild(img);
+                });
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.openPolicy = function(key) {
+            const modal = document.getElementById('galleryModal');
+            const titleEl = document.getElementById('modalTitle');
+            const gridEl = document.getElementById('modalGrid');
+            const textBodyEl = document.getElementById('modalTextBody');
+
+            gridEl.style.display = 'none';
+            textBodyEl.style.display = 'block';
+
+            const item = policies[key];
+            if (item) {
+                titleEl.innerText = item.title;
+                textBodyEl.innerHTML = item.content;
+                modal.style.display = 'flex';
+            }
+        };
+
+        window.closeGallery = function() {
+            document.getElementById('galleryModal').style.display = 'none';
+        };
+
         // Real-Time Date Overlap Checking Engine
         window.checkAvailability = async function() {
             const roomType = document.getElementById('cust-room').value;
@@ -491,239 +635,75 @@
             try {
                 const snapshot = await getDocs(collection(db, "udy_bookings"));
                 let bookedUnitsCount = 0;
-                const totalUnitsPerCategory = 3;
+                
+                const reqIn = new Date(requestedCheckin);
+                const reqOut = new Date(requestedCheckout);
 
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    if (data.room === roomType && data.status === 'Confirmed') {
-                        if (requestedCheckin < data.checkout && requestedCheckout > data.checkin) {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.room === roomType) {
+                        const existingIn = new Date(data.checkin);
+                        const existingOut = new Date(data.checkout);
+
+                        // Overlap logic: (StartA < EndB) and (EndA > StartB)
+                        if (reqIn < existingOut && reqOut > existingIn) {
                             bookedUnitsCount++;
                         }
                     }
                 });
 
-                const remaining = totalUnitsPerCategory - bookedUnitsCount;
-
-                if (remaining <= 0) {
+                // Assuming max units per category (e.g., 3 units available per room option)
+                const maxUnits = 3;
+                if (bookedUnitsCount >= maxUnits) {
                     statusEl.className = "availability-badge booked-out";
-                    statusEl.innerHTML = "● Fully Booked for these specific dates!";
+                    statusEl.innerHTML = "● Fully Booked for Selected Dates";
                     submitBtn.disabled = true;
-                    submitBtn.style.opacity = "0.5";
+                    submitBtn.innerText = "Selected Dates Not Available";
                 } else {
                     statusEl.className = "availability-badge available";
-                    statusEl.innerHTML = `● Available (${remaining} of ${totalUnitsPerCategory} units left for these dates)`;
+                    statusEl.innerHTML = `● Available (${maxUnits - bookedUnitsCount} units left)`;
                     submitBtn.disabled = false;
-                    submitBtn.style.opacity = "1";
+                    submitBtn.innerText = "Confirm Reservation & Send to Front Desk";
                 }
-            } catch (e) {
-                console.error(e);
+            } catch (error) {
+                console.error("Error checking availability:", error);
                 statusEl.className = "availability-badge available";
-                statusEl.innerHTML = "● Available for booking";
+                statusEl.innerHTML = "● Available for Booking";
                 submitBtn.disabled = false;
-                submitBtn.style.opacity = "1";
             }
         };
 
-        window.submitCustomerBooking = async function(e) {
-            e.preventDefault();
+        window.submitCustomerBooking = async function(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Processing Reservation...";
 
             const bookingData = {
-                bookingId: 'UDY-' + Math.floor(1000 + Math.random() * 9000),
                 name: document.getElementById('cust-name').value,
                 phone: document.getElementById('cust-phone').value,
                 room: document.getElementById('cust-room').value,
                 checkin: document.getElementById('cust-checkin').value,
+                days: document.getElementById('cust-days').value,
                 checkout: document.getElementById('cust-checkout').value,
-                status: 'Confirmed',
-                timestamp: new Date().toISOString()
+                createdAt: new Date().toISOString()
             };
 
             try {
                 await addDoc(collection(db, "udy_bookings"), bookingData);
-                alert(`Reservation Successful!\n\nThank you ${bookingData.name}. Your booking reference is #${bookingData.bookingId}. Our front desk has received your reservation.`);
+                alert("Reservation confirmed successfully! Your booking has been registered with the front desk.");
                 document.getElementById('public-booking-form').reset();
-                window.location.reload();
-            } catch (err) {
-                alert("Failed to submit booking. Please try again.");
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('cust-checkin').value = today;
+                calculateCheckout();
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert("Error submitting reservation. Please try again or call front desk.");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Confirm Reservation & Send to Front Desk";
             }
         };
-
-        // Photo Galleries Data
-        const galleries = {
-            'hotel-standard': {
-                title: 'Standard Room Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'hotel-deluxe': {
-                title: 'Deluxe Suite Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'hotel-vip': {
-                title: 'Executive VIP Suite Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-1bed': {
-                title: 'Luxury 1-Bedroom Apartment Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-2bed': {
-                title: 'Luxury 2-Bedroom Apartment Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'apt-penthouse': {
-                title: 'Executive 3-Bedroom Penthouse Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-restaurant': {
-                title: 'Restaurant & Bar Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-gym': {
-                title: 'Gym & Fitness Center Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=700&q=80'
-                ]
-            },
-            'sector-parking': {
-                title: 'Secure Car Park Gallery',
-                images: [
-                    'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1590674899484-d5640e854abe?auto=format&fit=crop&w=700&q=80',
-                    'https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?auto=format&fit=crop&w=700&q=80'
-                ]
-            }
-        };
-
-        // Policies Data
-        const policies = {
-            'privacy': {
-                title: 'Privacy Policy',
-                html: `
-                    <p>At Udy Hotel Lagos, we are committed to safeguarding your personal data and respecting your privacy.</p>
-                    <h4>1. Information We Collect</h4>
-                    <p>We collect personal details such as your name, phone number, email address, and check-in/check-out dates when you make a reservation with us.</p>
-                    <h4>2. Use of Information</h4>
-                    <p>Your details are used solely to process bookings, verify room availability, provide customer support, and improve our hospitality services.</p>
-                    <h4>3. Data Security</h4>
-                    <p>All records are stored securely in encrypted cloud databases. We do not sell, trade, or transfer your personal information to third parties.</p>
-                `
-            },
-            'terms': {
-                title: 'Terms & Conditions',
-                html: `
-                    <p>Welcome to Udy Hotel Lagos. By accessing our website or booking our rooms and apartments, you agree to comply with the following terms:</p>
-                    <h4>1. Check-in & Check-out</h4>
-                    <p>Standard check-in time is 2:00 PM, and check-out is strictly by 12:00 PM noon. Late departures may incur additional charges.</p>
-                    <h4>2. Guest Conduct</h4>
-                    <p>We maintain a peaceful and secure environment. Any disruptive behavior, property damage, or violation of hotel rules may lead to immediate eviction without a refund.</p>
-                    <h4>3. Liability</h4>
-                    <p>Udy Hotel Lagos is not liable for loss or damage to un-deposited valuables left unattended in rooms or vehicles.</p>
-                `
-            },
-            'booking': {
-                title: 'Booking Policy',
-                html: `
-                    <p>Review our reservation guidelines to ensure a seamless stay experience:</p>
-                    <h4>1. Confirmations & References</h4>
-                    <p>Upon completing your online reservation form, a unique booking reference number is generated instantly and logged in our system.</p>
-                    <h4>2. Cancellations & Modifications</h4>
-                    <p>Cancellations must be communicated to the front desk at least 24 hours prior to the scheduled check-in date to qualify for adjustments.</p>
-                    <h4>3. Availability Guarantee</h4>
-                    <p>Our live availability system ensures that once your reservation is confirmed, your unit is locked out for your specified dates.</p>
-                `
-            },
-            'whistleblowing': {
-                title: 'Whistleblowing Policy',
-                html: `
-                    <p>Udy Hotel Lagos upholds the highest standards of integrity, transparency, and ethical conduct.</p>
-                    <h4>1. Reporting Misconduct</h4>
-                    <p>Employees, guests, and stakeholders are encouraged to report any unethical behavior, financial impropriety, or safety breaches confidentially.</p>
-                    <h4>2. Protection Against Retaliation</h4>
-                    <p>We guarantee full protection and anonymity to any whistleblower who reports genuine concerns in good faith.</p>
-                    <h4>3. Contact Channel</h4>
-                    <p>Reports can be sent directly to our compliance desk via email at support@udyhotel.com.</p>
-                `
-            },
-            'data-subject': {
-                title: 'Data Subject Request',
-                html: `
-                    <p>Under data privacy regulations, you have rights regarding your personal information held by Udy Hotel Lagos.</p>
-                    <h4>1. Your Rights</h4>
-                    <p>You have the right to request access, correction, or permanent deletion of your personal booking records from our databases.</p>
-                    <h4>2. How to Submit a Request</h4>
-                    <p>To exercise your data rights, please send a formal request to reservations@udyhotel.com with your full name and registered phone number.</p>
-                    <h4>3. Response Timeline</h4>
-                    <p>Our data protection officer will acknowledge and process your request within 7 business days.</p>
-                `
-            }
-        };
-
-        window.openGallery = function(key) {
-            const data = galleries[key];
-            if (!data) return;
-            document.getElementById('modalTitle').innerText = data.title;
-            document.getElementById('modalGrid').style.display = 'grid';
-            document.getElementById('modalTextBody').style.display = 'none';
-            
-            const grid = document.getElementById('modalGrid');
-            grid.innerHTML = "";
-            data.images.forEach(imgUrl => {
-                grid.innerHTML += `<img src="${imgUrl}" alt="Gallery Image">`;
-            });
-            document.getElementById('galleryModal').style.display = 'flex';
-        };
-
-        window.openPolicy = function(key) {
-            const data = policies[key];
-            if (!data) return;
-            document.getElementById('modalTitle').innerText = data.title;
-            document.getElementById('modalGrid').style.display = 'none';
-            const textBody = document.getElementById('modalTextBody');
-            textBody.style.display = 'block';
-            textBody.innerHTML = data.html;
-            document.getElementById('galleryModal').style.display = 'flex';
-        };
-
-        window.closeGallery = function() {
-            document.getElementById('galleryModal').style.display = 'none';
-        };
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('galleryModal');
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        }
     </script>
 </body>
 </html>
