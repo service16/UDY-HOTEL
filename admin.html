@@ -3,282 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udyhotel - Management & Reception Portal</title>
+    <title>Master Admin Portal | Udyhotel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #1e293b;
-            --accent: #2563eb;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --light: #f8fafc;
-            --border: #e2e8f0;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f1f5f9; color: #334155; }
-        .container { max-width: 1200px; margin: auto; }
+        :root { --primary: #0F172A; --accent: #C5A059; --bg: #F8FAFC; --white: #FFFFFF; --text-dark: #1E293B; --text-gray: #64748B; --border: #E2E8F0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text-dark); padding: 20px; }
+        .login-screen { max-width: 400px; margin: 120px auto; background: var(--white); padding: 35px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 15px 30px rgba(0,0,0,0.05); text-align: center; }
+        .login-screen h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #b91c1c; margin-bottom: 10px; }
+        .login-screen p { color: var(--text-gray); font-size: 0.88rem; margin-bottom: 20px; }
+        .login-screen input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 15px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; outline: none; }
+        .portal-container { display: none; max-width: 1200px; margin: 0 auto; padding-top: 20px; }
+        .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+        .portal-header h2 { font-family: 'Playfair Display', serif; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .header h2 { margin: 0; color: var(--primary); font-size: 24px; }
+        .admin-controls-card { background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .admin-controls-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .control-group label { display: block; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-gray); margin-bottom: 5px; }
+        .control-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; margin-bottom: 8px; }
+        .btn-save { background: var(--primary); color: var(--accent); border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px; }
-        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid var(--accent); }
-        .stat-card h4 { margin: 0 0 5px 0; color: #64748b; font-size: 13px; text-transform: uppercase; }
-        .stat-card p { margin: 0; font-size: 24px; font-weight: bold; color: var(--primary); }
+        .portal-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--white); padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+        .stat-card h4 { font-size: 0.8rem; text-transform: uppercase; color: var(--text-gray); margin-bottom: 5px; }
+        .stat-card .number { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        
+        .portal-table-container { background: var(--white); border-radius: 10px; border: 1px solid var(--border); overflow-x: auto; }
+        .portal-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; white-space: nowrap; }
+        .portal-table th { background: #f1f5f9; color: var(--primary); padding: 14px 16px; font-weight: 600; border-bottom: 1px solid var(--border); }
+        .portal-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        
+        .status-pill { padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+        .status-confirmed { background: #dcfce7; color: #166534; }
+        .status-checkedin { background: #dbeafe; color: #1e40af; }
+        .status-checkedout { background: #f1f5f9; color: #475569; }
 
-        .panel { background: white; padding: 20px 25px; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .panel h3 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; align-items: flex-end; }
-        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #475569; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; box-sizing: border-box; }
-        
-        .controls-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
-        input[type="text"] { padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; width: 280px; font-size: 14px; }
-        button { padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: opacity 0.2s; }
-        button:hover { opacity: 0.9; }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-refresh { background: var(--success); color: white; }
-        .btn-checkout { background: var(--success); color: white; padding: 6px 10px; font-size: 12px; }
-        .btn-delete { background: var(--danger); color: white; padding: 6px 10px; font-size: 12px; }
-        
-        .table-responsive { background: white; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow-x: auto; padding: 10px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 14px 12px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--border); }
-        th { background-color: #f8fafc; color: var(--primary); font-weight: 600; }
-        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; background: #64748b; }
-        .badge.Confirmed { background: var(--success); }
-        .badge.CheckedOut { background: #64748b; }
-        .text-center { text-align: center; }
+        .btn-action { padding: 6px 12px; border-radius: 5px; font-size: 0.8rem; font-weight: 600; cursor: pointer; border: none; margin-right: 5px; }
+        .btn-delete { background: #dc2626; color: white; }
+        .btn-submit { background: #b91c1c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h2>🏨 Udyhotel Management & Reception Portal</h2>
-        <button class="btn-refresh" onclick="loadBookings()">🔄 Refresh Live Data</button>
+    <div id="loginScreen" class="login-screen">
+        <h3><i class="fa-solid fa-shield-halved"></i> Master Admin Portal</h3>
+        <p>Enter Master Admin PIN (Default: <b>9999</b>)</p>
+        <input type="password" id="adminPinInput" placeholder="Master PIN">
+        <button class="btn-submit" onclick="verifyAdminPin()">Unlock Master Control</button>
+        <br><br>
+        <a href="index.html" style="color: var(--text-gray); font-size: 0.85rem; text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Return to Website</a>
     </div>
 
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h4>Total Active Guests</h4>
-            <p id="stat-total">0</p>
+    <div id="portalContainer" class="portal-container">
+        <div class="portal-header">
+            <h2><i class="fa-solid fa-shield-halved" style="color: #b91c1c;"></i> Master Admin Dashboard</h2>
+            <a href="index.html" class="btn-action" style="background:#64748b; color:#fff; text-decoration: none;">Exit to Website</a>
         </div>
-        <div class="stat-card" style="border-left-color: var(--success);">
-            <h4>Confirmed Bookings</h4>
-            <p id="stat-confirmed">0</p>
-        </div>
-        <div class="stat-card" style="border-left-color: #eab308;">
-            <h4>Estimated Revenue</h4>
-            <p id="stat-revenue">₦0</p>
-        </div>
-    </div>
 
-    <div class="panel">
-        <h3>➕ Add Walk-In or Direct Reservation</h3>
-        <form id="walkin-form" onsubmit="addWalkInBooking(event)">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Guest Full Name</label>
-                    <input type="text" id="walkin-name" placeholder="e.g. John Doe" required>
+        <!-- Staff Security Controls (Reset Receptionist PINs) -->
+        <div class="admin-controls-card">
+            <h3><i class="fa-solid fa-key" style="color: var(--accent);"></i> Receptionist Staff Security & PIN Management</h3>
+            <p style="font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px;">If a receptionist leaves or is dismissed, update their access PIN instantly below to block them out.</p>
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label>Hotel Desk PIN</label>
+                    <input type="text" id="newHotelPin" placeholder="e.g. 1122">
+                    <button class="btn-save" onclick="updatePin('hotel')">Update Hotel PIN</button>
                 </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="walkin-phone" placeholder="e.g. 08012345678" required>
-                </div>
-                <div class="form-group">
-                    <label>Room / Apartment Type</label>
-                    <select id="walkin-room">
-                        <optgroup label="🏨 Hotel Rooms">
-                            <option value="Standard Room (₦35,000)">Standard Room - ₦35k</option>
-                            <option value="Deluxe Suite (₦60,000)">Deluxe Suite - ₦60k</option>
-                            <option value="Executive VIP Suite (₦100,000)">Executive VIP - ₦100k</option>
-                        </optgroup>
-                        <optgroup label="🏢 Luxury Apartments">
-                            <option value="Luxury 1-Bedroom Apartment (₦120,000)">1-Bedroom Apt - ₦120k</option>
-                            <option value="Luxury 2-Bedroom Apartment (₦150,000)">2-Bedroom Apt - ₦150k</option>
-                            <option value="Executive 3-Bedroom Penthouse (₦250,000)">Penthouse - ₦250k</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Check-in Date</label>
-                    <input type="date" id="walkin-checkin" required>
-                </div>
-                <div class="form-group">
-                    <label>Check-out Date</label>
-                    <input type="date" id="walkin-checkout" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn-primary" style="width: 100%;">Save Reservation</button>
+                <div class="control-group">
+                    <label>Apartment Desk PIN</label>
+                    <input type="text" id="newAptPin" placeholder="e.g. 3344">
+                    <button class="btn-save" onclick="updatePin('apartment')">Update Apartment PIN</button>
                 </div>
             </div>
-        </form>
-    </div>
-
-    <div class="table-responsive">
-        <div class="controls-flex" style="padding: 10px;">
-            <h3 style="margin: 0; color: var(--primary);">Guest Reservation Records</h3>
-            <input type="text" id="search-input" placeholder="🔍 Search by guest name or phone..." onkeyup="filterTable()">
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Booking ID</th>
-                    <th>Guest Name</th>
-                    <th>Phone</th>
-                    <th>Room / Apartment</th>
-                    <th>Check-in</th>
-                    <th>Check-out</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="bookings-table-body">
-                <tr><td colspan="8" class="text-center">Connecting to Firebase cloud database...</td></tr>
-            </tbody>
-        </table>
+
+        <div class="portal-stats">
+            <div class="stat-card"><h4>Total All-Time Bookings</h4><div class="number" id="admin-total-count">0</div></div>
+            <div class="stat-card"><h4>Active Stays (All)</h4><div class="number" id="admin-active-count">0</div></div>
+        </div>
+
+        <div class="portal-table-container">
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Ref ID</th>
+                        <th>Category</th>
+                        <th>Guest Name</th>
+                        <th>Phone</th>
+                        <th>Room / Unit</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody"></tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, doc, getDoc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
-      authDomain: "udyhotel-1c419.firebaseapp.com",
-      projectId: "udyhotel-1c419",
-      storageBucket: "udyhotel-1c419.firebasestorage.app",
-      messagingSenderId: "714050804978",
-      appId: "1:714050804978:web:a5cb029b2e45069c97c46b",
-      measurementId: "G-FESSMGY7M9"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    let allBookings = [];
-
-    window.loadBookings = async function() {
-        const tableBody = document.getElementById('bookings-table-body');
-        tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Fetching records...</td></tr>`;
-
-        try {
-            const querySnapshot = await getDocs(collection(db, "udy_bookings"));
-            allBookings = [];
-            querySnapshot.forEach((docSnap) => {
-                allBookings.push({ id: docSnap.id, ...docSnap.data() });
-            });
-            renderTable(allBookings);
-            updateStats(allBookings);
-        } catch (error) {
-            console.error("Error loading bookings: ", error);
-            tableBody.innerHTML = `<tr><td colspan="8" class="text-center" style="color: red;">Failed to load data.</td></tr>`;
-        }
-    };
-
-    function renderTable(bookings) {
-        const tableBody = document.getElementById('bookings-table-body');
-        tableBody.innerHTML = "";
-
-        if (bookings.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="8" class="text-center">No reservations found in the database.</td></tr>`;
-            return;
-        }
-
-        bookings.forEach((data) => {
-            const status = data.status || 'Confirmed';
-            const row = `<tr>
-                <td><strong>${data.bookingId || 'N/A'}</strong></td>
-                <td>${data.name || 'N/A'}</td>
-                <td>${data.phone || 'N/A'}</td>
-                <td>${data.room || 'N/A'}</td>
-                <td>${data.checkin || 'N/A'}</td>
-                <td>${data.checkout || 'N/A'}</td>
-                <td><span class="badge ${status}">${status}</span></td>
-                <td>
-                    <button class="btn-checkout" onclick="checkoutGuest('${data.id}')">🚪 Check Out</button>
-                    <button class="btn-delete" onclick="removeBooking('${data.id}')">Delete</button>
-                </td>
-            </tr>`;
-            tableBody.innerHTML += row;
-        });
-    }
-
-    function updateStats(bookings) {
-        const active = bookings.filter(b => b.status === 'Confirmed');
-        document.getElementById('stat-total').innerText = active.length;
-        document.getElementById('stat-confirmed').innerText = active.length;
-
-        let revenue = 0;
-        active.forEach(b => {
-            if (b.room && b.room.includes('250,000')) revenue += 250000;
-            else if (b.room && b.room.includes('150,000')) revenue += 150000;
-            else if (b.room && b.room.includes('120,000')) revenue += 120000;
-            else if (b.room && b.room.includes('100,000')) revenue += 100000;
-            else if (b.room && b.room.includes('60,000')) revenue += 60000;
-            else revenue += 35000;
-        });
-        document.getElementById('stat-revenue').innerText = '₦' + revenue.toLocaleString();
-    }
-
-    window.addWalkInBooking = async function(event) {
-        event.preventDefault();
-        const newBooking = {
-            bookingId: 'UDY-' + Math.floor(1000 + Math.random() * 9000),
-            name: document.getElementById('walkin-name').value,
-            phone: document.getElementById('walkin-phone').value,
-            room: document.getElementById('walkin-room').value,
-            checkin: document.getElementById('walkin-checkin').value,
-            checkout: document.getElementById('walkin-checkout').value,
-            status: 'Confirmed',
-            timestamp: new Date().toISOString()
+        const firebaseConfig = {
+          apiKey: "AIzaSyDSzNwHg2LwX1jEMeWwViyOai8yNqu8dpY",
+          authDomain: "udyhotel-1c419.firebaseapp.com",
+          projectId: "udyhotel-1c419",
+          storageBucket: "udyhotel-1c419.firebasestorage.app",
+          messagingSenderId: "714050804978",
+          appId: "1:714050804978:web:a5cb029b2e45069c97c46b"
         };
 
-        try {
-            await addDoc(collection(db, "udy_bookings"), newBooking);
-            alert("Reservation successfully saved to cloud!");
-            document.getElementById('walkin-form').reset();
-            loadBookings();
-        } catch (e) {
-            alert("Failed to save booking.");
-        }
-    };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    window.filterTable = function() {
-        const query = document.getElementById('search-input').value.toLowerCase();
-        const filtered = allBookings.filter(b => 
-            (b.name && b.name.toLowerCase().includes(query)) || 
-            (b.phone && b.phone.toLowerCase().includes(query)) ||
-            (b.bookingId && b.bookingId.toLowerCase().includes(query))
-        );
-        renderTable(filtered);
-    };
-
-    // Check out guest (Removes record or marks checked out to free dates instantly)
-    window.checkoutGuest = async function(docId) {
-        if (confirm("Check out this guest? This will instantly free up the room dates for other customers.")) {
-            try {
-                await deleteDoc(doc(db, "udy_bookings", docId));
-                loadBookings();
-                alert("Guest checked out successfully. Room dates are now available.");
-            } catch (e) {
-                alert("Could not process check-out.");
+        window.verifyAdminPin = async function() {
+            const pin = document.getElementById('adminPinInput').value;
+            // Master PIN is 9999 by default
+            if (pin === '9999') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('portalContainer').style.display = 'block';
+                loadAdminData();
+            } else {
+                alert('Incorrect Master Admin PIN!');
             }
-        }
-    };
+        };
 
-    window.removeBooking = async function(docId) {
-        if (confirm("Are you sure you want to delete this record?")) {
+        async function loadAdminData() {
             try {
-                await deleteDoc(doc(db, "udy_bookings", docId));
-                loadBookings();
-            } catch (e) {
-                alert("Could not delete booking.");
-            }
-        }
-    };
+                // Load existing PIN settings values into inputs
+                const settingsSnap = await getDoc(doc(db, "udy_settings", "access_pins"));
+                if (settingsSnap.exists()) {
+                    const data = settingsSnap.data();
+                    document.getElementById('newHotelPin').value = data.hotelPin || '1122';
+                    document.getElementById('newAptPin').value = data.aptPin || '3344';
+                } else {
+                    document.getElementById('newHotelPin').value = '1122';
+                    document.getElementById('newAptPin').value = '3344';
+                }
 
-    loadBookings();
-</script>
+                // Load all bookings
+                const snapshot = await getDocs(collection(db, "udy_bookings"));
+                let html = '';
+                let total = 0, active = 0;
+
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
+                    const docId = docSnap.id;
+                    total++;
+                    if (item.status === 'Checked-In') active++;
+
+                    let statusClass = 'status-confirmed';
+                    if (item.status === 'Checked-In') statusClass = 'status-checkedin';
+                    else if (item.status === 'Checked-Out') statusClass = 'status-checkedout';
+
+                    const categoryBadge = item.category === 'apartment' ? '<span style="color:#2563eb; font-weight:bold;">Apartment</span>' : '<span style="color:#d97706; font-weight:bold;">Hotel</span>';
+
+                    html += `
+                        <tr>
+                            <td><b>#${item.bookingId || 'N/A'}</b></td>
+                            <td>${categoryBadge}</td>
+                            <td>${item.name}</td>
+                            <td>${item.phone}</td>
+                            <td>${item.room}</td>
+                            <td>${item.checkin}</td>
+                            <td>${item.checkout}</td>
+                            <td><span class="status-pill ${statusClass}">${item.status}</span></td>
+                            <td>
+                                <button class="btn-action btn-delete" onclick="deleteRecord('${docId}')"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                document.getElementById('adminTableBody').innerHTML = html || '<tr><td colspan="9" style="text-align:center;">No records found.</td></tr>';
+                document.getElementById('admin-total-count').innerText = total;
+                document.getElementById('admin-active-count').innerText = active;
+            } catch (e) { console.error(e); }
+        }
+
+        window.updatePin = async function(type) {
+            let hotelPin = document.getElementById('newHotelPin').value;
+            let aptPin = document.getElementById('newAptPin').value;
+
+            try {
+                await setDoc(doc(db, "udy_settings", "access_pins"), {
+                    hotelPin: hotelPin,
+                    aptPin: aptPin
+                }, { merge: true });
+
+                alert(`Successfully updated the ${type.toUpperCase()} desk PIN! Any dismissed staff using the old PIN will now be blocked.`);
+            } catch (err) {
+                alert("Failed to update PIN.");
+            }
+        };
+
+        window.deleteRecord = async function(docId) {
+            if (confirm("Are you sure you want to permanently delete this booking record?")) {
+                await deleteDoc(doc(db, "udy_bookings", docId));
+                loadAdminData();
+            }
+        };
+    </script>
 </body>
 </html>
