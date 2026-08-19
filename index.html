@@ -31,7 +31,7 @@
     .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s; }
     .nav-links a:hover { color: var(--gold); }
     .cta-nav-btn { background: var(--gold); padding: 0.6rem 1.4rem; border-radius: 2px; color: var(--bg-color) !important; font-weight: 600; }
-    .cta-nav-btn:hover { background: var(--gold-hover); color: var(--bg-color) !important; }
+    .cta-nav-btn:hover { background: var(--gold-hover); }
 
     /* Hero Banner Section */
     .hero {
@@ -92,7 +92,30 @@
     .whatsapp-book-btn { background: #25d366; color: white; border: none; padding: 0.65rem 1.4rem; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
     .whatsapp-book-btn:hover { background: #20ba5a; }
 
-    /* Amenities & Features Section */
+    /* Modal Popup Form for Booking Details & Total Pricing Calculation */
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; padding: 1rem;
+    }
+    .modal-content {
+      background: var(--card-bg); border: 1px solid var(--gold); padding: 2.5rem; border-radius: 6px;
+      max-width: 500px; width: 100%; position: relative; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+    .modal-content h3 { color: var(--gold); font-weight: 400; font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .modal-content p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .form-row { margin-bottom: 1.2rem; display: flex; flex-direction: column; }
+    .form-row label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; font-weight: 600; }
+    .form-row input, .form-row select { background: #0c0c0e; border: 1px solid var(--border); color: white; padding: 0.75rem; border-radius: 2px; font-size: 0.95rem; }
+    .total-display { background: #0c0c0e; border: 1px dashed var(--gold); padding: 1rem; border-radius: 2px; margin: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
+    .total-display span:first-child { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
+    .total-display span:last-child { font-size: 1.3rem; font-weight: 700; color: var(--gold); }
+    .modal-actions { display: flex; gap: 1rem; }
+    .confirm-wa-btn { background: #25d366; color: white; border: none; padding: 0.9rem; font-weight: 700; letter-spacing: 1px; flex: 2; cursor: pointer; border-radius: 2px; text-align: center; }
+    .confirm-wa-btn:hover { background: #20ba5a; }
+    .close-modal-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 0.9rem; flex: 1; cursor: pointer; border-radius: 2px; font-weight: 600; }
+    .close-modal-btn:hover { border-color: white; color: white; }
+
+    /* Amenities Section */
     .amenities { background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 5rem 1.5rem; text-align: center; }
     .amenities-grid { max-width: 1200px; margin: 3rem auto 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; text-align: left; }
     .amenity-card { background: var(--bg-color); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
@@ -134,19 +157,19 @@
     <p>Discover refined accommodations, supreme comfort, and an alluring blend of luxury and exceptional hospitality for an unforgettable stay.</p>
   </section>
 
-  <!-- Check Availability / Booking Filter Bar -->
+  <!-- Check Availability Bar (Filters View) -->
   <div class="booking-bar">
     <div class="input-group">
       <label>Check-In Date</label>
-      <input type="date" id="checkInDate">
+      <input type="date" id="globalCheckIn">
     </div>
     <div class="input-group">
       <label>Check-Out Date</label>
-      <input type="date" id="checkOutDate">
+      <input type="date" id="globalCheckOut">
     </div>
     <div class="input-group">
       <label>Adults</label>
-      <select id="adultsCount">
+      <select id="globalAdults">
         <option value="1 Adult">1 Adult</option>
         <option value="2 Adults" selected>2 Adults</option>
         <option value="3 Adults">3 Adults</option>
@@ -155,7 +178,7 @@
     </div>
     <div class="input-group">
       <label>Children</label>
-      <select id="childrenCount">
+      <select id="globalChildren">
         <option value="0 Children" selected>0 Children</option>
         <option value="1 Child">1 Child</option>
         <option value="2+ Children">2+ Children</option>
@@ -184,13 +207,50 @@
       <button class="tab-btn" id="apartmentTab" onclick="switchTab('apartment')">APARTMENT UNITS</button>
     </div>
 
-    <!-- Dynamic Container Linked to Database -->
+    <!-- Dynamic Container Linked to Admin Database -->
     <div id="roomsGridContainer" class="rooms-grid">
       <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">Loading available spaces...</p>
     </div>
   </section>
 
-  <!-- Hotel Amenities & Features Section -->
+  <!-- Booking Details & Total Pricing Modal Popup -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal-content">
+      <h3 id="modalRoomTitle">Complete Your Booking</h3>
+      <p>Provide your contact details and length of stay to calculate your total and send details directly to WhatsApp.</p>
+      
+      <div class="form-row">
+        <label>Full Name</label>
+        <input type="text" id="guestFullName" placeholder="e.g. Adebayo Johnson">
+      </div>
+      <div class="form-row">
+        <label>Phone Number (WhatsApp)</label>
+        <input type="text" id="guestPhone" placeholder="e.g. 08123456789">
+      </div>
+      <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <label>Check-In Date</label>
+          <input type="date" id="modalCheckIn" onchange="calculateTotal()">
+        </div>
+        <div>
+          <label>Check-Out Date</label>
+          <input type="date" id="modalCheckOut" onchange="calculateTotal()">
+        </div>
+      </div>
+
+      <div class="total-display">
+        <span>Total Estimated Price:</span>
+        <span id="modalTotalPrice">$0</span>
+      </div>
+
+      <div class="modal-actions">
+        <button class="confirm-wa-btn" onclick="sendToWhatsApp()">PROCEED TO WHATSAPP</button>
+        <button class="close-modal-btn" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hotel Amenities Section -->
   <section class="amenities" id="amenities">
     <div class="section-title">
       <h4>World-Class Facilities</h4>
@@ -245,10 +305,11 @@
   </footer>
 
   <script type="module">
-    import { db, collection, onSnapshot, addDoc } from "./app.js";
+    import { db, collection, onSnapshot } from "./app.js";
 
     let allRooms = [];
     let currentCategory = 'hotel';
+    let selectedRoomData = null;
 
     window.switchTab = function(category) {
       currentCategory = category;
@@ -277,12 +338,12 @@
             <img src="${r.imageUrl}" alt="${r.name}">
             <div class="room-body">
               <div>
-                <div class="room-tag">${r.propertyType} Retreat</div>
+                <div class="room-tag">${r.propertyType} Unit</div>
                 <h3 class="room-name">${r.name}</h3>
               </div>
               <div class="room-footer">
                 <div class="price">$${r.price} <span>/ night</span></div>
-                <button class="whatsapp-book-btn" onclick="bookNowWhatsApp('${r.name}', '${r.propertyType}', ${r.price})">
+                <button class="whatsapp-book-btn" onclick='openBookingModal(${JSON.stringify(r)})'>
                   Book Now
                 </button>
               </div>
@@ -293,40 +354,71 @@
       container.innerHTML = html;
     }
 
-    // WhatsApp Instant Booking + Database Log
-    window.bookNowWhatsApp = async function(roomName, propertyType, price) {
-      const checkIn = document.getElementById('checkInDate').value || 'Not selected';
-      const checkOut = document.getElementById('checkOutDate').value || 'Not selected';
-      const adults = document.getElementById('adultsCount').value;
-      const children = document.getElementById('childrenCount').value;
-
-      try {
-        await addDoc(collection(db, "bookings"), {
-          guestName: "WhatsApp Guest Inquiry",
-          roomName: roomName,
-          propertyType: propertyType,
-          checkIn: checkIn,
-          checkOut: checkOut,
-          guests: `${adults}, ${children}`,
-          createdAt: new Date()
-        });
-      } catch(err) {
-        console.log("Logged locally");
-      }
-
-      const businessWhatsAppNumber = "2348129991716"; 
+    // Modal Control & Live Pricing Calculation (Zero Database Storage of Customer Information)
+    window.openBookingModal = function(room) {
+      selectedRoomData = room;
+      document.getElementById('modalRoomTitle').innerText = `Book: ${room.name} ($${room.price}/night)`;
       
-      const textMessage = `Hello Udy Hotel, I would like to book a reservation:\n\n*Room:* ${roomName} (${propertyType.toUpperCase()})\n*Rate:* $${price}/night\n*Check-In:* ${checkIn}\n*Check-Out:* ${checkOut}\n*Occupants:* ${adults}, ${children}\n\nPlease guide me on the payment and confirmation process.`;
-      
-      const whatsappURL = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
-      window.open(whatsappURL, '_blank');
+      // Prefill dates if selected in top bar
+      document.getElementById('modalCheckIn').value = document.getElementById('globalCheckIn').value;
+      document.getElementById('modalCheckOut').value = document.getElementById('globalCheckOut').value;
+      document.getElementById('guestFullName').value = '';
+      document.getElementById('guestPhone').value = '';
+
+      calculateTotal();
+      document.getElementById('bookingModal').style.display = 'flex';
     }
 
-    // Real-Time Room Sync
+    window.closeModal = function() {
+      document.getElementById('bookingModal').style.display = 'none';
+    }
+
+    window.calculateTotal = function() {
+      const checkInVal = document.getElementById('modalCheckIn').value;
+      const checkOutVal = document.getElementById('modalCheckOut').value;
+      const totalDisplay = document.getElementById('modalTotalPrice');
+
+      if (!checkInVal || !checkOutVal || !selectedRoomData) {
+        totalDisplay.innerText = `$${selectedRoomData ? selectedRoomData.price : 0} (1 night default)`;
+        return;
+      }
+
+      const checkInDate = new Date(checkInVal);
+      const checkOutDate = new Date(checkOutVal);
+      const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
+      let nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+      if (nights <= 0) nights = 1; // Minimum 1 night
+
+      const calculatedTotal = nights * selectedRoomData.price;
+      totalDisplay.innerText = `$${calculatedTotal} (${nights} Night${nights > 1 ? 's' : ''})`;
+    }
+
+    window.sendToWhatsApp = function() {
+      const name = document.getElementById('guestFullName').value.trim();
+      const phone = document.getElementById('guestPhone').value.trim();
+      const checkIn = document.getElementById('modalCheckIn').value;
+      const checkOut = document.getElementById('modalCheckOut').value;
+      const totalText = document.getElementById('modalTotalPrice').innerText;
+
+      if (!name || !phone || !checkIn || !checkOut) {
+        alert('Please fill in your name, phone number, and stay dates to continue.');
+        return;
+      }
+
+      const businessWhatsAppNumber = "2348129991716"; // Replace with client's WhatsApp number
+
+      const textMessage = `Hello Udy Hotel, I want to confirm and pay for a reservation:\n\n*Guest Name:* ${name}\n*Phone:* ${phone}\n*Room/Unit:* ${selectedRoomData.name} (${selectedRoomData.propertyType.toUpperCase()})\n*Check-In:* ${checkIn}\n*Check-Out:* ${checkOut}\n*Total Price:* ${totalText}\n\nPlease send payment details to proceed.`;
+
+      const whatsappURL = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
+      window.open(whatsappURL, '_blank');
+      closeModal();
+    }
+
+    // Real-Time Room Sync from Admin Portal
     onSnapshot(collection(db, "rooms"), (snapshot) => {
       allRooms = [];
       snapshot.forEach((doc) => {
-        allRooms.path = doc.id;
         allRooms.push({ id: doc.id, ...doc.data() });
       });
       renderRooms();
