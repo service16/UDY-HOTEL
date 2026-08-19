@@ -3,12 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udy Hotel & Apartments - Bookings</title>
+  <title>Udy Hotel & Apartments - Luxury Redefined</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      background: linear-gradient(rgba(15,15,15,0.7), rgba(15,15,15,0.8)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border: 1px solid #d4af37;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; color: #d4af37; }
+    .hero p { font-size: 1.2rem; color: #a1a1aa; }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .listing-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #27272a;
+      display: flex;
+      flex-direction: column;
+    }
+    .listing-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .listing-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .price { font-size: 1.25rem; font-weight: bold; color: var(--secondary-color); margin: 0.5rem 0; }
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .amenity-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Udy Hotel & Apartments</h1>
+    <div class="logo-container">
+      <img src="logo.jpeg" alt="Udy Logo">
+      <h1>Udy Hotel & Apartments</h1>
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="admin.html">Admin Portal</a>
@@ -18,23 +73,114 @@
   </header>
 
   <div class="container">
-    <h2>Welcome to Udy Hotel</h2>
-    <p>Select your preferred location and check real-time availability.</p>
+    <div class="hero">
+      <h1>Welcome to Udy</h1>
+      <p>Indulge in absolute luxury across our Main Hotel Branch or Exclusive City Apartments</p>
+    </div>
 
+    <!-- Resort Showcase (Bar & Pool Side) -->
     <div class="card">
-      <h3>Filter Listings</h3>
-      <label>Location / Property Type:</label>
+      <h2>Resort Experience & Amenities</h2>
+      <p style="color: var(--text-muted);">Explore our relaxing pool area and premium lounge bar built for your ultimate comfort.</p>
+      <div class="amenities-grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d" alt="Poolside">
+          <h3 style="margin-top: 0.8rem;">The Pool Side</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Unwind in our crystalline temperature-controlled outdoor pool.</p>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b" alt="Bar">
+          <h3 style="margin-top: 0.8rem;">The Udy Bar & Lounge</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Sip hand-crafted cocktails in a sophisticated, calm environment.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Live Properties -->
+    <div class="card">
+      <h2>Explore Rooms & Apartments</h2>
+      <label style="font-weight: bold; color: var(--text-muted);">Select Lodging Preference:</label>
       <select id="propertyFilter">
-        <option value="all">All Properties</option>
-        <option value="hotel">Udy Hotel (Main Branch)</option>
-        <option value="apartment">Udy Apartments (City Annex)</option>
+        <option value="all">All Locations (Hotel & Apartments)</option>
+        <option value="hotel">Udy Hotel (Main Branch Rooms)</option>
+        <option value="apartment">Udy Apartments (City Annex Units)</option>
       </select>
     </div>
 
-    <div id="listingsContainer">
-      <!-- Real-time listings load here -->
-      <p>Loading available rooms and apartments...</p>
+    <div id="listingsContainer" class="gallery-grid">
+      <p style="color: var(--text-muted);">Loading live catalog...</p>
     </div>
   </div>
+
+  <script type="module">
+    import { db, collection, addDoc, onSnapshot } from "./app.js";
+
+    const listingsContainer = document.getElementById('listingsContainer');
+    const propertyFilter = document.getElementById('propertyFilter');
+    let allRooms = [];
+
+    // Real-time synchronization with Firebase database
+    onSnapshot(collection(db, "rooms"), (snapshot) => {
+      allRooms = [];
+      snapshot.forEach((doc) => {
+        allRooms.push({ id: doc.id, ...doc.data() });
+      });
+      renderListings(propertyFilter.value);
+    });
+
+    propertyFilter.addEventListener('change', (e) => {
+      renderListings(e.target.value);
+    });
+
+    function renderListings(filter) {
+      let html = '';
+      const filtered = allRooms.filter(r => filter === 'all' || r.propertyType === filter);
+
+      if (filtered.length === 0) {
+        listingsContainer.innerHTML = '<p style="color: var(--text-muted);">No properties found.</p>';
+        return;
+      }
+
+      filtered.forEach(room => {
+        html += `
+          <div class="listing-card">
+            <img src="${room.imageUrl}" alt="${room.name}">
+            <div class="listing-content">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--secondary-color); font-weight: bold;">${room.propertyType === 'hotel' ? 'Hotel Room' : 'Apartment Unit'}</span>
+              <h3>${room.name}</h3>
+              <div class="price">$${room.price} <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: normal;">/ night</span></div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Complete luxury accommodations equipped with top-tier utilities.</p>
+              <button onclick="bookRoom('${room.name}', '${room.propertyType}')" style="margin-top: auto;">Book Now</button>
+            </div>
+          </div>
+        `;
+      });
+      listingsContainer.innerHTML = html;
+    }
+
+    window.bookRoom = async function(roomName, propertyType) {
+      const guestName = prompt(`Enter your Full Name to book ${roomName}:`);
+      if (!guestName) return;
+      const checkIn = prompt("Enter Check-In Date (YYYY-MM-DD):");
+      if (!checkIn) return;
+      const checkOut = prompt("Enter Check-Out Date (YYYY-MM-DD):");
+      if (!checkOut) return;
+
+      try {
+        await addDoc(collection(db, "bookings"), {
+          propertyType,
+          roomName,
+          guestName,
+          checkIn,
+          checkOut,
+          status: 'Confirmed Online',
+          createdAt: new Date()
+        });
+        alert('Booking successfully placed in real-time!');
+      } catch (err) {
+        alert('Booking failed. Check your Firebase network configuration.');
+      }
+    };
+  </script>
 </body>
 </html>
