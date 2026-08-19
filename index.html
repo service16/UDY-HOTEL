@@ -4,232 +4,193 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Udy Hotel & Apartments | Lagos</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     :root {
-      --primary-color: #0d0d0d;
-      --secondary-color: #d4af37;
+      --bg-color: #0c0c0e;
+      --card-bg: #141417;
+      --gold: #c5a059;
+      --gold-hover: #d4af37;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
-      --card-bg: #141416;
-      --border-color: #27272a;
+      --border: #27272a;
     }
-    body {
-      background-color: var(--primary-color);
-      color: var(--text-main);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+
+    /* Top Navigation Bar */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 3rem;
-      border-bottom: 1px solid var(--border-color);
-      background: rgba(13, 13, 13, 0.95);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem; background: rgba(12, 12, 14, 0.95);
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
     }
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .logo-area { display: flex; align-items: center; gap: 1rem; }
+    .logo-area img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+    .logo-area span { letter-spacing: 3px; font-weight: 700; color: var(--gold); font-size: 1.1rem; }
+    
+    .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+    .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .admin-btn { border: 1px solid var(--gold); padding: 0.5rem 1.2rem; border-radius: 2px; color: var(--gold) !important; font-weight: 600; }
+    .admin-btn:hover { background: var(--gold); color: var(--bg-color) !important; }
+
+    /* Hero Banner Section */
+    .hero {
+      height: 80vh; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('logo.jpeg') center/cover no-repeat;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1rem;
     }
-    .logo-area img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid var(--secondary-color);
+    .hero h4 { color: var(--gold); letter-spacing: 4px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .hero h1 { font-size: 3.5rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 1rem; }
+    .hero p { color: var(--text-muted); max-width: 650px; font-size: 1rem; margin-bottom: 2rem; }
+
+    /* Booking Bar Widget (Overlapping Banner) */
+    .booking-bar {
+      background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem 2rem;
+      display: flex; gap: 1rem; align-items: center; border-radius: 4px; max-width: 1100px; width: 90%; margin: -4rem auto 4rem auto; position: relative; z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
     }
-    .logo-area span {
-      letter-spacing: 3px;
-      font-weight: 700;
-      color: var(--secondary-color);
-      font-size: 1.1rem;
+    .input-group { display: flex; flex-direction: column; flex: 1; text-align: left; }
+    .input-group label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; font-weight: 600; }
+    .input-group input, .input-group select { background: #0c0c0e; border: 1px solid var(--border); color: white; padding: 0.7rem; border-radius: 2px; font-size: 0.9rem; }
+    .search-btn { background: var(--gold); color: var(--bg-color); border: none; padding: 0.9rem 2rem; font-weight: bold; letter-spacing: 1.5px; cursor: pointer; border-radius: 2px; transition: 0.3s; margin-top: 1.2rem; }
+    .search-btn:hover { background: var(--gold-hover); }
+
+    @media(max-width: 900px) {
+      .booking-bar { flex-direction: column; margin: 2rem 1rem; }
+      .hero h1 { font-size: 2.3rem; }
+      header { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
     }
-    .hero-section {
-      padding: 6rem 1rem 4rem 1rem;
-      text-align: center;
-      background: linear-gradient(to bottom, #111, var(--primary-color));
-    }
-    .hero-section h4 {
-      color: var(--secondary-color);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      margin-bottom: 0.5rem;
-    }
-    .hero-section h1 {
-      font-size: 3rem;
-      margin: 0 0 1rem 0;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-    .hero-section p {
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto 3rem auto;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .category-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 4rem;
-    }
-    .tab-btn {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
-      padding: 0.9rem 2.5rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      font-size: 0.85rem;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .tab-btn.active {
-      background: var(--secondary-color);
-      color: var(--primary-color);
-      border-color: var(--secondary-color);
-    }
-    .rooms-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 2.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem 6rem 1.5rem;
-    }
-    .room-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 4px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-    .room-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--secondary-color);
-    }
-    .room-card img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-    }
-    .room-info {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-    }
-    .room-badge {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      color: var(--secondary-color);
-      letter-spacing: 2px;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .room-title {
-      font-size: 1.4rem;
-      font-weight: 400;
-      margin: 0 0 1rem 0;
-    }
-    .room-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.5rem;
-      border-top: 1px solid var(--border-color);
-      padding-top: 1.5rem;
-    }
-    .room-price {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--secondary-color);
-    }
-    .room-price span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      font-weight: normal;
-    }
-    .book-btn {
-      background: transparent;
-      color: var(--secondary-color);
-      border: 1px solid var(--secondary-color);
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      border-radius: 2px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .book-btn:hover {
-      background: var(--secondary-color);
-      color: var(--primary-color);
-    }
+
+    /* Accommodations Section */
+    .accommodations { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 6rem 1.5rem; text-align: center; }
+    .section-title h4 { color: var(--gold); letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
+    .section-title h2 { font-size: 2.5rem; font-weight: 300; margin: 0.5rem 0 2rem 0; }
+
+    /* Tabs */
+    .tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3.5rem; }
+    .tab-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 0.8rem 2.5rem; font-weight: 600; letter-spacing: 2px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
+    .tab-btn.active { background: var(--gold); color: var(--bg-color); border-color: var(--gold); }
+
+    /* Rooms Grid */
+    .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.5rem; text-align: left; }
+    .room-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
+    .room-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+    .room-card img { width: 100%; height: 260px; object-fit: cover; }
+    .room-body { padding: 2rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+    .room-tag { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 0.4rem; }
+    .room-name { font-size: 1.4rem; font-weight: 400; margin-bottom: 1rem; }
+    .room-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: 1.2rem; }
+    .price { font-size: 1.25rem; font-weight: 600; color: var(--gold); }
+    .price span { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; }
+    
+    /* WhatsApp Book Now Button */
+    .whatsapp-book-btn { background: #25d366; color: white; border: none; padding: 0.65rem 1.4rem; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
+    .whatsapp-book-btn:hover { background: #20ba5a; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 3rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; background: #08080a; }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Navigation Bar -->
   <header>
     <div class="logo-area">
       <img src="logo.jpeg" alt="Udy Logo">
       <span>UDY HOTEL & APARTMENTS</span>
     </div>
-    <nav>
-      <a href="admin.html" style="color: var(--secondary-color); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; text-transform: uppercase;">Admin Portal</a>
-    </nav>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#roomsSection">Rooms</a></li>
+      <li><a href="#">Dining</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="admin.html" class="admin-btn">Admin Portal</a></li>
+    </ul>
   </header>
 
-  <!-- Hero & Content Section -->
-  <section class="hero-section">
-    <h4>Accommodations in Lagos</h4>
-    <h1>OUR ROOMS & APARTMENTS</h1>
-    <p>Each space is a private retreat, designed with meticulous attention to detail, uncompromising luxury, and refined Nigerian hospitality.</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <h4>Lagos, Nigeria</h4>
+    <h1>EXPERIENCE LUXURY & RETREAT</h1>
+    <p>Discover refined accommodations, supreme comfort, and an alluring blend of luxury and exceptional hospitality for an unforgettable stay.</p>
+  </section>
 
-    <!-- Category Tabs -->
-    <div class="category-tabs">
-      <button class="tab-btn active" id="hotelTabBtn" onclick="switchCategory('hotel')">HOTEL ROOMS</button>
-      <button class="tab-btn" id="apartmentTabBtn" onclick="switchCategory('apartment')">APARTMENT UNITS</button>
+  <!-- Check Availability Bar Widget -->
+  <div class="booking-bar">
+    <div class="input-group">
+      <label>Check-In Date</label>
+      <input type="date" id="checkInDate">
+    </div>
+    <div class="input-group">
+      <label>Check-Out Date</label>
+      <input type="date" id="checkOutDate">
+    </div>
+    <div class="input-group">
+      <label>Adults</label>
+      <select id="adultsCount">
+        <option value="1 Adult">1 Adult</option>
+        <option value="2 Adults" selected>2 Adults</option>
+        <option value="3 Adults">3 Adults</option>
+        <option value="4+ Adults">4+ Adults</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Children</label>
+      <select id="childrenCount">
+        <option value="0 Children" selected>0 Children</option>
+        <option value="1 Child">1 Child</option>
+        <option value="2+ Children">2+ Children</option>
+      </select>
+    </div>
+    <button class="search-btn" onclick="scrollToRooms()">SEARCH</button>
+  </div>
+
+  <!-- Accommodations Section -->
+  <section class="accommodations" id="roomsSection">
+    <div class="section-title">
+      <h4>Accommodations</h4>
+      <h2>OUR ROOMS & APARTMENTS</h2>
     </div>
 
-    <!-- Live Dynamic Rooms Grid -->
-    <div id="liveRoomsContainer" class="rooms-grid">
-      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center;">Loading refined living spaces...</p>
+    <!-- Category Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" id="hotelTab" onclick="switchTab('hotel')">HOTEL ROOMS</button>
+      <button class="tab-btn" id="apartmentTab" onclick="switchTab('apartment')">APARTMENT UNITS</button>
+    </div>
+
+    <!-- Dynamic Container Linked to Admin Portal Database -->
+    <div id="roomsGridContainer" class="rooms-grid">
+      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">Loading available spaces...</p>
     </div>
   </section>
 
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Udy Hotel & Apartments Lagos. All rights reserved.</p>
+  </footer>
+
   <script type="module">
-    import { db, collection, onSnapshot } from "./app.js";
+    import { db, collection, onSnapshot, addDoc } from "./app.js";
 
-    let allRoomsList = [];
-    let currentCategory = 'hotel'; // Default view matches hotel tab
+    let allRooms = [];
+    let currentCategory = 'hotel';
 
-    window.switchCategory = function(category) {
+    window.switchTab = function(category) {
       currentCategory = category;
-      document.getElementById('hotelTabBtn').classList.toggle('active', category === 'hotel');
-      document.getElementById('apartmentTabBtn').classList.toggle('active', category === 'apartment');
+      document.getElementById('hotelTab').classList.toggle('active', category === 'hotel');
+      document.getElementById('apartmentTab').classList.toggle('active', category === 'apartment');
       renderRooms();
     }
 
+    window.scrollToRooms = function() {
+      document.getElementById('roomsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
     function renderRooms() {
-      const container = document.getElementById('liveRoomsContainer');
-      const filtered = allRoomsList.filter(r => r.propertyType === currentCategory);
+      const container = document.getElementById('roomsGridContainer');
+      const filtered = allRooms.filter(r => r.propertyType === currentCategory);
 
       if (filtered.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 3rem; font-size: 0.95rem;">No ${currentCategory} units currently available.</p>`;
+        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 3rem;">No ${currentCategory} units currently active.</p>`;
         return;
       }
 
@@ -238,14 +199,16 @@
         html += `
           <div class="room-card">
             <img src="${r.imageUrl}" alt="${r.name}">
-            <div class="room-info">
+            <div class="room-body">
               <div>
-                <div class="room-badge">${r.propertyType} Retreat</div>
-                <h3 class="room-title">${r.name}</h3>
+                <div class="room-tag">${r.propertyType} Retreat</div>
+                <h3 class="room-name">${r.name}</h3>
               </div>
               <div class="room-footer">
-                <div class="room-price">$${r.price} <span>/ night</span></div>
-                <button class="book-btn" onclick="alert('Inquiry/Reservation requested for ${r.name}')">VIEW & BOOK</button>
+                <div class="price">$${r.price} <span>/ night</span></div>
+                <button class="whatsapp-book-btn" onclick="bookNowWhatsApp('${r.name}', '${r.propertyType}', ${r.price})">
+                  Book Now
+                </button>
               </div>
             </div>
           </div>
@@ -254,11 +217,42 @@
       container.innerHTML = html;
     }
 
-    // Real-Time Listener from Firestore Database
+    // WhatsApp Instant Booking + Admin Database Sync
+    window.bookNowWhatsApp = async function(roomName, propertyType, price) {
+      const checkIn = document.getElementById('checkInDate').value || 'Not selected';
+      const checkOut = document.getElementById('checkOutDate').value || 'Not selected';
+      const adults = document.getElementById('adultsCount').value;
+      const children = document.getElementById('childrenCount').value;
+
+      // Automatically log the booking inside Firebase so it appears on your Admin Portal dashboard
+      try {
+        await addDoc(collection(db, "bookings"), {
+          guestName: "WhatsApp Inquiry Guest",
+          roomName: roomName,
+          propertyType: propertyType,
+          checkIn: checkIn,
+          checkOut: checkOut,
+          guests: `${adults}, ${children}`,
+          createdAt: new Date()
+        });
+      } catch(err) {
+        console.log("Logged locally");
+      }
+
+      // Enter your business WhatsApp number with country code (e.g., 234812... for Nigeria)
+      const businessWhatsAppNumber = "2348129991716"; 
+      
+      const textMessage = `Hello Udy Hotel, I would like to book a reservation:\n\n*Room:* ${roomName} (${propertyType.toUpperCase()})\n*Rate:* $${price}/night\n*Check-In:* ${checkIn}\n*Check-Out:* ${checkOut}\n*Occupants:* ${adults}, ${children}\n\nPlease let me know how to proceed with payment and confirmation.`;
+      
+      const whatsappURL = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
+      window.open(whatsappURL, '_blank');
+    }
+
+    // Real-Time Listener synced with your Admin Portal
     onSnapshot(collection(db, "rooms"), (snapshot) => {
-      allRoomsList = [];
+      allRooms = [];
       snapshot.forEach((doc) => {
-        allRoomsList.push({ id: doc.id, ...doc.data() });
+        allRooms.push({ id: doc.id, ...doc.data() });
       });
       renderRooms();
     });
