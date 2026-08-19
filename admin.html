@@ -153,7 +153,6 @@
 
     let compressedImageString = "";
 
-    // Function to resize and compress image so it publishes instantly without freezing
     function compressImage(file, callback) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -184,7 +183,6 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          // Compress into JPEG format with 0.7 quality
           const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
           callback(dataUrl);
         }
@@ -204,7 +202,6 @@
       }
     });
 
-    // Add Room / Apartment Handler
     const addRoomForm = document.getElementById('addRoomForm');
     addRoomForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -237,7 +234,6 @@
       }
     });
 
-    // Real-Time Sync & Management Table for Rooms
     const adminRoomsTable = document.getElementById('adminRoomsTable');
     onSnapshot(collection(db, "rooms"), (snapshot) => {
       let html = '';
@@ -264,7 +260,6 @@
       adminRoomsTable.innerHTML = html || '<tr><td colspan="4">No rooms or apartments listed yet.</td></tr>';
     });
 
-    // Edit Room Name Function
     window.editName = async function(id, currentName) {
       const newName = prompt("Enter new room or apartment name:", currentName);
       if (newName !== null && newName.trim() !== "") {
@@ -273,7 +268,6 @@
       }
     };
 
-    // Edit Price Function
     window.editPrice = async function(id, currentPrice) {
       const newPrice = prompt("Enter new price per night ($):", currentPrice);
       if (newPrice !== null && !isNaN(newPrice)) {
@@ -282,7 +276,6 @@
       }
     };
 
-    // Edit Photo Function (Uploads a new picture replacement)
     window.editPhoto = function(id) {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
@@ -299,7 +292,6 @@
       fileInput.click();
     };
 
-    // Delete Room Function
     window.deleteRoom = async function(id) {
       if (confirm("Are you sure you want to remove this unit from the website?")) {
         await deleteDoc(doc(db, "rooms", id));
@@ -307,7 +299,6 @@
       }
     };
 
-    // Real-Time Bookings Records Table
     const adminBookingsTable = document.getElementById('adminBookingsTable');
     onSnapshot(collection(db, "bookings"), (snapshot) => {
       let html = '';
