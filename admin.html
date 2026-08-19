@@ -34,6 +34,24 @@
       background: #18181b;
       color: var(--secondary-color);
     }
+    .preview-box {
+      width: 100%;
+      height: 120px;
+      border: 1px dashed #3f3f46;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.4rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #121212;
+    }
+    .preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -52,11 +70,11 @@
   <div class="admin-container">
     <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
       <h2>Website Management Dashboard</h2>
-      <p>Add new hotel rooms or apartments, update pictures, change prices, and view customer reservations.</p>
+      <p>Upload room pictures directly from your device, modify prices, and manage active listings.</p>
     </div>
 
     <div class="grid-admin">
-      <!-- Left Column: Add New Room/Apartment Form -->
+      <!-- Left Column: Add New Room/Apartment Form with File Upload -->
       <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a;">
         <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Add New Unit</h3>
         <form id="addRoomForm">
@@ -72,8 +90,12 @@
           <label style="font-size: 0.85rem; color: var(--text-muted);">Price per Night ($)</label>
           <input type="number" id="roomPrice" placeholder="195" style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
 
-          <label style="font-size: 0.85rem; color: var(--text-muted);">Picture Image URL</label>
-          <input type="url" id="roomImage" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
+          <label style="font-size: 0.85rem; color: var(--text-muted);">Upload Picture / Snap Photo</label>
+          <input type="file" id="roomImageFile" accept="image/*" capture="environment" style="width: 100%; padding: 0.4rem; margin: 0.4rem 0 0.5rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px; font-size: 0.85rem;" required>
+          
+          <div class="preview-box" id="imagePreviewContainer">
+            <span style="color: var(--text-muted); font-size: 0.8rem;">Image Preview</span>
+          </div>
 
           <button type="submit" style="width: 100%; margin-top: 0.5rem; background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;">Publish to Live Site</button>
         </form>
@@ -88,8 +110,8 @@
             <table>
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Name</th>
+                  <th>Photo</th>
+                  <th>Type & Name</th>
                   <th>Price ($)</th>
                   <th>Actions</th>
                 </tr>
@@ -129,22 +151,47 @@
   <script type="module">
     import { db, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from "./app.js";
 
+    let base64ImageString = "";
+
+    // Handle Image Selection and Convert to Base64 String
+    const imageFileInput = document.getElementById('roomImageFile');
+    const previewContainer = document.getElementById('imagePreviewContainer');
+
+    imageFileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          base64ImageString = event.target.result;
+          previewContainer.innerHTML = `<img src="${base64ImageString}" alt="Preview">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
     // Add Room / Apartment Handler
     const addRoomForm = document.getElementById('addRoomForm');
     addRoomForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!base64ImageString) {
+        alert('Please select or snap an image for this room.');
+        return;
+      }
+
       try {
         await addDoc(collection(db, "rooms"), {
           propertyType: document.getElementById('propertyType').value,
           name: document.getElementById('roomName').value,
           price: Number(document.getElementById('roomPrice').value),
-          imageUrl: document.getElementById('roomImage').value,
+          imageUrl: base64ImageString,
           createdAt: new Date()
         });
-        alert('Unit published successfully! It is now visible on the home page.');
+        alert('Unit published successfully with uploaded image! It is now live on the website.');
         addRoomForm.reset();
+        base64ImageString = "";
+        previewContainer.innerHTML = `<span style="color: var(--text-muted); font-size: 0.8rem;">Image Preview</span>`;
       } catch (err) {
-        alert('Error adding unit. Please verify your Firebase connection.');
+        alert('Error publishing unit. Make sure the image file size is manageable.');
       }
     });
 
@@ -157,13 +204,15 @@
         const id = documentSnap.id;
         html += `
           <tr>
-            <td style="text-transform: uppercase; font-size: 0.75rem; font-weight: bold; color: var(--secondary-color);">${r.propertyType}</td>
-            <td>${r.name}</td>
+            <td><img src="${r.imageUrl}" alt="room" style="width: 45px; height: 35px; object-fit: cover; border-radius: 3px; border: 1px solid #3f3f46;"></td>
+            <td>
+              <div style="text-transform: uppercase; font-size: 0.7rem; color: var(--secondary-color); font-weight: bold;">${r.propertyType}</div>
+              <div style="font-weight: 500;">${r.name}</div>
+            </td>
             <td>$${r.price}</td>
             <td>
-              <button onclick="updatePrice('${id}', ${r.price})" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer;">Edit Price</button>
-              <button onclick="updateImage('${id}', '${r.imageUrl}')" style="background: #27272a; color: var(--white); border: 1px solid #3f3f46; padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Edit Photo</button>
-              <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Delete</button>
+              <button onclick="updatePrice('${id}', ${r.price})" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer;">Price</button>
+              <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Delete</button>
             </td>
           </tr>
         `;
@@ -177,15 +226,6 @@
       if (newPrice !== null && !isNaN(newPrice)) {
         await updateDoc(doc(db, "rooms", id), { price: Number(newPrice) });
         alert('Price updated successfully and synced to website!');
-      }
-    };
-
-    // Update Image URL Function
-    window.updateImage = async function(id, currentImg) {
-      const newImg = prompt("Enter new picture image URL:", currentImg);
-      if (newImg !== null && newImg.trim() !== "") {
-        await updateDoc(doc(db, "rooms", id), { imageUrl: newImg });
-        alert('Room picture updated successfully!');
       }
     };
 
