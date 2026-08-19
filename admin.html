@@ -70,11 +70,11 @@
   <div class="admin-container">
     <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
       <h2>Website Management Dashboard</h2>
-      <p>Upload room pictures directly from your device, modify prices, and manage active listings.</p>
+      <p>Upload room pictures directly, edit names, update prices, and manage active listings instantly.</p>
     </div>
 
     <div class="grid-admin">
-      <!-- Left Column: Add New Room/Apartment Form with File Upload -->
+      <!-- Left Column: Add New Room/Apartment Form with Compression -->
       <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a;">
         <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Add New Unit</h3>
         <form id="addRoomForm">
@@ -97,11 +97,11 @@
             <span style="color: var(--text-muted); font-size: 0.8rem;">Image Preview</span>
           </div>
 
-          <button type="submit" style="width: 100%; margin-top: 0.5rem; background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;">Publish to Live Site</button>
+          <button type="submit" id="publishBtn" style="width: 100%; margin-top: 0.5rem; background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;">Publish to Live Site</button>
         </form>
       </div>
 
-      <!-- Right Column: Live Room Catalog & Price Editor -->
+      <!-- Right Column: Live Room Catalog & Management Editor -->
       <div>
         <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a; margin-bottom: 2rem;">
           <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">Active Website Rooms & Prices</h3>
@@ -151,21 +151,56 @@
   <script type="module">
     import { db, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from "./app.js";
 
-    let base64ImageString = "";
+    let compressedImageString = "";
 
-    // Handle Image Selection and Convert to Base64 String
+    // Function to resize and compress image so it publishes instantly without freezing
+    function compressImage(file, callback) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function(event) {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          // Compress into JPEG format with 0.7 quality
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+          callback(dataUrl);
+        }
+      }
+    }
+
     const imageFileInput = document.getElementById('roomImageFile');
     const previewContainer = document.getElementById('imagePreviewContainer');
 
     imageFileInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          base64ImageString = event.target.result;
-          previewContainer.innerHTML = `<img src="${base64ImageString}" alt="Preview">`;
-        };
-        reader.readAsDataURL(file);
+        compressImage(file, function(result) {
+          compressedImageString = result;
+          previewContainer.innerHTML = `<img src="${compressedImageString}" alt="Preview">`;
+        });
       }
     });
 
@@ -173,25 +208,32 @@
     const addRoomForm = document.getElementById('addRoomForm');
     addRoomForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!base64ImageString) {
+      if (!compressedImageString) {
         alert('Please select or snap an image for this room.');
         return;
       }
+
+      const publishBtn = document.getElementById('publishBtn');
+      publishBtn.disabled = true;
+      publishBtn.innerText = 'Publishing to Live Site...';
 
       try {
         await addDoc(collection(db, "rooms"), {
           propertyType: document.getElementById('propertyType').value,
           name: document.getElementById('roomName').value,
           price: Number(document.getElementById('roomPrice').value),
-          imageUrl: base64ImageString,
+          imageUrl: compressedImageString,
           createdAt: new Date()
         });
-        alert('Unit published successfully with uploaded image! It is now live on the website.');
+        alert('Unit published successfully! It is now live on the website.');
         addRoomForm.reset();
-        base64ImageString = "";
+        compressedImageString = "";
         previewContainer.innerHTML = `<span style="color: var(--text-muted); font-size: 0.8rem;">Image Preview</span>`;
       } catch (err) {
-        alert('Error publishing unit. Make sure the image file size is manageable.');
+        alert('Error publishing unit. Please try again.');
+      } finally {
+        publishBtn.disabled = false;
+        publishBtn.innerText = 'Publish to Live Site';
       }
     });
 
@@ -211,7 +253,9 @@
             </td>
             <td>$${r.price}</td>
             <td>
-              <button onclick="updatePrice('${id}', ${r.price})" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer;">Price</button>
+              <button onclick="editName('${id}', '${r.name}')" style="background: #27272a; color: var(--white); border: 1px solid #3f3f46; padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer;">Name</button>
+              <button onclick="editPrice('${id}', ${r.price})" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Price</button>
+              <button onclick="editPhoto('${id}')" style="background: #27272a; color: var(--white); border: 1px solid #3f3f46; padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Photo</button>
               <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.5rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Delete</button>
             </td>
           </tr>
@@ -220,13 +264,39 @@
       adminRoomsTable.innerHTML = html || '<tr><td colspan="4">No rooms or apartments listed yet.</td></tr>';
     });
 
-    // Update Price Function
-    window.updatePrice = async function(id, currentPrice) {
+    // Edit Room Name Function
+    window.editName = async function(id, currentName) {
+      const newName = prompt("Enter new room or apartment name:", currentName);
+      if (newName !== null && newName.trim() !== "") {
+        await updateDoc(doc(db, "rooms", id), { name: newName.trim() });
+        alert('Room name updated successfully!');
+      }
+    };
+
+    // Edit Price Function
+    window.editPrice = async function(id, currentPrice) {
       const newPrice = prompt("Enter new price per night ($):", currentPrice);
       if (newPrice !== null && !isNaN(newPrice)) {
         await updateDoc(doc(db, "rooms", id), { price: Number(newPrice) });
-        alert('Price updated successfully and synced to website!');
+        alert('Price updated successfully!');
       }
+    };
+
+    // Edit Photo Function (Uploads a new picture replacement)
+    window.editPhoto = function(id) {
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      fileInput.onchange = e => {
+        const file = e.target.files[0];
+        if (file) {
+          compressImage(file, async function(newImageUrl) {
+            await updateDoc(doc(db, "rooms", id), { imageUrl: newImageUrl });
+            alert('Room picture updated successfully!');
+          });
+        }
+      };
+      fileInput.click();
     };
 
     // Delete Room Function
