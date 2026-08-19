@@ -3,155 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udy Hotel & Apartments - Luxury Redefined</title>
+  <title>Udy Hotel & Apartments</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .tab-btn {
+      background: #18181b;
+      color: var(--text-muted);
+      border: 1px solid #3f3f46;
+      padding: 0.75rem 2rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .tab-btn.active {
+      background: var(--secondary-color);
+      color: var(--primary-color);
+      border-color: var(--secondary-color);
+    }
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .room-card {
+      background: var(--card-bg);
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .room-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .room-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Sticky Top Bar with Search & Quick Booking Inputs -->
+  <!-- Header -->
   <header>
     <div class="logo-area">
       <img src="logo.jpeg" alt="Udy Logo">
       <span>UDY HOTEL</span>
     </div>
-
-    <div class="sticky-search-bar">
-      <select id="topLocationSelect">
-        <option value="hotel">Lagos Hotel</option>
-        <option value="apartment">City Apartments</option>
-      </select>
-      <input type="date" id="topCheckIn">
-      <input type="date" id="topCheckOut">
-      <select id="topGuests">
-        <option value="1">1 Adult</option>
-        <option value="2" selected>2 Adults</option>
-        <option value="3">3+ Guests</option>
-      </select>
-      <button onclick="scrollToRooms()">SEARCH</button>
-    </div>
-
-    <button class="nav-menu-btn" onclick="window.location.href='admin.html'" title="Staff Portal">☰</button>
+    <nav>
+      <a href="admin.html" style="color: var(--secondary-color); text-decoration: none; font-size: 0.85rem; font-weight: bold;">Admin Login</a>
+    </nav>
   </header>
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1>UDY HOTEL</h1>
-    <p>Lagos</p>
-    <button class="reserve-btn" onclick="scrollToRooms()">Reserve Your Stay</button>
-  </div>
-
-  <div class="container">
-    
-    <!-- Accommodations / Rooms Section (Matching Video Layout) -->
-    <div id="rooms-section" class="section-header">
-      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.5rem;">Accommodations</p>
-      <h2>Our Rooms & Apartments</h2>
-      <p>Each space is a private retreat, designed with meticulous attention to detail and uncompromising luxury.</p>
+  <!-- Hero & Rooms Section -->
+  <section style="padding: 4rem 1rem; text-align: center;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <h4 style="color: var(--secondary-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem;">Accommodations</h4>
+      <h1 style="font-size: 2.5rem; margin: 0.5rem 0 1rem 0;">OUR ROOMS & APARTMENTS</h1>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">Each space is a private retreat, designed with meticulous attention to detail and uncompromising luxury.</p>
     </div>
 
-    <!-- Filter Buttons to Toggle Hotel Rooms vs Apartments -->
-    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem;">
-      <button onclick="switchCategory('hotel')" id="btnHotel" class="reserve-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Hotel Rooms</button>
-      <button onclick="switchCategory('apartment')" id="btnApt" class="reserve-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem; background: transparent; border-color: #3f3f46; color: var(--text-muted);">Apartment Units</button>
+    <!-- Category Filter Tabs -->
+    <div class="category-tabs">
+      <button class="tab-btn active" id="hotelTabBtn" onclick="switchCategory('hotel')">HOTEL ROOMS</button>
+      <button class="tab-btn" id="apartmentTabBtn" onclick="switchCategory('apartment')">APARTMENT UNITS</button>
     </div>
 
-    <!-- Dynamic Room List container synced with Firebase -->
-    <div id="roomsListContainer">
-      <p style="text-align: center; color: var(--text-muted);">Loading real-time rooms and pricing...</p>
+    <!-- Dynamic Room Grid Container -->
+    <div id="liveRoomsContainer" class="rooms-grid">
+      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center;">Loading real-time rooms and pricing...</p>
     </div>
-
-    <!-- Restaurant & Bar Section -->
-    <div class="section-header" style="margin-top: 6rem;">
-      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.5rem;">Restaurant & Lounge</p>
-      <h2>Udy Mogambo Lounge</h2>
-      <p>A vibrant culinary destination where exquisite plating craftsmanship meets the warmth of hospitality.</p>
-    </div>
-
-    <div class="grid-2">
-      <div class="card-item">
-        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b" alt="Bar & Lounge">
-        <h3>The Outdoor Lounge</h3>
-        <p>Sunset views, intimate seating, craft cocktails, and world-class wines.</p>
-      </div>
-      <div class="card-item">
-        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d" alt="Poolside">
-        <h3>The Pool Oasis</h3>
-        <p>An absolute oasis in the city designed for absolute relaxation.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div>
-      <h3>UDY HOTEL LAGOS</h3>
-      <p>Where Elegance and Convenience Meet</p>
-    </div>
-    <div>
-      <h3>CONTACT</h3>
-      <p>1 Mogambo Close, Maryland Estate, Ikeja, Lagos, Nigeria</p>
-      <p>+234 812 999 1716</p>
-      <p>reservations@udyhotel.com</p>
-    </div>
-    <div>
-      <h3>LINKS</h3>
-      <a href="index.html">Home</a>
-      <a href="admin.html">Staff Admin Portal</a>
-    </div>
-  </footer>
+  </section>
 
   <script type="module">
-    import { db, collection, addDoc, onSnapshot } from "./app.js";
+    import { db, collection, onSnapshot } from "./app.js";
 
-    let allRooms = [];
-    let currentCategory = 'hotel';
+    let allRoomsList = [];
+    let currentCategory = 'hotel'; // Default view
 
-    // Fetch live rooms from Firebase
-    onSnapshot(collection(db, "rooms"), (snapshot) => {
-      allRooms = [];
-      snapshot.forEach((doc) => {
-        allRooms.push({ id: doc.id, ...doc.data() });
-      });
-      renderRooms(currentCategory);
-    });
-
-    window.switchCategory = function(cat) {
-      currentCategory = cat;
-      if(cat === 'hotel') {
-        document.getElementById('btnHotel').style.background = 'var(--secondary-color)';
-        document.getElementById('btnHotel').style.color = 'var(--primary-color)';
-        document.getElementById('btnApt').style.background = 'transparent';
-        document.getElementById('btnApt').style.color = 'var(--text-muted)';
-      } else {
-        document.getElementById('btnApt').style.background = 'var(--secondary-color)';
-        document.getElementById('btnApt').style.color = 'var(--primary-color)';
-        document.getElementById('btnHotel').style.background = 'transparent';
-        document.getElementById('btnHotel').style.color = 'var(--text-muted)';
-      }
-      renderRooms(cat);
+    window.switchCategory = function(category) {
+      currentCategory = category;
+      document.getElementById('hotelTabBtn').classList.toggle('active', category === 'hotel');
+      document.getElementById('apartmentTabBtn').classList.toggle('active', category === 'apartment');
+      renderRooms();
     }
 
-    function renderRooms(cat) {
-      const container = document.getElementById('roomsListContainer');
-      const filtered = allRooms.filter(r => r.propertyType === cat);
+    function renderRooms() {
+      const container = document.getElementById('liveRoomsContainer');
+      const filtered = allRoomsList.filter(r => r.propertyType === currentCategory);
 
-      if(filtered.length === 0) {
-        container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No rooms found in this category. You can add units via the Admin Portal.</p>`;
+      if (filtered.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">No ${currentCategory} units available at the moment.</p>`;
         return;
       }
 
       let html = '';
-      filtered.forEach(room => {
+      filtered.forEach(r => {
         html += `
-          <div class="room-row">
+          <div class="room-card">
+            <img src="${r.imageUrl}" alt="${r.name}">
             <div class="room-info">
-              <h3>${room.name}</h3>
-              <div class="price">From $${room.price}</div>
-            </div>
-            <div class="room-desc">
-              Refined comfort with panoramic views & modern amenities
-              <span onclick="bookSpecificRoom('${room.name}', '${room.propertyType}')">Book Now &rarr;</span>
+              <div>
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--secondary-color); font-weight: bold; margin-bottom: 0.3rem;">${r.propertyType} Unit</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">${r.name}</h3>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px solid #27272a; padding-top: 1rem;">
+                <span style="font-size: 1.1rem; font-weight: bold; color: var(--secondary-color);">$${r.price} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">/ night</span></span>
+                <button onclick="alert('Proceeding to reserve ${r.name}')" style="background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.5rem 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Book Now</button>
+              </div>
             </div>
           </div>
         `;
@@ -159,33 +133,14 @@
       container.innerHTML = html;
     }
 
-    window.scrollToRooms = function() {
-      document.getElementById('rooms-section').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    window.bookSpecificRoom = async function(roomName, propertyType) {
-      const guestName = prompt(`Enter your Full Name to reserve ${roomName}:`);
-      if(!guestName) return;
-      const checkIn = document.getElementById('topCheckIn').value || prompt("Enter Check-In Date (YYYY-MM-DD):");
-      if(!checkIn) return;
-      const checkOut = document.getElementById('topCheckOut').value || prompt("Enter Check-Out Date (YYYY-MM-DD):");
-      if(!checkOut) return;
-
-      try {
-        await addDoc(collection(db, "bookings"), {
-          propertyType,
-          roomName,
-          guestName,
-          checkIn,
-          checkOut,
-          status: 'Confirmed Online',
-          createdAt: new Date()
-        });
-        alert(`Reservation successful for ${roomName}! Management will contact you shortly.`);
-      } catch(e) {
-        alert("Booking error. Please check your network configuration.");
-      }
-    }
+    // Real-Time Listener from Firestore Database
+    onSnapshot(collection(db, "rooms"), (snapshot) => {
+      allRoomsList = [];
+      snapshot.forEach((doc) => {
+        allRoomsList.push({ id: doc.id, ...doc.data() });
+      });
+      renderRooms();
+    });
   </script>
 </body>
 </html>
