@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Udy Hotel & Apartments</title>
+  <title>Admin Dashboard - Udy Hotel</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Udy Hotel - Manager Dashboard</h1>
+    <div class="logo-container">
+      <img src="logo.jpeg" alt="Udy Logo">
+      <h1>Udy Admin Control</h1>
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="admin.html">Admin Portal</a>
@@ -18,85 +21,126 @@
   </header>
 
   <div class="container">
-    <h2>Management Control Center</h2>
+    <h2>Management Dashboard</h2>
 
-    <!-- Add New Room / Apartment Section -->
+    <!-- Add Unit Form -->
     <div class="card">
-      <h3>Add New Room or Apartment</h3>
+      <h3>Add Room or Apartment Listing</h3>
       <form id="addRoomForm">
-        <label>Property Location</label>
+        <label>Property Location / Type</label>
         <select id="propertyType" required>
           <option value="hotel">Udy Hotel (Main Branch)</option>
           <option value="apartment">Udy Apartments (City Annex)</option>
         </select>
 
-        <label>Room/Apartment Name & Number</label>
-        <input type="text" id="roomName" placeholder="e.g., Deluxe Suite 101" required>
+        <label>Room Name / Number</label>
+        <input type="text" id="roomName" placeholder="e.g., Executive Suite 302" required>
 
         <label>Price per Night ($)</label>
-        <input type="number" id="roomPrice" placeholder="150" required>
+        <input type="number" id="roomPrice" placeholder="200" required>
 
-        <label>Image URL</label>
-        <input type="url" id="roomImage" placeholder="https://example.com/image.jpg" required>
+        <label>Picture Image URL</label>
+        <input type="url" id="roomImage" placeholder="https://images.unsplash.com/..." required>
 
-        <button type="submit">Publish Listing</button>
+        <button type="submit">Publish to Website</button>
       </form>
     </div>
 
-    <!-- Live Bookings and Records -->
+    <!-- Active Catalog Manager (Edit Prices / Delete) -->
     <div class="card">
-      <h3>Live Guest Records & Bookings</h3>
+      <h3>Manage Existing Listings & Update Prices</h3>
       <table>
         <thead>
           <tr>
-            <th>Guest Name</th>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Current Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="adminRoomsTable">
+          <tr><td colspan="4">Loading listings...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Live Records -->
+    <div class="card">
+      <h3>All Bookings & Sales Records</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Guest</th>
             <th>Property</th>
-            <th>Room / Unit</th>
+            <th>Unit</th>
             <th>Check-In</th>
             <th>Check-Out</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody id="adminBookingsTable">
-          <tr>
-            <td colspan="6">Loading real-time records...</td>
-          </tr>
+          <tr><td colspan="5">Loading records...</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
   <script type="module">
-    import { db, collection, addDoc, onSnapshot } from "./app.js";
+    import { db, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from "./app.js";
 
-    // Handle adding new property units
     const addRoomForm = document.getElementById('addRoomForm');
     addRoomForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const propertyType = document.getElementById('propertyType').value;
-      const name = document.getElementById('roomName').value;
-      const price = document.getElementById('roomPrice').value;
-      const imageUrl = document.getElementById('roomImage').value;
-
       try {
         await addDoc(collection(db, "rooms"), {
-          propertyType,
-          name,
-          price: Number(price),
-          imageUrl,
-          available: true,
+          propertyType: document.getElementById('propertyType').value,
+          name: document.getElementById('roomName').value,
+          price: Number(document.getElementById('roomPrice').value),
+          imageUrl: document.getElementById('roomImage').value,
           createdAt: new Date()
         });
-        alert('Room/Apartment added successfully!');
+        alert('Listing successfully created and live on home page!');
         addRoomForm.reset();
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        alert('Failed to add listing.');
+      } catch (err) {
+        alert('Error adding room.');
       }
     });
 
-    // Real-time listener for bookings
-    const bookingsTable = document.getElementById('adminBookingsTable');
+    const adminRoomsTable = document.getElementById('adminRoomsTable');
+    onSnapshot(collection(db, "rooms"), (snapshot) => {
+      let html = '';
+      snapshot.forEach((documentSnap) => {
+        const r = documentSnap.data();
+        const id = documentSnap.id;
+        html += `
+          <tr>
+            <td>${r.propertyType.toUpperCase()}</td>
+            <td>${r.name}</td>
+            <td>$${r.price}</td>
+            <td>
+              <button onclick="updatePrice('${id}', ${r.price})" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Edit Price</button>
+              <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; padding: 0.3rem 0.6rem; font-size: 0.8rem; margin-left: 5px;">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+      adminRoomsTable.innerHTML = html || '<tr><td colspan="4">No rooms listed yet.</td></tr>';
+    });
+
+    window.updatePrice = async function(id, currentPrice) {
+      const newPrice = prompt("Enter new price per night ($):", currentPrice);
+      if (newPrice && !isNaN(newPrice)) {
+        await updateDoc(doc(db, "rooms", id), { price: Number(newPrice) });
+        alert('Price updated successfully and reflected instantly.');
+      }
+    };
+
+    window.deleteRoom = async function(id) {
+      if (confirm("Are you sure you want to delete this room?")) {
+        await deleteDoc(doc(db, "rooms", id));
+      }
+    };
+
+    const adminBookingsTable = document.getElementById('adminBookingsTable');
     onSnapshot(collection(db, "bookings"), (snapshot) => {
       let html = '';
       snapshot.forEach((doc) => {
@@ -108,14 +152,10 @@
             <td>${b.roomName}</td>
             <td>${b.checkIn}</td>
             <td>${b.checkOut}</td>
-            <td>${b.status || 'Confirmed'}</td>
           </tr>
         `;
       });
-      if (html === '') {
-        html = '<tr><td colspan="6">No active bookings found.</td></tr>';
-      }
-      bookingsTable.innerHTML = html;
+      adminBookingsTable.innerHTML = html || '<tr><td colspan="5">No records found.</td></tr>';
     });
   </script>
 </body>
