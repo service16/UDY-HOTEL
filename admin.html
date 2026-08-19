@@ -5,88 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - Udy Hotel</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .grid-admin {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .grid-admin { grid-template-columns: 1fr; }
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #27272a;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #18181b;
+      color: var(--secondary-color);
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header>
-    <div class="logo-container">
+    <div class="logo-area">
       <img src="logo.jpeg" alt="Udy Logo">
-      <h1>Udy Admin Control</h1>
+      <span>UDY HOTEL ADMIN</span>
     </div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="admin.html">Admin Portal</a>
-      <a href="receptionist-hotel.html">Hotel Desk</a>
-      <a href="receptionist-apt.html">Apartment Desk</a>
+      <a href="index.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">View Live Website &rarr;</a>
     </nav>
   </header>
 
-  <div class="container">
-    <h2>Management Dashboard</h2>
-
-    <!-- Add Unit Form -->
-    <div class="card">
-      <h3>Add Room or Apartment Listing</h3>
-      <form id="addRoomForm">
-        <label>Property Location / Type</label>
-        <select id="propertyType" required>
-          <option value="hotel">Udy Hotel (Main Branch)</option>
-          <option value="apartment">Udy Apartments (City Annex)</option>
-        </select>
-
-        <label>Room Name / Number</label>
-        <input type="text" id="roomName" placeholder="e.g., Executive Suite 302" required>
-
-        <label>Price per Night ($)</label>
-        <input type="number" id="roomPrice" placeholder="200" required>
-
-        <label>Picture Image URL</label>
-        <input type="url" id="roomImage" placeholder="https://images.unsplash.com/..." required>
-
-        <button type="submit">Publish to Website</button>
-      </form>
+  <div class="admin-container">
+    <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+      <h2>Website Management Dashboard</h2>
+      <p>Add new hotel rooms or apartments, update pictures, change prices, and view customer reservations.</p>
     </div>
 
-    <!-- Active Catalog Manager (Edit Prices / Delete) -->
-    <div class="card">
-      <h3>Manage Existing Listings & Update Prices</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Current Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="adminRoomsTable">
-          <tr><td colspan="4">Loading listings...</td></tr>
-        </tbody>
-      </table>
+    <div class="grid-admin">
+      <!-- Left Column: Add New Room/Apartment Form -->
+      <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a;">
+        <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">Add New Unit</h3>
+        <form id="addRoomForm">
+          <label style="font-size: 0.85rem; color: var(--text-muted);">Category</label>
+          <select id="propertyType" style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
+            <option value="hotel">Hotel Room</option>
+            <option value="apartment">Apartment Unit</option>
+          </select>
+
+          <label style="font-size: 0.85rem; color: var(--text-muted);">Room / Unit Name</label>
+          <input type="text" id="roomName" placeholder="e.g., Deluxe Room or Studio Suite" style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
+
+          <label style="font-size: 0.85rem; color: var(--text-muted);">Price per Night ($)</label>
+          <input type="number" id="roomPrice" placeholder="195" style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
+
+          <label style="font-size: 0.85rem; color: var(--text-muted);">Picture Image URL</label>
+          <input type="url" id="roomImage" placeholder="https://images.unsplash.com/..." style="width: 100%; padding: 0.6rem; margin: 0.4rem 0 1rem 0; background: #121212; color: white; border: 1px solid #3f3f46; border-radius: 4px;" required>
+
+          <button type="submit" style="width: 100%; margin-top: 0.5rem; background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;">Publish to Live Site</button>
+        </form>
+      </div>
+
+      <!-- Right Column: Live Room Catalog & Price Editor -->
+      <div>
+        <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a; margin-bottom: 2rem;">
+          <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">Active Website Rooms & Prices</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Changes take effect instantly on the home page.</p>
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Name</th>
+                  <th>Price ($)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminRoomsTable">
+                <tr><td colspan="4">Syncing rooms...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Live Records -->
-    <div class="card">
-      <h3>All Bookings & Sales Records</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Guest</th>
-            <th>Property</th>
-            <th>Unit</th>
-            <th>Check-In</th>
-            <th>Check-Out</th>
-          </tr>
-        </thead>
-        <tbody id="adminBookingsTable">
-          <tr><td colspan="5">Loading records...</td></tr>
-        </tbody>
-      </table>
+    <!-- Bookings Records Section -->
+    <div class="card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid #27272a; margin-top: 2rem;">
+      <h3 style="color: var(--secondary-color); margin-bottom: 0.5rem;">Customer Reservations & Bookings</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Live online reservations made by visitors.</p>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Guest Name</th>
+              <th>Category</th>
+              <th>Unit Booked</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+            </tr>
+          </thead>
+          <tbody id="adminBookingsTable">
+            <tr><td colspan="5">Syncing bookings...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <script type="module">
     import { db, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot } from "./app.js";
 
+    // Add Room / Apartment Handler
     const addRoomForm = document.getElementById('addRoomForm');
     addRoomForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -98,13 +141,14 @@
           imageUrl: document.getElementById('roomImage').value,
           createdAt: new Date()
         });
-        alert('Listing successfully created and live on home page!');
+        alert('Unit published successfully! It is now visible on the home page.');
         addRoomForm.reset();
       } catch (err) {
-        alert('Error adding room.');
+        alert('Error adding unit. Please verify your Firebase connection.');
       }
     });
 
+    // Real-Time Sync & Management Table for Rooms
     const adminRoomsTable = document.getElementById('adminRoomsTable');
     onSnapshot(collection(db, "rooms"), (snapshot) => {
       let html = '';
@@ -113,33 +157,47 @@
         const id = documentSnap.id;
         html += `
           <tr>
-            <td>${r.propertyType.toUpperCase()}</td>
+            <td style="text-transform: uppercase; font-size: 0.75rem; font-weight: bold; color: var(--secondary-color);">${r.propertyType}</td>
             <td>${r.name}</td>
             <td>$${r.price}</td>
             <td>
-              <button onclick="updatePrice('${id}', ${r.price})" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Edit Price</button>
-              <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; padding: 0.3rem 0.6rem; font-size: 0.8rem; margin-left: 5px;">Delete</button>
+              <button onclick="updatePrice('${id}', ${r.price})" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color); padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer;">Edit Price</button>
+              <button onclick="updateImage('${id}', '${r.imageUrl}')" style="background: #27272a; color: var(--white); border: 1px solid #3f3f46; padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Edit Photo</button>
+              <button onclick="deleteRoom('${id}')" style="background: #ef4444; color: white; border: none; padding: 0.3rem 0.6rem; font-size: 0.75rem; border-radius: 3px; cursor: pointer; margin-left: 3px;">Delete</button>
             </td>
           </tr>
         `;
       });
-      adminRoomsTable.innerHTML = html || '<tr><td colspan="4">No rooms listed yet.</td></tr>';
+      adminRoomsTable.innerHTML = html || '<tr><td colspan="4">No rooms or apartments listed yet.</td></tr>';
     });
 
+    // Update Price Function
     window.updatePrice = async function(id, currentPrice) {
       const newPrice = prompt("Enter new price per night ($):", currentPrice);
-      if (newPrice && !isNaN(newPrice)) {
+      if (newPrice !== null && !isNaN(newPrice)) {
         await updateDoc(doc(db, "rooms", id), { price: Number(newPrice) });
-        alert('Price updated successfully and reflected instantly.');
+        alert('Price updated successfully and synced to website!');
       }
     };
 
+    // Update Image URL Function
+    window.updateImage = async function(id, currentImg) {
+      const newImg = prompt("Enter new picture image URL:", currentImg);
+      if (newImg !== null && newImg.trim() !== "") {
+        await updateDoc(doc(db, "rooms", id), { imageUrl: newImg });
+        alert('Room picture updated successfully!');
+      }
+    };
+
+    // Delete Room Function
     window.deleteRoom = async function(id) {
-      if (confirm("Are you sure you want to delete this room?")) {
+      if (confirm("Are you sure you want to remove this unit from the website?")) {
         await deleteDoc(doc(db, "rooms", id));
+        alert('Listing removed successfully.');
       }
     };
 
+    // Real-Time Bookings Records Table
     const adminBookingsTable = document.getElementById('adminBookingsTable');
     onSnapshot(collection(db, "bookings"), (snapshot) => {
       let html = '';
@@ -148,14 +206,14 @@
         html += `
           <tr>
             <td>${b.guestName}</td>
-            <td>${b.propertyType.toUpperCase()}</td>
+            <td style="text-transform: uppercase;">${b.propertyType}</td>
             <td>${b.roomName}</td>
             <td>${b.checkIn}</td>
             <td>${b.checkOut}</td>
           </tr>
         `;
       });
-      adminBookingsTable.innerHTML = html || '<tr><td colspan="5">No records found.</td></tr>';
+      adminBookingsTable.innerHTML = html || '<tr><td colspan="5">No customer reservations recorded yet.</td></tr>';
     });
   </script>
 </body>
