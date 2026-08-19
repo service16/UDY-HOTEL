@@ -1,10 +1,12 @@
 :root {
-  --primary-color: #1e3a8a;
-  --secondary-color: #3b82f6;
-  --accent-color: #f59e0b;
-  --bg-color: #f8fafc;
-  --text-color: #1e293b;
-  --white: #ffffff;
+  --bg-color: #0b0b0b;          /* Deep Luxury Black */
+  --card-bg: #161616;           /* Slightly lighter dark tone for cards */
+  --primary-color: #d4af37;     /* Metallic Gold */
+  --secondary-color: #f3e5ab;   /* Light Gold / Cream */
+  --accent-color: #ffd700;      /* Bright Gold */
+  --text-color: #f8fafc;        /* Clean White/Off-white for readability */
+  --text-muted: #94a3b8;        /* Muted gray for descriptions */
+  --border-color: #262626;      /* Dark subtle borders */
 }
 
 * {
@@ -21,27 +23,45 @@ body {
 }
 
 header {
-  background: var(--primary-color);
-  color: var(--white);
+  background: #000000;
+  color: var(--primary-color);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-container img {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  object-fit: cover;
 }
 
 header h1 {
   font-size: 1.5rem;
+  color: var(--primary-color);
+  letter-spacing: 1px;
 }
 
 nav a {
-  color: var(--white);
+  color: var(--text-color);
   text-decoration: none;
   margin-left: 1.5rem;
   font-weight: 600;
+  transition: color 0.3s;
 }
 
 nav a:hover {
-  color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 .container {
@@ -51,33 +71,47 @@ nav a:hover {
 }
 
 .card {
-  background: var(--white);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   margin-bottom: 1.5rem;
 }
 
+.card h2, .card h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
 button {
-  background: var(--secondary-color);
-  color: var(--white);
+  background: var(--primary-color);
+  color: #000000;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: bold;
+  transition: opacity 0.3s;
 }
 
 button:hover {
-  background: var(--primary-color);
+  opacity: 0.85;
 }
 
 input, select {
   width: 100%;
-  padding: 0.6rem;
+  padding: 0.75rem;
   margin: 0.5rem 0 1rem 0;
-  border: 1px solid #cbd5e1;
+  background: #000000;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
   border-radius: 4px;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color);
+  outline: none;
 }
 
 table {
@@ -89,9 +123,14 @@ table {
 th, td {
   padding: 0.75rem;
   text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 th {
-  background: #f1f5f9;
+  background: #000000;
+  color: var(--primary-color);
+}
+
+td {
+  color: var(--text-color);
 }
