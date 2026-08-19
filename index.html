@@ -5,275 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Udy Hotel & Apartments - Luxury Redefined</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    .hero {
-      background: linear-gradient(rgba(15,15,15,0.65), rgba(15,15,15,0.85)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945') center/cover no-repeat;
-      color: white;
-      text-align: center;
-      padding: 6rem 1rem;
-      border-radius: 12px;
-      margin-bottom: 2.5rem;
-      border: 1px solid var(--secondary-color);
-    }
-    .hero h1 { font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--secondary-color); letter-spacing: 2px; }
-    .hero p { font-size: 1.25rem; color: #d1d5db; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto; }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .section-title h2 { font-size: 2.2rem; color: var(--secondary-color); margin-bottom: 0.5rem; }
-    .section-title p { color: var(--text-muted); font-size: 1.05rem; }
-
-    .amenities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-    .amenity-card {
-      background: var(--card-bg);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #27272a;
-      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4);
-    }
-    .amenity-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    .amenity-info {
-      padding: 1.5rem;
-    }
-    .amenity-info h3 { color: var(--secondary-color); margin-bottom: 0.5rem; font-size: 1.3rem; }
-    .amenity-info p { color: var(--text-muted); font-size: 0.95rem; }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-    .listing-card {
-      background: var(--card-bg);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #27272a;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    .listing-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    .listing-content {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      color: var(--primary-color);
-      background: var(--secondary-color);
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      font-weight: bold;
-      margin-bottom: 0.75rem;
-      width: fit-content;
-    }
-    .price { font-size: 1.4rem; font-weight: bold; color: var(--secondary-color); margin: 0.75rem 0; }
-
-    /* Modal Pop-up Styling for "Book Your Stay Now" */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: var(--card-bg);
-      padding: 2.5rem;
-      border-radius: 12px;
-      border: 1px solid var(--secondary-color);
-      text-align: center;
-      max-width: 450px;
-      width: 90%;
-    }
-    .modal-content h2 { color: var(--secondary-color); margin-bottom: 1rem; }
-    .modal-btn-group {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    .modal-btn-group button { flex: 1; padding: 0.8rem; font-size: 1rem; }
-    .close-modal {
-      margin-top: 1rem;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      cursor: pointer;
-    }
-
-    footer {
-      background: var(--primary-color);
-      color: var(--text-muted);
-      text-align: center;
-      padding: 2rem;
-      border-top: 1px solid #27272a;
-      margin-top: 4rem;
-    }
-  </style>
 </head>
 <body>
+
+  <!-- Sticky Top Bar with Search & Quick Booking Inputs -->
   <header>
-    <div class="logo-container">
+    <div class="logo-area">
       <img src="logo.jpeg" alt="Udy Logo">
-      <h1>Udy Hotel & Apartments</h1>
+      <span>UDY HOTEL</span>
     </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="#catalog-section" onclick="filterProperty('hotel')">Hotels</a>
-      <a href="#catalog-section" onclick="filterProperty('apartment')">Apartments</a>
-      <a href="admin.html" style="font-size: 0.8rem; color: var(--text-muted); border: 1px solid #3f3f46; padding: 4px 8px; border-radius: 4px;">Staff Portal</a>
-    </nav>
+
+    <div class="sticky-search-bar">
+      <select id="topLocationSelect">
+        <option value="hotel">Lagos Hotel</option>
+        <option value="apartment">City Apartments</option>
+      </select>
+      <input type="date" id="topCheckIn">
+      <input type="date" id="topCheckOut">
+      <select id="topGuests">
+        <option value="1">1 Adult</option>
+        <option value="2" selected>2 Adults</option>
+        <option value="3">3+ Guests</option>
+      </select>
+      <button onclick="scrollToRooms()">SEARCH</button>
+    </div>
+
+    <button class="nav-menu-btn" onclick="window.location.href='admin.html'" title="Staff Portal">☰</button>
   </header>
 
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>UDY HOTEL</h1>
+    <p>Lagos</p>
+    <button class="reserve-btn" onclick="scrollToRooms()">Reserve Your Stay</button>
+  </div>
+
   <div class="container">
-    <!-- Hero Showcase Section -->
-    <div class="hero">
-      <h1>Welcome to Udy Excellence</h1>
-      <p>Immerse yourself in supreme hospitality. Choose between our high-end Main Hotel branch or our spacious, private City Apartments.</p>
-      <button onclick="openBookingModal()" style="padding: 0.9rem 2.5rem; font-size: 1.15rem;">Book Your Stay Now</button>
+    
+    <!-- Accommodations / Rooms Section (Matching Video Layout) -->
+    <div id="rooms-section" class="section-header">
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.5rem;">Accommodations</p>
+      <h2>Our Rooms & Apartments</h2>
+      <p>Each space is a private retreat, designed with meticulous attention to detail and uncompromising luxury.</p>
     </div>
 
-    <!-- Resort Amenities (Pool Side & Bar Showcase) -->
-    <div class="section-title">
-      <h2>Resort Highlights & Amenities</h2>
-      <p>Designed to give you a relaxing, unforgettable getaway experience</p>
+    <!-- Filter Buttons to Toggle Hotel Rooms vs Apartments -->
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem;">
+      <button onclick="switchCategory('hotel')" id="btnHotel" class="reserve-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Hotel Rooms</button>
+      <button onclick="switchCategory('apartment')" id="btnApt" class="reserve-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem; background: transparent; border-color: #3f3f46; color: var(--text-muted);">Apartment Units</button>
     </div>
 
-    <div class="amenities-grid">
-      <div class="amenity-card">
-        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d" alt="Udy Poolside">
-        <div class="amenity-info">
-          <h3>The Crystalline Poolside</h3>
-          <p>Take a refreshing swim or lounge under the sun in our pristine outdoor oasis complete with private cabanas and towel service.</p>
-        </div>
+    <!-- Dynamic Room List container synced with Firebase -->
+    <div id="roomsListContainer">
+      <p style="text-align: center; color: var(--text-muted);">Loading real-time rooms and pricing...</p>
+    </div>
+
+    <!-- Restaurant & Bar Section -->
+    <div class="section-header" style="margin-top: 6rem;">
+      <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 0.5rem;">Restaurant & Lounge</p>
+      <h2>Udy Mogambo Lounge</h2>
+      <p>A vibrant culinary destination where exquisite plating craftsmanship meets the warmth of hospitality.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card-item">
+        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b" alt="Bar & Lounge">
+        <h3>The Outdoor Lounge</h3>
+        <p>Sunset views, intimate seating, craft cocktails, and world-class wines.</p>
       </div>
-      <div class="amenity-card">
-        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b" alt="Udy Bar & Lounge">
-        <div class="amenity-info">
-          <h3>The Udy Bar & Lounge</h3>
-          <p>Unwind with master mixologist cocktails, fine wines, and soft ambient music designed for elite relaxation.</p>
-        </div>
+      <div class="card-item">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d" alt="Poolside">
+        <h3>The Pool Oasis</h3>
+        <p>An absolute oasis in the city designed for absolute relaxation.</p>
       </div>
     </div>
 
-    <!-- Catalog Section Anchor -->
-    <div id="catalog-section" class="section-title" style="margin-top: 3rem;">
-      <h2>Our Rooms & Apartments Collection</h2>
-      <p>Browse our verified options, check real-time rates, and book instantly</p>
-    </div>
-
-    <!-- Dynamic Real-Time Listings Grid -->
-    <div id="listingsContainer" class="gallery-grid">
-      <p style="text-align: center; grid-column: 1/-1; color: var(--text-muted);">Syncing live rooms, prices, and availability from database...</p>
-    </div>
   </div>
 
-  <!-- Booking Decision Modal Window -->
-  <div id="bookingModal" class="modal">
-    <div class="modal-content">
-      <h2>Select Property Type</h2>
-      <p style="color: var(--text-muted); font-size: 0.95rem;">Where would you like to experience your stay with Udy today?</p>
-      <div class="modal-btn-group">
-        <button onclick="filterProperty('hotel'); closeModal();">Udy Hotel</button>
-        <button onclick="filterProperty('apartment'); closeModal();" style="background: #27272a; color: var(--secondary-color); border: 1px solid var(--secondary-color);">Udy Apartments</button>
-      </div>
-      <button class="close-modal" onclick="closeModal()">Cancel</button>
-    </div>
-  </div>
-
+  <!-- Footer -->
   <footer>
-    <p>&copy; 2026 Udy Hotel & Apartments. All rights reserved. Professional Hospitality Solutions.</p>
+    <div>
+      <h3>UDY HOTEL LAGOS</h3>
+      <p>Where Elegance and Convenience Meet</p>
+    </div>
+    <div>
+      <h3>CONTACT</h3>
+      <p>1 Mogambo Close, Maryland Estate, Ikeja, Lagos, Nigeria</p>
+      <p>+234 812 999 1716</p>
+      <p>reservations@udyhotel.com</p>
+    </div>
+    <div>
+      <h3>LINKS</h3>
+      <a href="index.html">Home</a>
+      <a href="admin.html">Staff Admin Portal</a>
+    </div>
   </footer>
 
   <script type="module">
     import { db, collection, addDoc, onSnapshot } from "./app.js";
 
-    const listingsContainer = document.getElementById('listingsContainer');
     let allRooms = [];
-    let currentFilter = 'all';
+    let currentCategory = 'hotel';
 
-    // Real-time synchronization
+    // Fetch live rooms from Firebase
     onSnapshot(collection(db, "rooms"), (snapshot) => {
       allRooms = [];
       snapshot.forEach((doc) => {
         allRooms.push({ id: doc.id, ...doc.data() });
       });
-      renderListings(currentFilter);
+      renderRooms(currentCategory);
     });
 
-    window.filterProperty = function(type) {
-      currentFilter = type;
-      renderListings(type);
-      document.getElementById('catalog-section').scrollIntoView({ behavior: 'smooth' });
+    window.switchCategory = function(cat) {
+      currentCategory = cat;
+      if(cat === 'hotel') {
+        document.getElementById('btnHotel').style.background = 'var(--secondary-color)';
+        document.getElementById('btnHotel').style.color = 'var(--primary-color)';
+        document.getElementById('btnApt').style.background = 'transparent';
+        document.getElementById('btnApt').style.color = 'var(--text-muted)';
+      } else {
+        document.getElementById('btnApt').style.background = 'var(--secondary-color)';
+        document.getElementById('btnApt').style.color = 'var(--primary-color)';
+        document.getElementById('btnHotel').style.background = 'transparent';
+        document.getElementById('btnHotel').style.color = 'var(--text-muted)';
+      }
+      renderRooms(cat);
     }
 
-    function renderListings(filter) {
-      let html = '';
-      const filtered = allRooms.filter(r => filter === 'all' || r.propertyType === filter);
+    function renderRooms(cat) {
+      const container = document.getElementById('roomsListContainer');
+      const filtered = allRooms.filter(r => r.propertyType === cat);
 
-      if (filtered.length === 0) {
-        listingsContainer.innerHTML = `<p style="text-align: center; grid-column: 1/-1; color: var(--text-muted);">No active units found under this category. Management can add listings via the staff portal.</p>`;
+      if(filtered.length === 0) {
+        container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 2rem;">No rooms found in this category. You can add units via the Admin Portal.</p>`;
         return;
       }
 
+      let html = '';
       filtered.forEach(room => {
-        const badgeText = room.propertyType === 'hotel' ? 'Hotel Room' : 'Apartment Unit';
         html += `
-          <div class="listing-card">
-            <img src="${room.imageUrl}" alt="${room.name}">
-            <div class="listing-content">
-              <span class="badge">${badgeText}</span>
+          <div class="room-row">
+            <div class="room-info">
               <h3>${room.name}</h3>
-              <div class="price">$${room.price} <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: normal;">/ night</span></div>
-              <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">Fully equipped with modern utilities, high-speed Wi-Fi, and premium climate controls.</p>
-              <button onclick="bookRoom('${room.name}', '${room.propertyType}')" style="margin-top: auto; width: 100%;">Book This Room</button>
+              <div class="price">From $${room.price}</div>
+            </div>
+            <div class="room-desc">
+              Refined comfort with panoramic views & modern amenities
+              <span onclick="bookSpecificRoom('${room.name}', '${room.propertyType}')">Book Now &rarr;</span>
             </div>
           </div>
         `;
       });
-      listingsContainer.innerHTML = html;
+      container.innerHTML = html;
     }
 
-    window.openBookingModal = function() {
-      document.getElementById('bookingModal').style.display = 'flex';
+    window.scrollToRooms = function() {
+      document.getElementById('rooms-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    window.closeModal = function() {
-      document.getElementById('bookingModal').style.display = 'none';
-    }
-
-    window.bookRoom = async function(roomName, propertyType) {
+    window.bookSpecificRoom = async function(roomName, propertyType) {
       const guestName = prompt(`Enter your Full Name to reserve ${roomName}:`);
-      if (!guestName) return;
-      const checkIn = prompt("Enter Check-In Date (YYYY-MM-DD):");
-      if (!checkIn) return;
-      const checkOut = prompt("Enter Check-Out Date (YYYY-MM-DD):");
-      if (!checkOut) return;
+      if(!guestName) return;
+      const checkIn = document.getElementById('topCheckIn').value || prompt("Enter Check-In Date (YYYY-MM-DD):");
+      if(!checkIn) return;
+      const checkOut = document.getElementById('topCheckOut').value || prompt("Enter Check-Out Date (YYYY-MM-DD):");
+      if(!checkOut) return;
 
       try {
         await addDoc(collection(db, "bookings"), {
@@ -285,11 +181,11 @@
           status: 'Confirmed Online',
           createdAt: new Date()
         });
-        alert(`Reservation for ${roomName} successful! Our front desk team will reach out to confirm your booking details.`);
-      } catch (err) {
-        alert('Booking failed. Please check your network connection.');
+        alert(`Reservation successful for ${roomName}! Management will contact you shortly.`);
+      } catch(e) {
+        alert("Booking error. Please check your network configuration.");
       }
-    };
+    }
   </script>
 </body>
 </html>
