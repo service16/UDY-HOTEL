@@ -3,22 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udy Hotel & Apartments</title>
+  <title>Udy Hotel & Apartments | Lagos</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    :root {
+      --primary-color: #0d0d0d;
+      --secondary-color: #d4af37;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --card-bg: #141416;
+      --border-color: #27272a;
+    }
+    body {
+      background-color: var(--primary-color);
+      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(13, 13, 13, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-area img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--secondary-color);
+    }
+    .logo-area span {
+      letter-spacing: 3px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      font-size: 1.1rem;
+    }
+    .hero-section {
+      padding: 6rem 1rem 4rem 1rem;
+      text-align: center;
+      background: linear-gradient(to bottom, #111, var(--primary-color));
+    }
+    .hero-section h4 {
+      color: var(--secondary-color);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero-section h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .hero-section p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem auto;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
     .category-tabs {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin: 2rem 0;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
     }
     .tab-btn {
-      background: #18181b;
+      background: transparent;
       color: var(--text-muted);
-      border: 1px solid #3f3f46;
-      padding: 0.75rem 2rem;
-      font-weight: bold;
-      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      padding: 0.9rem 2.5rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      font-size: 0.85rem;
+      border-radius: 2px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -29,31 +100,83 @@
     }
     .rooms-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2.5rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem 6rem 1.5rem;
     }
     .room-card {
       background: var(--card-bg);
-      border: 1px solid #27272a;
-      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .room-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--secondary-color);
     }
     .room-card img {
       width: 100%;
-      height: 220px;
+      height: 260px;
       object-fit: cover;
     }
     .room-info {
-      padding: 1.5rem;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       justify-content: space-between;
+    }
+    .room-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--secondary-color);
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .room-title {
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin: 0 0 1rem 0;
+    }
+    .room-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+    }
+    .room-price {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+    .room-price span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: normal;
+    }
+    .book-btn {
+      background: transparent;
+      color: var(--secondary-color);
+      border: 1px solid var(--secondary-color);
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .book-btn:hover {
+      background: var(--secondary-color);
+      color: var(--primary-color);
     }
   </style>
 </head>
@@ -63,30 +186,28 @@
   <header>
     <div class="logo-area">
       <img src="logo.jpeg" alt="Udy Logo">
-      <span>UDY HOTEL</span>
+      <span>UDY HOTEL & APARTMENTS</span>
     </div>
     <nav>
-      <a href="admin.html" style="color: var(--secondary-color); text-decoration: none; font-size: 0.85rem; font-weight: bold;">Admin Login</a>
+      <a href="admin.html" style="color: var(--secondary-color); text-decoration: none; font-size: 0.8rem; letter-spacing: 1px; font-weight: 600; text-transform: uppercase;">Admin Portal</a>
     </nav>
   </header>
 
-  <!-- Hero & Rooms Section -->
-  <section style="padding: 4rem 1rem; text-align: center;">
-    <div style="max-width: 800px; margin: 0 auto;">
-      <h4 style="color: var(--secondary-color); letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem;">Accommodations</h4>
-      <h1 style="font-size: 2.5rem; margin: 0.5rem 0 1rem 0;">OUR ROOMS & APARTMENTS</h1>
-      <p style="color: var(--text-muted); margin-bottom: 2rem;">Each space is a private retreat, designed with meticulous attention to detail and uncompromising luxury.</p>
-    </div>
+  <!-- Hero & Content Section -->
+  <section class="hero-section">
+    <h4>Accommodations in Lagos</h4>
+    <h1>OUR ROOMS & APARTMENTS</h1>
+    <p>Each space is a private retreat, designed with meticulous attention to detail, uncompromising luxury, and refined Nigerian hospitality.</p>
 
-    <!-- Category Filter Tabs -->
+    <!-- Category Tabs -->
     <div class="category-tabs">
       <button class="tab-btn active" id="hotelTabBtn" onclick="switchCategory('hotel')">HOTEL ROOMS</button>
       <button class="tab-btn" id="apartmentTabBtn" onclick="switchCategory('apartment')">APARTMENT UNITS</button>
     </div>
 
-    <!-- Dynamic Room Grid Container -->
+    <!-- Live Dynamic Rooms Grid -->
     <div id="liveRoomsContainer" class="rooms-grid">
-      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center;">Loading real-time rooms and pricing...</p>
+      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center;">Loading refined living spaces...</p>
     </div>
   </section>
 
@@ -94,7 +215,7 @@
     import { db, collection, onSnapshot } from "./app.js";
 
     let allRoomsList = [];
-    let currentCategory = 'hotel'; // Default view
+    let currentCategory = 'hotel'; // Default view matches hotel tab
 
     window.switchCategory = function(category) {
       currentCategory = category;
@@ -108,7 +229,7 @@
       const filtered = allRoomsList.filter(r => r.propertyType === currentCategory);
 
       if (filtered.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">No ${currentCategory} units available at the moment.</p>`;
+        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 3rem; font-size: 0.95rem;">No ${currentCategory} units currently available.</p>`;
         return;
       }
 
@@ -119,12 +240,12 @@
             <img src="${r.imageUrl}" alt="${r.name}">
             <div class="room-info">
               <div>
-                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--secondary-color); font-weight: bold; margin-bottom: 0.3rem;">${r.propertyType} Unit</div>
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">${r.name}</h3>
+                <div class="room-badge">${r.propertyType} Retreat</div>
+                <h3 class="room-title">${r.name}</h3>
               </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; border-top: 1px solid #27272a; padding-top: 1rem;">
-                <span style="font-size: 1.1rem; font-weight: bold; color: var(--secondary-color);">$${r.price} <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">/ night</span></span>
-                <button onclick="alert('Proceeding to reserve ${r.name}')" style="background: var(--secondary-color); color: var(--primary-color); border: none; padding: 0.5rem 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 0.85rem;">Book Now</button>
+              <div class="room-footer">
+                <div class="room-price">$${r.price} <span>/ night</span></div>
+                <button class="book-btn" onclick="alert('Inquiry/Reservation requested for ${r.name}')">VIEW & BOOK</button>
               </div>
             </div>
           </div>
