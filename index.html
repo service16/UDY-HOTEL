@@ -1,428 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udy Hotel & Apartments | Luxury Accommodation in Lagos</title>
-  <style>
-    :root {
-      --bg-color: #0c0c0e;
-      --card-bg: #141417;
-      --gold: #c5a059;
-      --gold-hover: #d4af37;
-      --text-main: #f4f4f5;
-      --text-muted: #a1a1aa;
-      --border: #27272a;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; scroll-behavior: smooth; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udy Hotel & Apartments | Luxury Lodging & Shortlets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #fafaf9; color: #1c1917; line-height: 1.6; }
+        
+        /* Navbar */
+        .navbar { background: #1c1917; color: white; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+        .logo span { color: #d97706; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { color: #e7e5e4; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: #d97706; }
 
-    /* Top Navigation Bar */
-    header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.2rem 4rem; background: rgba(12, 12, 14, 0.95);
-      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
-    }
-    .logo-area { display: flex; align-items: center; gap: 1rem; }
-    .logo-area img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
-    .logo-area span { letter-spacing: 3px; font-weight: 700; color: var(--gold); font-size: 1.1rem; }
-    
-    .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
-    .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; letter-spacing: 1.5px; text-transform: uppercase; transition: 0.3s; }
-    .nav-links a:hover { color: var(--gold); }
-    .cta-nav-btn { background: var(--gold); padding: 0.6rem 1.4rem; border-radius: 2px; color: var(--bg-color) !important; font-weight: 600; }
-    .cta-nav-btn:hover { background: var(--gold-hover); }
+        /* Hero Section */
+        .hero { background: linear-gradient(rgba(28,25,23,0.7), rgba(28,25,23,0.7)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; height: 75vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 15px; }
+        .hero h1 span { color: #d97706; }
+        .hero p { font-size: 1.1rem; color: #d6d3d1; max-width: 600px; margin-bottom: 30px; }
+        
+        /* Main Container */
+        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1c1917; margin-bottom: 10px; }
+        .section-header p { color: #78716c; font-size: 1rem; }
 
-    /* Hero Banner Section */
-    .hero {
-      height: 85vh; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('logo.jpeg') center/cover no-repeat;
-      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 1rem;
-    }
-    .hero h4 { color: var(--gold); letter-spacing: 4px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .hero h1 { font-size: 3.5rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 1rem; }
-    .hero p { color: var(--text-muted); max-width: 650px; font-size: 1rem; margin-bottom: 2rem; }
+        /* Showcase Grid */
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .property-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e7e5e4; display: flex; flex-direction: column; }
+        .property-img { height: 240px; width: 100%; object-fit: cover; }
+        .property-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
+        .badge { background: #fef3c7; color: #b45309; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; width: max-content; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .property-body h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px; color: #1c1917; }
+        .property-body p { color: #57534e; font-size: 0.95rem; margin-bottom: 20px; flex: 1; }
+        .price { font-size: 1.25rem; font-weight: 700; color: #d97706; margin-bottom: 20px; }
+        
+        /* Action Buttons */
+        .btn-group { display: flex; gap: 10px; }
+        .btn-whatsapp { flex: 1; background: #25d366; color: white; padding: 12px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 600; font-size: 0.9rem; transition: opacity 0.3s; }
+        .btn-whatsapp:hover { opacity: 0.9; }
+        .btn-call { background: #1c1917; color: white; padding: 12px 16px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; }
+        .btn-call:hover { background: #292524; }
 
-    /* Booking Bar Widget (Overlapping Banner) */
-    .booking-bar {
-      background: var(--card-bg); border: 1px solid var(--border); padding: 1.5rem 2rem;
-      display: flex; gap: 1rem; align-items: center; border-radius: 4px; max-width: 1100px; width: 90%; margin: -4rem auto 4rem auto; position: relative; z-index: 10; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    }
-    .input-group { display: flex; flex-direction: column; flex: 1; text-align: left; }
-    .input-group label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; font-weight: 600; }
-    .input-group input, .input-group select { background: #0c0c0e; border: 1px solid var(--border); color: white; padding: 0.7rem; border-radius: 2px; font-size: 0.9rem; }
-    .search-btn { background: var(--gold); color: var(--bg-color); border: none; padding: 0.9rem 2rem; font-weight: bold; letter-spacing: 1.5px; cursor: pointer; border-radius: 2px; transition: 0.3s; margin-top: 1.2rem; }
-    .search-btn:hover { background: var(--gold-hover); }
-
-    @media(max-width: 900px) {
-      .booking-bar { flex-direction: column; margin: 2rem 1rem; }
-      .hero h1 { font-size: 2.3rem; }
-      header { padding: 1.2rem 1.5rem; }
-      .nav-links { display: none; }
-    }
-
-    /* About Section */
-    .about-section { max-width: 1000px; margin: 4rem auto; padding: 0 1.5rem; text-align: center; }
-    .about-section h4 { color: var(--gold); letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .about-section h2 { font-size: 2.2rem; font-weight: 300; margin-bottom: 1.5rem; }
-    .about-section p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; }
-
-    /* Accommodations Section */
-    .accommodations { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 5rem 1.5rem; text-align: center; }
-    .section-title h4 { color: var(--gold); letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
-    .section-title h2 { font-size: 2.5rem; font-weight: 300; margin: 0.5rem 0 2rem 0; }
-
-    /* Tabs */
-    .tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3.5rem; }
-    .tab-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 0.8rem 2.5rem; font-weight: 600; letter-spacing: 2px; font-size: 0.85rem; cursor: pointer; transition: 0.3s; }
-    .tab-btn.active { background: var(--gold); color: var(--bg-color); border-color: var(--gold); }
-
-    /* Rooms Grid */
-    .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.5rem; text-align: left; }
-    .room-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; transition: 0.3s; }
-    .room-card:hover { transform: translateY(-5px); border-color: var(--gold); }
-    .room-card img { width: 100%; height: 260px; object-fit: cover; }
-    .room-body { padding: 2rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-    .room-tag { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 0.4rem; }
-    .room-name { font-size: 1.4rem; font-weight: 400; margin-bottom: 1rem; }
-    .room-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 1.2rem; margin-top: 1.2rem; }
-    .price { font-size: 1.25rem; font-weight: 600; color: var(--gold); }
-    .price span { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; }
-    
-    /* WhatsApp Book Now Button */
-    .whatsapp-book-btn { background: #25d366; color: white; border: none; padding: 0.65rem 1.4rem; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
-    .whatsapp-book-btn:hover { background: #20ba5a; }
-
-    /* Modal Popup Form for Booking Details & Total Pricing Calculation */
-    .modal-overlay {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; padding: 1rem;
-    }
-    .modal-content {
-      background: var(--card-bg); border: 1px solid var(--gold); padding: 2.5rem; border-radius: 6px;
-      max-width: 500px; width: 100%; position: relative; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-    }
-    .modal-content h3 { color: var(--gold); font-weight: 400; font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .modal-content p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
-    .form-row { margin-bottom: 1.2rem; display: flex; flex-direction: column; }
-    .form-row label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; font-weight: 600; }
-    .form-row input, .form-row select { background: #0c0c0e; border: 1px solid var(--border); color: white; padding: 0.75rem; border-radius: 2px; font-size: 0.95rem; }
-    .total-display { background: #0c0c0e; border: 1px dashed var(--gold); padding: 1rem; border-radius: 2px; margin: 1.5rem 0; display: flex; justify-content: space-between; align-items: center; }
-    .total-display span:first-child { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
-    .total-display span:last-child { font-size: 1.3rem; font-weight: 700; color: var(--gold); }
-    .modal-actions { display: flex; gap: 1rem; }
-    .confirm-wa-btn { background: #25d366; color: white; border: none; padding: 0.9rem; font-weight: 700; letter-spacing: 1px; flex: 2; cursor: pointer; border-radius: 2px; text-align: center; }
-    .confirm-wa-btn:hover { background: #20ba5a; }
-    .close-modal-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 0.9rem; flex: 1; cursor: pointer; border-radius: 2px; font-weight: 600; }
-    .close-modal-btn:hover { border-color: white; color: white; }
-
-    /* Amenities Section */
-    .amenities { background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 5rem 1.5rem; text-align: center; }
-    .amenities-grid { max-width: 1200px; margin: 3rem auto 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; text-align: left; }
-    .amenity-card { background: var(--bg-color); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
-    .amenity-card h3 { font-size: 1.2rem; color: var(--gold); margin-bottom: 0.8rem; font-weight: 400; }
-    .amenity-card p { color: var(--text-muted); font-size: 0.9rem; }
-
-    /* Footer */
-    footer { border-top: 1px solid var(--border); padding: 4rem 2rem 2rem 2rem; background: #08080a; }
-    .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: left; margin-bottom: 3rem; }
-    .footer-col h4 { color: var(--gold); letter-spacing: 2px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 1.2rem; }
-    .footer-col p, .footer-col ul li a { color: var(--text-muted); font-size: 0.9rem; text-decoration: none; transition: 0.3s; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 0.6rem; }
-    .footer-col ul li a:hover { color: var(--gold); }
-    .footer-bottom { text-align: center; border-top: 1px solid var(--border); padding-top: 2rem; color: var(--text-muted); font-size: 0.85rem; }
-  </style>
+        /* Footer */
+        footer { background: #1c1917; color: #a8a29e; text-align: center; padding: 40px 20px; margin-top: 80px; font-size: 0.9rem; }
+        footer p { margin-bottom: 5px; }
+    </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <header>
-    <div class="logo-area">
-      <img src="logo.jpeg" alt="Udy Logo">
-      <span>UDY HOTEL & APARTMENTS</span>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#roomsSection">Rooms & Suites</a></li>
-      <li><a href="#amenities">Amenities</a></li>
-      <li><a href="#roomsSection" class="cta-nav-btn">Book Now</a></li>
-    </ul>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h4>Lagos, Nigeria</h4>
-    <h1>EXPERIENCE LUXURY & RETREAT</h1>
-    <p>Discover refined accommodations, supreme comfort, and an alluring blend of luxury and exceptional hospitality for an unforgettable stay.</p>
-  </section>
-
-  <!-- Check Availability Bar (Filters View) -->
-  <div class="booking-bar">
-    <div class="input-group">
-      <label>Check-In Date</label>
-      <input type="date" id="globalCheckIn">
-    </div>
-    <div class="input-group">
-      <label>Check-Out Date</label>
-      <input type="date" id="globalCheckOut">
-    </div>
-    <div class="input-group">
-      <label>Adults</label>
-      <select id="globalAdults">
-        <option value="1 Adult">1 Adult</option>
-        <option value="2 Adults" selected>2 Adults</option>
-        <option value="3 Adults">3 Adults</option>
-        <option value="4+ Adults">4+ Adults</option>
-      </select>
-    </div>
-    <div class="input-group">
-      <label>Children</label>
-      <select id="globalChildren">
-        <option value="0 Children" selected>0 Children</option>
-        <option value="1 Child">1 Child</option>
-        <option value="2+ Children">2+ Children</option>
-      </select>
-    </div>
-    <button class="search-btn" onclick="scrollToRooms()">SEARCH</button>
-  </div>
-
-  <!-- About Section -->
-  <section class="about-section" id="about">
-    <h4>Welcome to Udy Hotel & Apartments</h4>
-    <h2>A Sanctuary of Elegance in the Heart of Lagos</h2>
-    <p>The moment you enter our rooms and suites, you'll be transported to a space of timeless sophistication. Whether you are visiting for executive business or a serene weekend getaway, Udy Hotel & Apartments delivers world-class personalized services, unmatched room comfort, and fine dining tailored to exceed your expectations.</p>
-  </section>
-
-  <!-- Accommodations Section -->
-  <section class="accommodations" id="roomsSection">
-    <div class="section-title">
-      <h4>Accommodations</h4>
-      <h2>OUR ROOMS & APARTMENTS</h2>
-    </div>
-
-    <!-- Category Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" id="hotelTab" onclick="switchTab('hotel')">HOTEL ROOMS</button>
-      <button class="tab-btn" id="apartmentTab" onclick="switchTab('apartment')">APARTMENT UNITS</button>
-    </div>
-
-    <!-- Dynamic Container Linked to Admin Database -->
-    <div id="roomsGridContainer" class="rooms-grid">
-      <p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">Loading available spaces...</p>
-    </div>
-  </section>
-
-  <!-- Booking Details & Total Pricing Modal Popup -->
-  <div class="modal-overlay" id="bookingModal">
-    <div class="modal-content">
-      <h3 id="modalRoomTitle">Complete Your Booking</h3>
-      <p>Provide your contact details and length of stay to calculate your total and send details directly to WhatsApp.</p>
-      
-      <div class="form-row">
-        <label>Full Name</label>
-        <input type="text" id="guestFullName" placeholder="e.g. Adebayo Johnson">
-      </div>
-      <div class="form-row">
-        <label>Phone Number (WhatsApp)</label>
-        <input type="text" id="guestPhone" placeholder="e.g. 08123456789">
-      </div>
-      <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-        <div>
-          <label>Check-In Date</label>
-          <input type="date" id="modalCheckIn" onchange="calculateTotal()">
-        </div>
-        <div>
-          <label>Check-Out Date</label>
-          <input type="date" id="modalCheckOut" onchange="calculateTotal()">
-        </div>
-      </div>
-
-      <div class="total-display">
-        <span>Total Estimated Price:</span>
-        <span id="modalTotalPrice">$0</span>
-      </div>
-
-      <div class="modal-actions">
-        <button class="confirm-wa-btn" onclick="sendToWhatsApp()">PROCEED TO WHATSAPP</button>
-        <button class="close-modal-btn" onclick="closeModal()">Cancel</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Hotel Amenities Section -->
-  <section class="amenities" id="amenities">
-    <div class="section-title">
-      <h4>World-Class Facilities</h4>
-      <h2>EXPLORE OUR FEATURES</h2>
-    </div>
-    <div class="amenities-grid">
-      <div class="amenity-card">
-        <h3>Fine Dining & Lounge</h3>
-        <p>Savor exquisite local and international culinary delights prepared by our expert chefs in an elegant ambient setting.</p>
-      </div>
-      <div class="amenity-card">
-        <h3>Swimming Pool & Spa</h3>
-        <p>Unwind and refresh your body and soul with our serene poolside environment and therapeutic wellness options.</p>
-      </div>
-      <div class="amenity-card">
-        <h3>Executive Boardroom</h3>
-        <p>Fully equipped professional meeting spaces designed for high-level corporate meetings, workshops, and private events.</p>
-      </div>
-      <div class="amenity-card">
-        <h3>24/7 Fitness Centre</h3>
-        <p>Stay active during your travels with modern gym equipment, free weights, and fitness training assistance.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Professional Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-col">
-        <h4>Udy Hotel & Apartments</h4>
-        <p>Providing an immaculate blend of luxury living, security, and exceptional hotel hospitality in Lagos.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#roomsSection">Rooms & Suites</a></li>
-          <li><a href="#amenities">Facilities</a></li>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">UDY <span>HOTEL & APARTMENTS</span></div>
+        <ul class="nav-links">
+            <li><a href="#hotel">Hotel Rooms</a></li>
+            <li><a href="#apartments">Luxury Apartments</a></li>
+            <li><a href="#contact">Contact Front Desk</a></li>
         </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact Information</h4>
-        <p>📍 Lagos, Nigeria</p>
-        <p style="margin-top: 0.5rem;">📞 +234 812 999 1716</p>
-        <p style="margin-top: 0.5rem;">✉️ reservations@udyhotel.com</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Udy Hotel & Apartments Lagos. All rights reserved.</p>
-    </div>
-  </footer>
+    </nav>
 
-  <script type="module">
-    import { db, collection, onSnapshot } from "./app.js";
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>Experience Comfort at <span>Udy</span></h1>
+        <p>Choose between our premium hotel rooms for short stays or fully-serviced luxury apartments tailored for absolute privacy and relaxation.</p>
+        <a href="#hotel" class="btn-whatsapp" style="width: 200px; background: #d97706; margin-top: 10px;">Explore Options</a>
+    </header>
 
-    let allRooms = [];
-    let currentCategory = 'hotel';
-    let selectedRoomData = null;
+    <!-- Main Showcase Container -->
+    <div class="container">
+        <div class="section-header">
+            <h2>Select Your Preferred Experience</h2>
+            <p>Direct bookings via WhatsApp and Phone with zero complications.</p>
+        </div>
 
-    window.switchTab = function(category) {
-      currentCategory = category;
-      document.getElementById('hotelTab').classList.toggle('active', category === 'hotel');
-      document.getElementById('apartmentTab').classList.toggle('active', category === 'apartment');
-      renderRooms();
-    }
-
-    window.scrollToRooms = function() {
-      document.getElementById('roomsSection').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function renderRooms() {
-      const container = document.getElementById('roomsGridContainer');
-      const filtered = allRooms.filter(r => r.propertyType === currentCategory);
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 3rem;">No ${currentCategory} units currently active.</p>`;
-        return;
-      }
-
-      let html = '';
-      filtered.forEach(r => {
-        html += `
-          <div class="room-card">
-            <img src="${r.imageUrl}" alt="${r.name}">
-            <div class="room-body">
-              <div>
-                <div class="room-tag">${r.propertyType} Unit</div>
-                <h3 class="room-name">${r.name}</h3>
-              </div>
-              <div class="room-footer">
-                <div class="price">$${r.price} <span>/ night</span></div>
-                <button class="whatsapp-book-btn" onclick='openBookingModal(${JSON.stringify(r)})'>
-                  Book Now
-                </button>
-              </div>
+        <div class="category-grid">
+            
+            <!-- Location/Category A: Hotel Rooms -->
+            <div class="property-card" id="hotel">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" alt="Udy Hotel Room" class="property-img">
+                <div class="property-body">
+                    <span class="badge">Location A - Hotel Rooms</span>
+                    <h3>Classic & Executive Hotel Rooms</h3>
+                    <p>Designed for travelers and guests looking for top-tier hospitality, room service, 24/7 power, and cozy king-sized comfort.</p>
+                    <div class="price">From ₦45,000 / night</div>
+                    <div class="btn-group">
+                        <!-- REPLACE WITH HOTEL WHATSAPP NUMBER -->
+                        <a href="https://wa.me/2348000000001?text=Hello%20Udy%20Hotel,%20I%20would%20like%20to%20book%20a%20Hotel%20Room." target="_blank" class="btn-whatsapp">Book via WhatsApp</a>
+                        <!-- REPLACE WITH HOTEL CALL LINE -->
+                        <a href="tel:+2348000000001" class="btn-call">📞 Call</a>
+                    </div>
+                </div>
             </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
 
-    // Modal Control & Live Pricing Calculation (Zero Database Storage of Customer Information)
-    window.openBookingModal = function(room) {
-      selectedRoomData = room;
-      document.getElementById('modalRoomTitle').innerText = `Book: ${room.name} ($${room.price}/night)`;
-      
-      // Prefill dates if selected in top bar
-      document.getElementById('modalCheckIn').value = document.getElementById('globalCheckIn').value;
-      document.getElementById('modalCheckOut').value = document.getElementById('globalCheckOut').value;
-      document.getElementById('guestFullName').value = '';
-      document.getElementById('guestPhone').value = '';
+            <!-- Location/Category B: Luxury Apartments -->
+            <div class="property-card" id="apartments">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Udy Apartments" class="property-img">
+                <div class="property-body">
+                    <span class="badge" style="background: #e0f2fe; color: #0369a1;">Location B - Apartments</span>
+                    <h3>Fully Serviced Luxury Apartments</h3>
+                    <p>Ideal for families or extended stays. Features fully equipped kitchens, spacious living areas, high-end privacy, and absolute home-away-from-home luxury.</p>
+                    <div class="price">From ₦90,000 / night</div>
+                    <div class="btn-group">
+                        <!-- REPLACE WITH APARTMENT WHATSAPP NUMBER -->
+                        <a href="https://wa.me/2348000000002?text=Hello%20Udy%20Apartments,%20I%20would%20like%20to%20book%20an%20Apartment." target="_blank" class="btn-whatsapp" style="background: #0284c7;">Book via WhatsApp</a>
+                        <!-- REPLACE WITH APARTMENT CALL LINE -->
+                        <a href="tel:+2348000000002" class="btn-call">📞 Call</a>
+                    </div>
+                </div>
+            </div>
 
-      calculateTotal();
-      document.getElementById('bookingModal').style.display = 'flex';
-    }
+        </div>
+    </div>
 
-    window.closeModal = function() {
-      document.getElementById('bookingModal').style.display = 'none';
-    }
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2026 Udy Hotel & Apartments. All rights reserved.</p>
+        <p>Direct Inquiries: Contact our respective hotel and apartment lines above for immediate assistance.</p>
+    </footer>
 
-    window.calculateTotal = function() {
-      const checkInVal = document.getElementById('modalCheckIn').value;
-      const checkOutVal = document.getElementById('modalCheckOut').value;
-      const totalDisplay = document.getElementById('modalTotalPrice');
-
-      if (!checkInVal || !checkOutVal || !selectedRoomData) {
-        totalDisplay.innerText = `$${selectedRoomData ? selectedRoomData.price : 0} (1 night default)`;
-        return;
-      }
-
-      const checkInDate = new Date(checkInVal);
-      const checkOutDate = new Date(checkOutVal);
-      const timeDiff = checkOutDate.getTime() - checkInDate.getTime();
-      let nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-      if (nights <= 0) nights = 1; // Minimum 1 night
-
-      const calculatedTotal = nights * selectedRoomData.price;
-      totalDisplay.innerText = `$${calculatedTotal} (${nights} Night${nights > 1 ? 's' : ''})`;
-    }
-
-    window.sendToWhatsApp = function() {
-      const name = document.getElementById('guestFullName').value.trim();
-      const phone = document.getElementById('guestPhone').value.trim();
-      const checkIn = document.getElementById('modalCheckIn').value;
-      const checkOut = document.getElementById('modalCheckOut').value;
-      const totalText = document.getElementById('modalTotalPrice').innerText;
-
-      if (!name || !phone || !checkIn || !checkOut) {
-        alert('Please fill in your name, phone number, and stay dates to continue.');
-        return;
-      }
-
-      const businessWhatsAppNumber = "2348129991716"; // Replace with client's WhatsApp number
-
-      const textMessage = `Hello Udy Hotel, I want to confirm and pay for a reservation:\n\n*Guest Name:* ${name}\n*Phone:* ${phone}\n*Room/Unit:* ${selectedRoomData.name} (${selectedRoomData.propertyType.toUpperCase()})\n*Check-In:* ${checkIn}\n*Check-Out:* ${checkOut}\n*Total Price:* ${totalText}\n\nPlease send payment details to proceed.`;
-
-      const whatsappURL = `https://wa.me/${businessWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
-      window.open(whatsappURL, '_blank');
-      closeModal();
-    }
-
-    // Real-Time Room Sync from Admin Portal
-    onSnapshot(collection(db, "rooms"), (snapshot) => {
-      allRooms = [];
-      snapshot.forEach((doc) => {
-        allRooms.push({ id: doc.id, ...doc.data() });
-      });
-      renderRooms();
-    });
-  </script>
 </body>
 </html>
