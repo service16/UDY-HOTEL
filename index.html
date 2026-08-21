@@ -3,123 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Udy Hotel & Apartments | Luxury Lodging & Shortlets</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Udy Hotel & Luxury Apartments | Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: #fafaf9; color: #1c1917; line-height: 1.6; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
         
+        /* Top Bar */
+        .top-bar { background: #0f172a; color: #94a3b8; font-size: 0.85rem; padding: 10px 8%; display: flex; justify-content: space-between; align-items: center; }
+        .top-bar span { color: #f59e0b; font-weight: 500; }
+
         /* Navbar */
-        .navbar { background: #1c1917; color: white; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+        .navbar { background: #ffffff; padding: 15px 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #0f172a; letter-spacing: 0.5px; }
         .logo span { color: #d97706; }
-        .nav-links { display: flex; gap: 25px; list-style: none; }
-        .nav-links a { color: #e7e5e4; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #334155; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
         .nav-links a:hover { color: #d97706; }
+        .nav-btn { background: #0f172a; color: white !important; padding: 10px 20px; border-radius: 6px; font-weight: 600; }
 
         /* Hero Section */
-        .hero { background: linear-gradient(rgba(28,25,23,0.7), rgba(28,25,23,0.7)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; height: 75vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 15px; }
-        .hero h1 span { color: #d97706; }
-        .hero p { font-size: 1.1rem; color: #d6d3d1; max-width: 600px; margin-bottom: 30px; }
+        .hero { 
+            background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.7)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center; min-height: 80vh; display: flex; align-items: center; text-align: center; color: white; padding: 40px 20px;
+        }
+        .hero-content { max-width: 800px; margin: auto; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; margin-bottom: 20px; font-weight: 700; }
+        .hero h1 span { color: #f59e0b; }
+        .hero p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 35px; }
         
-        /* Main Container */
-        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #1c1917; margin-bottom: 10px; }
-        .section-header p { color: #78716c; font-size: 1rem; }
+        .hero-cta-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn-hotel { background: #d97706; color: white; padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .btn-hotel:hover { background: #b45309; }
+        .btn-apartment { background: #0f172a; color: white; border: 1px solid rgba(255,255,255,0.3); padding: 14px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .btn-apartment:hover { background: #1e293b; }
 
-        /* Showcase Grid */
-        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
-        .property-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e7e5e4; display: flex; flex-direction: column; }
-        .property-img { height: 240px; width: 100%; object-fit: cover; }
-        .property-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
-        .badge { background: #fef3c7; color: #b45309; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; width: max-content; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .property-body h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 10px; color: #1c1917; }
-        .property-body p { color: #57534e; font-size: 0.95rem; margin-bottom: 20px; flex: 1; }
-        .price { font-size: 1.25rem; font-weight: 700; color: #d97706; margin-bottom: 20px; }
+        /* Section Titles */
+        .section { padding: 80px 8%; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 50px auto; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: #0f172a; margin-bottom: 10px; }
+        .section-header p { color: #64748b; font-size: 1rem; }
+        .badge { background: #fef3c7; color: #b45309; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 15px; }
+
+        /* Dual-Category Grid */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .property-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+        .property-img { height: 240px; background-size: cover; background-position: center; position: relative; }
+        .property-badge { position: absolute; top: 15px; left: 15px; background: #0f172a; color: white; padding: 5px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .property-body { padding: 30px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .property-body h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #0f172a; margin-bottom: 10px; }
+        .property-body p { color: #64748b; font-size: 0.95rem; margin-bottom: 20px; }
         
-        /* Action Buttons */
-        .btn-group { display: flex; gap: 10px; }
-        .btn-whatsapp { flex: 1; background: #25d366; color: white; padding: 12px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 600; font-size: 0.9rem; transition: opacity 0.3s; }
-        .btn-whatsapp:hover { opacity: 0.9; }
-        .btn-call { background: #1c1917; color: white; padding: 12px 16px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; }
-        .btn-call:hover { background: #292524; }
+        .price-tag { font-size: 1.25rem; font-weight: 700; color: #d97706; margin-bottom: 20px; }
+        .price-tag span { font-size: 0.85rem; color: #64748b; font-weight: 400; }
+
+        /* Action Buttons Inside Cards */
+        .action-buttons { display: flex; gap: 10px; }
+        .whatsapp-btn { flex: 1; background: #25d366; color: white; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: opacity 0.3s; }
+        .whatsapp-btn:hover { opacity: 0.9; }
+        .call-btn { flex: 1; background: #0f172a; color: white; text-align: center; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; }
+        .call-btn:hover { background: #334155; }
 
         /* Footer */
-        footer { background: #1c1917; color: #a8a29e; text-align: center; padding: 40px 20px; margin-top: 80px; font-size: 0.9rem; }
-        footer p { margin-bottom: 5px; }
+        footer { background: #0f172a; color: #94a3b8; padding: 50px 8% 20px 8%; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: white; font-size: 1.1rem; margin-bottom: 15px; font-family: 'Playfair Display', serif; }
+        .footer-col p { font-size: 0.9rem; margin-bottom: 10px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <!-- Navbar -->
+    <!-- Top Info Bar -->
+    <div class="top-bar">
+        <div>📍 Alagbado, Lagos State, Nigeria</div>
+        <div>Front Desk Line: <span>+234 800 000 0000</span></div>
+    </div>
+
+    <!-- Main Navigation -->
     <nav class="navbar">
         <div class="logo">UDY <span>HOTEL & APARTMENTS</span></div>
-        <ul class="nav-links">
-            <li><a href="#hotel">Hotel Rooms</a></li>
-            <li><a href="#apartments">Luxury Apartments</a></li>
-            <li><a href="#contact">Contact Front Desk</a></li>
-        </ul>
+        <div class="nav-links">
+            <a href="#hotel">Hotel Rooms</a>
+            <a href="#apartments">Luxury Apartments</a>
+            <a href="#contact" class="nav-btn">Contact Front Desk</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
-        <h1>Experience Comfort at <span>Udy</span></h1>
-        <p>Choose between our premium hotel rooms for short stays or fully-serviced luxury apartments tailored for absolute privacy and relaxation.</p>
-        <a href="#hotel" class="btn-whatsapp" style="width: 200px; background: #d97706; margin-top: 10px;">Explore Options</a>
-    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge" style="background: rgba(254, 243, 199, 0.2); color: #f59e0b;">Welcome to Excellence</span>
+            <h1>Experience Luxury Living & <span>Comfortable Stays</span></h1>
+            <p>Choose between our classic hotel rooms designed for short getaways or our fully-serviced executive apartments built for extended stays.</p>
+            <div class="hero-cta-group">
+                <a href="#hotel" class="btn-hotel">Browse Hotel Rooms</a>
+                <a href="#apartments" class="btn-apartment">View Shortlet Apartments</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- Main Showcase Container -->
-    <div class="container">
+    <!-- LOCATION A: HOTEL ROOMS SECTION -->
+    <section class="section" id="hotel">
         <div class="section-header">
-            <h2>Select Your Preferred Experience</h2>
-            <p>Direct bookings via WhatsApp and Phone with zero complications.</p>
+            <span class="badge">Location A</span>
+            <h2>Udy Hotel Rooms</h2>
+            <p>Perfect for business travelers, couples, and weekend getaways. Enjoy premium room service and maximum security.</p>
         </div>
 
-        <div class="category-grid">
-            
-            <!-- Location/Category A: Hotel Rooms -->
-            <div class="property-card" id="hotel">
-                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" alt="Udy Hotel Room" class="property-img">
+        <div class="grid-2">
+            <!-- Room 1 -->
+            <div class="property-card">
+                <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80');">
+                    <span class="property-badge">Hotel Section</span>
+                </div>
                 <div class="property-body">
-                    <span class="badge">Location A - Hotel Rooms</span>
-                    <h3>Classic & Executive Hotel Rooms</h3>
-                    <p>Designed for travelers and guests looking for top-tier hospitality, room service, 24/7 power, and cozy king-sized comfort.</p>
-                    <div class="price">From ₦45,000 / night</div>
-                    <div class="btn-group">
-                        <!-- REPLACE WITH HOTEL WHATSAPP NUMBER -->
-                        <a href="https://wa.me/2348000000001?text=Hello%20Udy%20Hotel,%20I%20would%20like%20to%20book%20a%20Hotel%20Room." target="_blank" class="btn-whatsapp">Book via WhatsApp</a>
-                        <!-- REPLACE WITH HOTEL CALL LINE -->
-                        <a href="tel:+2348000000001" class="btn-call">📞 Call</a>
+                    <div>
+                        <h3>Standard Executive Room</h3>
+                        <p>Queen-size bed, smart TV, en-suite modern bathroom, high-speed Wi-Fi, and air conditioning.</p>
+                        <div class="price-tag">₦35,000 <span>/ night</span></div>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="https://wa.me/2348000000000?text=Hello%20Udy%20Hotel,%20I%20would%20like%20to%20book%20the%20Standard%20Executive%20Room." target="_blank" class="whatsapp-btn">Book via WhatsApp</a>
+                        <a href="tel:08000000000" class="call-btn">Call Desk</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Location/Category B: Luxury Apartments -->
-            <div class="property-card" id="apartments">
-                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Udy Apartments" class="property-img">
+            <!-- Room 2 -->
+            <div class="property-card">
+                <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80');">
+                    <span class="property-badge">Hotel Section</span>
+                </div>
                 <div class="property-body">
-                    <span class="badge" style="background: #e0f2fe; color: #0369a1;">Location B - Apartments</span>
-                    <h3>Fully Serviced Luxury Apartments</h3>
-                    <p>Ideal for families or extended stays. Features fully equipped kitchens, spacious living areas, high-end privacy, and absolute home-away-from-home luxury.</p>
-                    <div class="price">From ₦90,000 / night</div>
-                    <div class="btn-group">
-                        <!-- REPLACE WITH APARTMENT WHATSAPP NUMBER -->
-                        <a href="https://wa.me/2348000000002?text=Hello%20Udy%20Apartments,%20I%20would%20like%20to%20book%20an%20Apartment." target="_blank" class="btn-whatsapp" style="background: #0284c7;">Book via WhatsApp</a>
-                        <!-- REPLACE WITH APARTMENT CALL LINE -->
-                        <a href="tel:+2348000000002" class="btn-call">📞 Call</a>
+                    <div>
+                        <h3>Royal VIP Suite</h3>
+                        <p>Spacious luxury layout, king-sized bed, mini-lounge area, complimentary breakfast, and premium views.</p>
+                        <div class="price-tag">₦60,000 <span>/ night</span></div>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="https://wa.me/2348000000000?text=Hello%20Udy%20Hotel,%20I%20would%20like%20to%20book%20the%20Royal%20VIP%20Suite." target="_blank" class="whatsapp-btn">Book via WhatsApp</a>
+                        <a href="tel:08000000000" class="call-btn">Call Desk</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION B: APARTMENTS SECTION -->
+    <section class="section bg-white" id="apartments" style="background: #ffffff;">
+        <div class="section-header">
+            <span class="badge">Location B</span>
+            <h2>Udy Luxury Apartments</h2>
+            <p>Fully furnished serviced apartments featuring private kitchens, living rooms, and complete privacy for families or long stays.</p>
+        </div>
+
+        <div class="grid-2">
+            <!-- Apartment 1 -->
+            <div class="property-card">
+                <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80');">
+                    <span class="property-badge" style="background: #d97706;">Apartment Section</span>
+                </div>
+                <div class="property-body">
+                    <div>
+                        <h3>1-Bedroom Executive Apartment</h3>
+                        <p>Fully equipped kitchen, cozy living room with smart entertainment system, washing machine, and 24/7 power.</p>
+                        <div class="price-tag">₦75,000 <span>/ night</span></div>
+                    </div>
+                    <div class="action-buttons">
+                        <!-- Note: Uses a separate WhatsApp number for apartments line -->
+                        <a href="https://wa.me/2348111111111?text=Hello%20Udy%20Apartments,%20I%20want%20to%20inquire%20about%20the%201-Bedroom%20Apartment." target="_blank" class="whatsapp-btn">Apartment WhatsApp</a>
+                        <a href="tel:08111111111" class="call-btn">Call Apartments</a>
                     </div>
                 </div>
             </div>
 
+            <!-- Apartment 2 -->
+            <div class="property-card">
+                <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80');">
+                    <span class="property-badge" style="background: #d97706;">Apartment Section</span>
+                </div>
+                <div class="property-body">
+                    <div>
+                        <h3>2-Bedroom Luxury Penthouse</h3>
+                        <p>Two ensuite bedrooms, massive luxury living area, modern fitted kitchen, dedicated parking space, and top-tier security.</p>
+                        <div class="price-tag">₦120,000 <span>/ night</span></div>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="https://wa.me/2348111111111?text=Hello%20Udy%20Apartments,%20I%20want%20to%20inquire%20about%20the%202-Bedroom%20Penthouse." target="_blank" class="whatsapp-btn">Apartment WhatsApp</a>
+                        <a href="tel:08111111111" class="call-btn">Call Apartments</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer id="contact">
-        <p>&copy; 2026 Udy Hotel & Apartments. All rights reserved.</p>
-        <p>Direct Inquiries: Contact our respective hotel and apartment lines above for immediate assistance.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Udy Hotel & Apartments</h4>
+                <p>Providing top-tier comfort, secure hospitality, and serene apartment lodging right in the heart of Lagos.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Hotel Front Desk</h4>
+                <p>Phone: +234 800 000 0000</p>
+                <p>WhatsApp: +234 800 000 0000</p>
+            </div>
+            <div class="footer-col">
+                <h4>Apartments Reservation</h4>
+                <p>Phone: +234 811 111 1111</p>
+                <p>WhatsApp: +234 811 111 1111</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Udy Hotel & Luxury Apartments. All rights reserved.</p>
+        </div>
     </footer>
 
 </body>
